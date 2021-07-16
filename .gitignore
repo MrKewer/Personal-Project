@@ -7,6 +7,10 @@
 [Uu]ser[Ss]ettings/
 Assets/AssetStoreTools*
 
+# MemoryCaptures can get excessive in size.
+# They also could contain extremely sensitive data
+/[Mm]emoryCaptures/
+
 # Visual Studio cache directory
 .vs/
 
@@ -37,3 +41,4 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+*.log
