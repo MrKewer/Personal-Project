@@ -2554,8 +2554,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1374769158}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -620.59, y: -215.7, z: 0}
-  m_LocalScale: {x: 0.081250705, y: 0.081250705, z: 0.081250705}
+  m_LocalPosition: {x: -620.5, y: -215.63, z: 0}
+  m_LocalScale: {x: 0.57455426, y: 0.57455426, z: 0.57455426}
   m_Children: []
   m_Father: {fileID: 278662884}
   m_RootOrder: 5
@@ -2600,7 +2600,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 3c2fe7a7d21764202adb8200047974e0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: dd969ff500f016143a55d39a937d34bb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -3188,15 +3188,17 @@ MonoBehaviour:
   character: {fileID: 191690980}
   level: {fileID: 1374769158}
   levelList:
-  - {fileID: 21300000, guid: 3c2fe7a7d21764202adb8200047974e0, type: 3}
-  - {fileID: 21300000, guid: 4d32b1211ea4642f6bfbd25e47fd444d, type: 3}
-  - {fileID: 21300000, guid: f853ef505e2214dc8aef4ffe7df644ee, type: 3}
+  - {fileID: 21300000, guid: dd969ff500f016143a55d39a937d34bb, type: 3}
+  - {fileID: 21300000, guid: fb916fc52160bb5429413298cf892dcf, type: 3}
+  - {fileID: 21300000, guid: 4d6ee25f1a568c14cbf2160ea1e69da8, type: 3}
   characterList:
   - {fileID: 100000, guid: 2f8d00bf5057f624e949aef802595da9, type: 3}
   - {fileID: 100000, guid: d70170446aa035f40a2429d04ab83ea6, type: 3}
   - {fileID: 100066, guid: fe32ce89f99911a478ea9e6736294382, type: 3}
   - {fileID: 100066, guid: 3afad42cab5a57a4c9f19f8deaaf8689, type: 3}
   - {fileID: 100000, guid: 882e87ba7c26a9d47a4f001002357e94, type: 3}
+  levelNumber: 0
+  characterNumber: 0
 --- !u!1 &1524461477
 GameObject:
   m_ObjectHideFlags: 0
