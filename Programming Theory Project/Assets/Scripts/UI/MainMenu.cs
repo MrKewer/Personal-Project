@@ -35,25 +35,17 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Image level;
     [SerializeField] private List<Sprite> levelList;
     [SerializeField] private List<GameObject> characterList;
+    private List<GameObject> characterPool = new List<GameObject>();
     [SerializeField] private int levelNumber = 0;
     [SerializeField] private int characterNumber = 0;
     // Start is called before the first frame update
 
-    void OnAwake()
-    {
-        Vector3 characterPosition = new Vector3 (0, 0, 0);
-        //Rotation characterRotation = new Vector3(0, 126,523, 0);
-        for(int i = 0; i < characterList.Count-1; i++)
-        {
-         //   GameObject characterPool = Instantiate(characterList[i], characterTransform);
-        }
-    }
 
 
     void Start()
     {
         TitleScreen();
-
+        PoolCharacters();
         newGameButton.onClick.AddListener(EnterNameScreen);
         exitButton.onClick.AddListener(ExitGame);
 
@@ -72,12 +64,62 @@ public class MainMenu : MonoBehaviour
 
     }
 
+    #region Title Screen
+    private void TitleScreen()
+    {
+        DeactivateAllScreens();
+        titleScreen.SetActive(true);
+    }
+    #endregion
+
+    #region Enter Name Screen
+    private void EnterNameScreen()
+    {
+        CharacterSelectDeactivatePool();
+        DeactivateAllScreens();
+        enterName.SetActive(true);
+    }
+
+    #endregion
+
+    #region Character Select
+
+    void PoolCharacters()
+    {
+        Vector3 characterPosition = new Vector3(0, 0, 0);
+        Quaternion characterRotation = Quaternion.Euler(0, 126, 0);
+
+        for (int i = 0; i < characterList.Count; i++)
+        {
+            GameObject pooledCharacter = Instantiate(characterList[i], characterPosition, characterRotation);
+            pooledCharacter.SetActive(false);
+            characterPool.Add(pooledCharacter);
+        }
+    }
+    private void CharacterSelectDeactivatePool()
+    {
+        for (int i = 0; i < characterPool.Count; i++)
+        {
+            characterPool[i].SetActive(false);
+        }
+    }
+    private void CharacterSelectScreen()
+    {
+        if (playerName.text != "")
+        {
+            DeactivateAllScreens();
+            characterSelect.SetActive(true);
+            CharacterSelectDeactivatePool();
+            characterPool[characterNumber].SetActive(true);
+        }
+    }
     private void CharacterSelectScrollRight()
     {
-        characterNumber++;
-        if(characterNumber <= characterList.Count -1)
+        characterNumber++;        
+        if (characterNumber <= characterList.Count -1)
         {
-            //character = characterList[characterNumber];
+            CharacterSelectDeactivatePool();
+            characterPool[characterNumber].SetActive(true);
         }
         else
         {
@@ -86,15 +128,25 @@ public class MainMenu : MonoBehaviour
     }
     private void CharacterSelectScrollLeft()
     {
-        characterNumber--;
+        characterNumber--;        
         if (characterNumber >= 0)
         {
-            //character = characterList[characterNumber];
+            CharacterSelectDeactivatePool();
+            characterPool[characterNumber].SetActive(true);
         }
         else
         {
             characterNumber = 0;
         }
+    }
+    #endregion
+
+    #region Level Select
+    private void LevelSelectScreen()
+    {
+        CharacterSelectDeactivatePool();
+        DeactivateAllScreens();
+        levelSelect.SetActive(true);
     }
     private void LevelSelectScrollLeft()
     {
@@ -120,43 +172,21 @@ public class MainMenu : MonoBehaviour
             levelNumber = levelList.Count - 1;
         }
     }
-    private void TitleScreen()
-    {
-        titleScreen.SetActive(true);
-        enterName.SetActive(false);
-        characterSelect.SetActive(false);
-        levelSelect.SetActive(false);
-    }
+    #endregion
 
-    private void EnterNameScreen()
-    {
-        titleScreen.SetActive(false);
-        enterName.SetActive(true);
-        characterSelect.SetActive(false);
-        levelSelect.SetActive(false);
-    }
 
-    private void CharacterSelectScreen()
-    {
-        if (playerName.text != "") { 
-            titleScreen.SetActive(false);
-            enterName.SetActive(false);
-            characterSelect.SetActive(true);
-            levelSelect.SetActive(false);
-        }
-    }
-    private void LevelSelectScreen()
-    {
-        titleScreen.SetActive(false);
-        enterName.SetActive(false);
-        characterSelect.SetActive(false);
-        levelSelect.SetActive(true);
-    }
+
     private void StartGame()
     {
 
     }
-
+    private void DeactivateAllScreens()
+    {
+        titleScreen.SetActive(false);
+        enterName.SetActive(false);
+        characterSelect.SetActive(false);
+        levelSelect.SetActive(false);
+    }
     private void ExitGame()
     {
 #if UNITY_EDITOR
