@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class MainMenu : MonoBehaviour
 {
@@ -11,6 +14,8 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject levelSelect;
 
     [SerializeField] private Button newGameButton;
+    [SerializeField] private Button optionButton;
+    [SerializeField] private Button exitButton;
 
     [SerializeField] private InputField playerName;
     [SerializeField] private Button enterNameNextButton;
@@ -27,7 +32,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Button levelSelectBackButton;
 
     [SerializeField] private GameObject character;
-    [SerializeField] private GameObject level;
+    [SerializeField] private Image level;
     [SerializeField] private List<Sprite> levelList;
     [SerializeField] private List<GameObject> characterList;
     [SerializeField] private int levelNumber = 0;
@@ -36,7 +41,10 @@ public class MainMenu : MonoBehaviour
     void Start()
     {
         TitleScreen();
+
         newGameButton.onClick.AddListener(EnterNameScreen);
+        exitButton.onClick.AddListener(ExitGame);
+
         enterNameNextButton.onClick.AddListener(CharacterSelectScreen);
         enterNameBackButton.onClick.AddListener(TitleScreen);
 
@@ -81,7 +89,7 @@ public class MainMenu : MonoBehaviour
         levelNumber--;
         if (levelNumber >= 0)
         {
-            level.GetComponent<SpriteRenderer>().sprite = levelList[levelNumber];
+            level.sprite = levelList[levelNumber];
         }
         else
         {
@@ -93,7 +101,7 @@ public class MainMenu : MonoBehaviour
         levelNumber++;
         if (levelNumber <= levelList.Count - 1)
         {
-            level.GetComponent<SpriteRenderer>().sprite = levelList[levelNumber];
+            level.sprite = levelList[levelNumber];
         }
         else
         {
@@ -135,5 +143,14 @@ public class MainMenu : MonoBehaviour
     private void StartGame()
     {
 
+    }
+
+    private void ExitGame()
+    {
+#if UNITY_EDITOR
+        EditorApplication.ExitPlaymode();
+#else
+Application.Quit();
+#endif
     }
 }
