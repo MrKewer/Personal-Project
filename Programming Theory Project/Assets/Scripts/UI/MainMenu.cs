@@ -31,13 +31,25 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Button levelSelectStartButton;
     [SerializeField] private Button levelSelectBackButton;
 
-    [SerializeField] private GameObject character;
+    //[SerializeField] private GameObject character;
     [SerializeField] private Image level;
     [SerializeField] private List<Sprite> levelList;
     [SerializeField] private List<GameObject> characterList;
     [SerializeField] private int levelNumber = 0;
     [SerializeField] private int characterNumber = 0;
     // Start is called before the first frame update
+
+    void OnAwake()
+    {
+        Vector3 characterPosition = new Vector3 (0, 0, 0);
+        //Rotation characterRotation = new Vector3(0, 126,523, 0);
+        for(int i = 0; i < characterList.Count-1; i++)
+        {
+         //   GameObject characterPool = Instantiate(characterList[i], characterTransform);
+        }
+    }
+
+
     void Start()
     {
         TitleScreen();
@@ -65,7 +77,7 @@ public class MainMenu : MonoBehaviour
         characterNumber++;
         if(characterNumber <= characterList.Count -1)
         {
-            character = characterList[characterNumber];
+            //character = characterList[characterNumber];
         }
         else
         {
@@ -77,7 +89,7 @@ public class MainMenu : MonoBehaviour
         characterNumber--;
         if (characterNumber >= 0)
         {
-            character = characterList[characterNumber];
+            //character = characterList[characterNumber];
         }
         else
         {
