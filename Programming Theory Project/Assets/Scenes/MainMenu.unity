@@ -2654,7 +2654,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Animal Chaser
+  m_Text: Zoophobia
 --- !u!222 &1088625102
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5135,7 +5135,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1994439915
 Transform:
   m_ObjectHideFlags: 0
