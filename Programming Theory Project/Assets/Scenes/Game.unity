@@ -339,10 +339,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 413474409, guid: 4abc3c69c42e4f941b77c1999ace2138, type: 3}
-      propertyPath: CharacterListPrefab
-      value: 
-      objectReference: {fileID: 1410284180}
     - target: {fileID: 3671785523353117188, guid: 4abc3c69c42e4f941b77c1999ace2138, type: 3}
       propertyPath: m_Name
       value: Player
@@ -389,6 +385,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3671785523353117688, guid: 4abc3c69c42e4f941b77c1999ace2138, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6382759172106842603, guid: 4abc3c69c42e4f941b77c1999ace2138, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -516,7 +516,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelSelectedNumber: 2
-  characterSelectedNumber: 3
+  characterSelectedNumber: 4
   playerName: a
   OnGameStateChanged:
     m_PersistentCalls:
@@ -536,11 +536,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1410284180 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2264553385443142738, guid: 4abc3c69c42e4f941b77c1999ace2138, type: 3}
-  m_PrefabInstance: {fileID: 413474407}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1843093774 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6599522259516073843, guid: 1f5358da87480524d818a45a301333d0, type: 3}

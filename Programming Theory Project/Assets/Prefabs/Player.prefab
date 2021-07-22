@@ -84,6 +84,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba64265363fad684f832bfacb6bbac38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CharacterListPrefab: {fileID: 2264553385443142738}
+  speed: 5
+  verticalSpeed: 10
+  verticalStep: 3.5
+  xBound: 10
+  jumpForce: 250
+  gravityModifier: 10
+  tolerance: 0
+  isOnGround: 0
+  moveLeft: 0
+  moveCenterFL: 0
+  moveCenterFR: 0
+  moveRight: 0
+  fullHealth: 100
+  health: 100
+  character: {fileID: 0}
+  Explode: {fileID: 191186, guid: 079954accd64b32419ec069129c81273, type: 3}
+  CollideFx: {fileID: 180128, guid: 6586ff0f14125534cae2f5d8f04b7871, type: 3}
 --- !u!1001 &3448835527632885889
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -141,6 +159,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c50712b1cb56194a9c33f2acb4860a4, type: 3}
+--- !u!1 &2264553385443142738 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3508857084939678931, guid: 0c50712b1cb56194a9c33f2acb4860a4, type: 3}
+  m_PrefabInstance: {fileID: 3448835527632885889}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6381998199622092667 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8596756165560786938, guid: 0c50712b1cb56194a9c33f2acb4860a4, type: 3}
