@@ -6,7 +6,6 @@ public class BackgroundRepeat : MonoBehaviour
 {
     private Vector3 startPos;
     private float repeatWidth;
-    public float speed = 10.0f;
     [SerializeField] private SpriteRenderer sprite;
     [SerializeField] private GameObject levelList;
  
@@ -28,7 +27,7 @@ public class BackgroundRepeat : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector3.left * speed * Time.deltaTime);
+        transform.Translate(Vector3.left * GameManager.Instance.gameSpeed * Time.deltaTime);
         if (transform.position.x < startPos.x - repeatWidth)
         {
             transform.position = startPos;

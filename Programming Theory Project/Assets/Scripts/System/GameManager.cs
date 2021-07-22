@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 [System.Serializable] public class EventGameState : UnityEvent<GameManager.GameState, GameManager.GameState> { }
 public class GameManager : Singleton<GameManager>
 {
+    public float gameSpeed = 10f;
     public int levelSelectedNumber = 2;
     public int characterSelectedNumber = 0;
     public string playerName = "a";

@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     private GameObject characterSelected;
     [SerializeField] private GameObject CharacterListPrefab;
-
+    private Animator runAnimation;
     [SerializeField] private float speed = 10.0f;
     [SerializeField] private float verticalSpeed = 10.0f;
     [SerializeField] private float verticalStep = 3f;
@@ -39,6 +39,9 @@ public class PlayerController : MonoBehaviour
         Physics.gravity *= gravityModifier;
         startPos = transform.position;
 
+        runAnimation = characterSelected.GetComponent<Animator>();
+        
+
     }
 
     // Update is called once per frame
@@ -65,7 +68,7 @@ public class PlayerController : MonoBehaviour
 
         // move player forward and backwards
         transform.Translate(Vector3.right * Time.deltaTime * horizontalInput * speed);
-
+        runAnimation.SetFloat("Speed_f", GameManager.Instance.gameSpeed/10);
         // move player from center to left
         #region Move Left
         // when the player is in position of the center

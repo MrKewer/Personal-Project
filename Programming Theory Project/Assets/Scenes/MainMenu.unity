@@ -301,6 +301,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 565f9a98bdd63ba49a61429e56f25ff0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameSpeed: 0
   levelSelectedNumber: 0
   characterSelectedNumber: 0
   playerName: a
