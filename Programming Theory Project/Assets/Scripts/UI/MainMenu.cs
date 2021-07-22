@@ -33,8 +33,10 @@ public class MainMenu : MonoBehaviour
 
     //[SerializeField] private GameObject character;
     [SerializeField] private Image level;
-    [SerializeField] private List<Sprite> levelList;
-    [SerializeField] private List<GameObject> characterList;
+    [SerializeField] private GameObject levelListPrefab;
+    private List<Sprite> levelList;
+    [SerializeField] private GameObject characterListPrefab;
+    private List<GameObject> characterList;
     private List<GameObject> characterPool = new List<GameObject>();
     [SerializeField] private int levelNumber = 0;
     [SerializeField] private int characterNumber = 0;
@@ -45,6 +47,8 @@ public class MainMenu : MonoBehaviour
     void Start()
     {
         TitleScreen();
+        characterList = new List<GameObject>(characterListPrefab.GetComponent<CharacterList>().characterList);
+        levelList = new List<Sprite>(levelListPrefab.GetComponent<LevelList>().levelSelectList);
         PoolCharacters();
         newGameButton.onClick.AddListener(EnterNameScreen);
         exitButton.onClick.AddListener(ExitGame);
@@ -61,6 +65,7 @@ public class MainMenu : MonoBehaviour
         levelSelectRightScrollButton.onClick.AddListener(LevelSelectScrollRight);
         levelSelectStartButton.onClick.AddListener(StartGame);
         levelSelectBackButton.onClick.AddListener(CharacterSelectScreen);
+    
 
     }
 
@@ -123,7 +128,9 @@ public class MainMenu : MonoBehaviour
         }
         else
         {
-            characterNumber = characterList.Count - 1;
+            characterNumber = 0;
+            CharacterSelectDeactivatePool();
+            characterPool[characterNumber].SetActive(true);
         }
     }
     private void CharacterSelectScrollLeft()
@@ -136,7 +143,9 @@ public class MainMenu : MonoBehaviour
         }
         else
         {
-            characterNumber = 0;
+            characterNumber = characterList.Count - 1;
+            CharacterSelectDeactivatePool();
+            characterPool[characterNumber].SetActive(true);
         }
     }
     #endregion
