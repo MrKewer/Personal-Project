@@ -187,7 +187,11 @@ public class MainMenu : MonoBehaviour
 
     private void StartGame()
     {
-
+        GameManager.Instance.playerName = playerName.text;
+        GameManager.Instance.characterSelectedNumber = characterNumber;
+        GameManager.Instance.levelSelectedNumber = levelNumber;
+        GameManager.Instance.StartGame();
+        Destroy(gameObject);
     }
     private void DeactivateAllScreens()
     {

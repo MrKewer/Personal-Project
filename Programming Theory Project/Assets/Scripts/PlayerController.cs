@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 characterTransform = new Vector3(0, 0, 0);
         Quaternion characterRotation = Quaternion.Euler(0, 90, 0);
-        characterSelected = CharacterListPrefab.GetComponent<CharacterList>().characterList[1];
+        characterSelected = CharacterListPrefab.GetComponent<CharacterList>().characterList[GameManager.Instance.characterSelectedNumber];
         characterSelected = Instantiate(characterSelected,characterTransform, characterRotation);
     }
 
