@@ -26,6 +26,8 @@ public class GameManager : Singleton<GameManager>
     {
         MAINMENU,
         RUNNING,
+        BOSSFIGHT,
+        ENDGAME,
         PAUSED,
         DEAD
     }

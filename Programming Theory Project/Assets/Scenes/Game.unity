@@ -338,6 +338,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2129882554481089939, guid: 4abc3c69c42e4f941b77c1999ace2138, type: 3}
+      propertyPath: m_Size.x
+      value: 1.672763
+      objectReference: {fileID: 0}
+    - target: {fileID: 2129882554481089939, guid: 4abc3c69c42e4f941b77c1999ace2138, type: 3}
+      propertyPath: m_Size.z
+      value: 2.271574
+      objectReference: {fileID: 0}
+    - target: {fileID: 2129882554481089939, guid: 4abc3c69c42e4f941b77c1999ace2138, type: 3}
+      propertyPath: m_Center.x
+      value: -0.00073462725
+      objectReference: {fileID: 0}
+    - target: {fileID: 2129882554481089939, guid: 4abc3c69c42e4f941b77c1999ace2138, type: 3}
+      propertyPath: m_Center.z
+      value: 0.125866
+      objectReference: {fileID: 0}
     - target: {fileID: 3671785523353117188, guid: 4abc3c69c42e4f941b77c1999ace2138, type: 3}
       propertyPath: m_Name
       value: Player
@@ -515,8 +531,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnListPrefab: {fileID: 1843093774}
-  obstaclesToSpawn: []
-  obstaclesPool: []
+  obstacleSpawnTime: 1
+  obstacleHitParticalPrefab: {fileID: 180128, guid: 6586ff0f14125534cae2f5d8f04b7871, type: 3}
+  explosionParticalPrefab: {fileID: 191186, guid: 079954accd64b32419ec069129c81273, type: 3}
+  poolDuplicates: 3
 --- !u!4 &1361979384
 Transform:
   m_ObjectHideFlags: 0
@@ -561,7 +579,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameSpeed: 10
-  levelSelectedNumber: 1
+  levelSelectedNumber: 2
   characterSelectedNumber: 4
   playerName: a
   OnGameStateChanged:

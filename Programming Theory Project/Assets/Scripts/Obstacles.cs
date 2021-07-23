@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class Obstacles : MonoBehaviour
 {
-    public float speed = 10.0f;
-    private float xDestroy = -50f;
+    private float xDestroy = -35f;
 
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector3.left * speed * Time.deltaTime);
+        transform.Translate(Vector3.left * GameManager.Instance.gameSpeed * Time.deltaTime);
         if (transform.position.x < xDestroy)
         {
             gameObject.SetActive(false);
         }
     }
+    
 }

@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody playerRb;
     private Vector3 startPos;
     [SerializeField] private GameObject Explode;
-    [SerializeField] private GameObject CollideFx;
+    private SpawnManager spawnManager;
 
     public float VerticalStep
     {
@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         Vector3 characterTransform = new Vector3(0, 0, 0);
         Quaternion characterRotation = Quaternion.Euler(0, 90, 0);
         characterSelected = CharacterListPrefab.GetComponent<CharacterList>().characterList[GameManager.Instance.characterSelectedNumber];
@@ -186,8 +187,9 @@ public class PlayerController : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("Obstacle"))
         {
-            Instantiate(CollideFx, collision.gameObject.transform.position, CollideFx.transform.rotation);
-            Destroy(collision.gameObject);
+            //Instantiate(CollideFx, collision.gameObject.transform.position, CollideFx.transform.rotation);
+
+            collision.gameObject.SetActive(false);
 
             health -= 10;
             //healthBar.transform.localScale = new Vector3(healthBarSize.x * (health / fullHealth), healthBarSize.y, healthBarSize.z);
@@ -197,6 +199,7 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+    
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Powerup"))

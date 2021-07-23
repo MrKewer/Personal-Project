@@ -8,19 +8,35 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private GameObject spawnListPrefab;
 
     private GameObject listToSpawnPrefab;
-    [SerializeField] private List<GameObject> obstaclesToSpawn;
+    private List<GameObject> obstaclesToSpawn;
     private List<GameObject> EnemiesToSpawn;
     private List<GameObject> BossesToSpawn;
 
-    [SerializeField] private List<GameObject> obstaclesPool;
+    private List<GameObject> obstaclesPool = new List<GameObject>();
     private List<GameObject> EnemiesPool;
     private List<GameObject> BossesPool;
 
-    private float xSpawnPos = 20.0f;
+    private float xSpawnPos = 30.0f;
     private float startDelay = 2f;
-    private float obstacleSpawnTime = 1f;
+    public float obstacleSpawnTime = 0.5f;
     private float powerupSpawnTime = 5f;
 
+
+    [SerializeField] private GameObject obstacleHitParticalPrefab;
+    [SerializeField] private GameObject explosionParticalPrefab;
+    private int particalPoolDepth = 10;
+    private bool canGrow = true;
+    private List<GameObject> obstacleHitParticalPool = new List<GameObject>();
+    private List<GameObject> explosionParticalPool = new List<GameObject>();
+
+    [SerializeField] private int poolDuplicates = 3;
+
+    private void Awake()
+    {
+
+
+
+    }
     void Start()
     {
         playerControllerScript = GameObject.Find("Player").GetComponent<PlayerController>();
@@ -28,16 +44,46 @@ public class SpawnManager : MonoBehaviour
         obstaclesToSpawn = listToSpawnPrefab.GetComponent<SpawnList>().obstacles;
         EnemiesToSpawn = listToSpawnPrefab.GetComponent<SpawnList>().enemies;
         BossesToSpawn = listToSpawnPrefab.GetComponent<SpawnList>().bosses;
-
         PoolObstacles();
-
+        PoolObsticalHitPartical();
 
         InvokeRepeating("SpawnRandomObstacle", startDelay, obstacleSpawnTime);
+    }
+    #region Obstacles
+
+    void PoolObsticalHitPartical()
+    {
+        for(int i=0; i<particalPoolDepth; i++)
+        {
+            GameObject pooledParticle = Instantiate(obstacleHitParticalPrefab);
+            pooledParticle.AddComponent<Obstacles>();
+            pooledParticle.SetActive(false);
+            obstacleHitParticalPool.Add(pooledParticle);
+        }
+    }
+
+    public GameObject GetAvailableObstacleHitPartical()
+    {
+        for(int i = 0; i < obstacleHitParticalPool.Count; i++)
+        {
+            if (obstacleHitParticalPool[i].activeInHierarchy == false)
+                return obstacleHitParticalPool[i];
+        }
+        if (canGrow == true)
+        {
+            GameObject pooledParticle = Instantiate(obstacleHitParticalPrefab);
+            pooledParticle.AddComponent<Obstacles>();
+            pooledParticle.SetActive(false);
+            obstacleHitParticalPool.Add(pooledParticle);
+            return pooledParticle;
+        }
+        else
+            return null;
     }
 
     void PoolObstacles()
     {
-        for(int a = 0; a < 2; a++)
+        for(int a = 0; a < 3; a++)
         {
             for (int i = 0; i < obstaclesToSpawn.Count; i++)
             {
@@ -52,27 +98,29 @@ public class SpawnManager : MonoBehaviour
 
     private GameObject GetAvailableObstacle()
     {
-        //int randomIndex = Random.Range(0, obstaclesPool.Count);
-        for (int i = 0; i < obstaclesPool.Count; i++)
-        {
-            if (obstaclesPool[i].activeInHierarchy == false)
-                return obstaclesPool[i];
-        }         
+        for (int i = 0; i < 5; i++) { //Try to random a few times
+            int randomIndex = Random.Range(0, obstaclesPool.Count);
+            if (obstaclesPool[randomIndex].activeInHierarchy == false)
+            {
+                return obstaclesPool[randomIndex];
+            }
+        }
         return null;
     }
 
     private void SpawnRandomObstacle()
     {
-
         int randomPathway = Random.Range(-1, 2);
-        GameObject obstacleToSpawn = GetAvailableObstacle();
-        //int randomIndex = Random.Range(0, obstaclePrefab.Length);
+        GameObject obstacleToSpawn = GetAvailableObstacle();   
 
-        Vector3 spawnPos = new Vector3(xSpawnPos, obstacleToSpawn.transform.position.y, randomPathway * playerControllerScript.VerticalStep);
+        if (obstacleToSpawn != null)
+        {
+            float yPos = obstacleToSpawn.transform.position.y;
+            Vector3 spawnPos = new Vector3(xSpawnPos, yPos, randomPathway * playerControllerScript.VerticalStep);
 
-        obstacleToSpawn.SetActive(true);
-        obstacleToSpawn.transform.position = spawnPos;
-        //Instantiate(obstacleToSpawn, spawnPos, obstacleToSpawn.transform.rotation);
-
+            obstacleToSpawn.SetActive(true);
+            obstacleToSpawn.transform.position = spawnPos;
+        }
     }
+    #endregion
 }
