@@ -47,8 +47,8 @@ public class MainMenu : MonoBehaviour
     void Start()
     {
         TitleScreen();
-        characterList = new List<GameObject>(characterListPrefab.GetComponent<CharacterList>().characterList);
-        levelList = new List<Sprite>(levelListPrefab.GetComponent<LevelList>().levelSelectList);
+        characterList = characterListPrefab.GetComponent<CharacterList>().characterList;
+        levelList = levelListPrefab.GetComponent<LevelList>().levelSelectList;
         PoolCharacters();
         newGameButton.onClick.AddListener(EnterNameScreen);
         exitButton.onClick.AddListener(ExitGame);

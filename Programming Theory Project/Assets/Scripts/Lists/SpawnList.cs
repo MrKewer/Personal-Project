@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SpawnList : MonoBehaviour
 {
-    public List<GameObject> Obstacles;
-    public List<GameObject> Enemies;
-    public List<GameObject> Bosses;
+    public List<GameObject> obstacles;
+    public List<GameObject> enemies;
+    public List<GameObject> bosses;
 }

@@ -16,11 +16,11 @@ public class BackgroundRepeat : MonoBehaviour
         repeatWidth = GetComponent<BoxCollider>().size.x / 2;
         if (gameObject.CompareTag("Ground"))
         {
-            gameObject.GetComponent<SpriteRenderer>().sprite = levelList.GetComponent<LevelList>().GroundList[GameManager.Instance.levelSelectedNumber];
+            gameObject.GetComponent<SpriteRenderer>().sprite = levelList.GetComponent<LevelList>().groundList[GameManager.Instance.levelSelectedNumber];
         }
         else
         {
-            gameObject.GetComponent<SpriteRenderer>().sprite = levelList.GetComponent<LevelList>().BackgroundList[GameManager.Instance.levelSelectedNumber];
+            gameObject.GetComponent<SpriteRenderer>().sprite = levelList.GetComponent<LevelList>().backgroundList[GameManager.Instance.levelSelectedNumber];
         }
     }
 

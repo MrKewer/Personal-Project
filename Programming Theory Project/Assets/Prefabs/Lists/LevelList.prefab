@@ -1,5 +1,166 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &732672313
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 732672315}
+  - component: {fileID: 732672314}
+  m_Layer: 5
+  m_Name: TownList
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &732672315
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 732672313}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6599522259516073842}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &732672314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 732672313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a6489eaedb1efa48b3a3aecf520d69d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  obstacles:
+  - {fileID: 1547116696582102, guid: f750d5f061e724f4c827ab6b376e2550, type: 3}
+  - {fileID: 134104, guid: 71782582b9d2cac4cba5251a3b767d13, type: 3}
+  - {fileID: 114304, guid: 3daef342e8f3f9548b04424eac7d4d0d, type: 3}
+  - {fileID: 3632747045727499139, guid: 5aef617cfc2a8c74a93fa3ab893ec3a7, type: 3}
+  enemies: []
+  bosses: []
+--- !u!1 &1252277190
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1252277191}
+  - component: {fileID: 1252277192}
+  m_Layer: 0
+  m_Name: CityList
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1252277191
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1252277190}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 36.466824, y: -47.09333, z: -1.1949921}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6599522259516073842}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1252277192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1252277190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a6489eaedb1efa48b3a3aecf520d69d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  obstacles:
+  - {fileID: 134104, guid: 71782582b9d2cac4cba5251a3b767d13, type: 3}
+  - {fileID: 181666, guid: ee7d0c4ddd804dd4e95f705d43c9135e, type: 3}
+  - {fileID: 151096, guid: 367149bd17c4d4d4e8868ec6a5cf8d45, type: 3}
+  - {fileID: 145980, guid: 84a102c1bf03d0a43bd4b342185c2811, type: 3}
+  enemies: []
+  bosses: []
+--- !u!1 &1955289380
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1955289382}
+  - component: {fileID: 1955289381}
+  m_Layer: 5
+  m_Name: NatureList
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1955289382
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1955289380}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6599522259516073842}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1955289381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1955289380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a6489eaedb1efa48b3a3aecf520d69d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  obstacles:
+  - {fileID: 1547116696582102, guid: f750d5f061e724f4c827ab6b376e2550, type: 3}
+  - {fileID: 1609270425926636, guid: 9020d2933ec6c0544965ea4b12952c42, type: 3}
+  - {fileID: 1732272334065596, guid: cdcb19fde9e8cba40b7bff849baf2c1b, type: 3}
+  - {fileID: 3632747045727499139, guid: 5aef617cfc2a8c74a93fa3ab893ec3a7, type: 3}
+  - {fileID: 151096, guid: 367149bd17c4d4d4e8868ec6a5cf8d45, type: 3}
+  enemies: []
+  bosses: []
 --- !u!1 &6599522259516073843
 GameObject:
   m_ObjectHideFlags: 0
@@ -27,7 +188,10 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1252277191}
+  - {fileID: 732672315}
+  - {fileID: 1955289382}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -52,11 +216,15 @@ MonoBehaviour:
   - {fileID: 21300000, guid: dd969ff500f016143a55d39a937d34bb, type: 3}
   - {fileID: 21300000, guid: fb916fc52160bb5429413298cf892dcf, type: 3}
   - {fileID: 21300000, guid: 4d6ee25f1a568c14cbf2160ea1e69da8, type: 3}
-  BackgroundList:
+  backgroundList:
   - {fileID: 21300000, guid: 3c2fe7a7d21764202adb8200047974e0, type: 3}
   - {fileID: 21300000, guid: 4d32b1211ea4642f6bfbd25e47fd444d, type: 3}
   - {fileID: 21300000, guid: f853ef505e2214dc8aef4ffe7df644ee, type: 3}
-  GroundList:
+  groundList:
   - {fileID: 21300000, guid: 529e53698ababdc4984ce68217230247, type: 3}
   - {fileID: 21300000, guid: 0fed3d13be2890e4c8b51d4019ab9c60, type: 3}
   - {fileID: 21300000, guid: a1dd31804fb51f04f8fce83357cc7cd0, type: 3}
+  spawnList:
+  - {fileID: 1252277190}
+  - {fileID: 732672313}
+  - {fileID: 1955289380}

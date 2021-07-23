@@ -26,6 +26,11 @@ public class PlayerController : MonoBehaviour
     private Vector3 startPos;
     [SerializeField] private GameObject Explode;
     [SerializeField] private GameObject CollideFx;
+
+    public float VerticalStep
+    {
+        get { return verticalStep; } private set { }
+    }
     // Start is called before the first frame update
     void Start()
     {
