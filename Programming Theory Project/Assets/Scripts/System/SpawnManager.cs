@@ -21,7 +21,7 @@ public class SpawnManager : MonoBehaviour
     public float obstacleSpawnTime = 0.5f;
     private float powerupSpawnTime = 5f;
 
-
+    [SerializeField] private GameObject boxColliderPrefab;
     [SerializeField] private GameObject obstacleHitParticalPrefab;
     [SerializeField] private GameObject explosionParticalPrefab;
     private int particalPoolDepth = 10;
@@ -89,7 +89,9 @@ public class SpawnManager : MonoBehaviour
             {
                 GameObject pooledObstacle = Instantiate(obstaclesToSpawn[i]);
                 pooledObstacle.SetActive(false);
-                pooledObstacle.AddComponent<Obstacles>();
+                pooledObstacle.AddComponent<Obstacles>();                
+                //GameObject boxCollider = Instantiate(boxColliderPrefab);
+                //boxCollider.transform.SetParent(pooledObstacle.transform);
                 obstaclesPool.Add(pooledObstacle);
             }
         }

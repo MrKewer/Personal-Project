@@ -189,8 +189,8 @@ public class PlayerController : MonoBehaviour
         {
             //Instantiate(CollideFx, collision.gameObject.transform.position, CollideFx.transform.rotation);
 
-            collision.gameObject.SetActive(false);
-
+            //collision.gameObject.SetActive(false);
+            collision.gameObject.transform.parent.gameObject.SetActive(false);
             health -= 10;
             //healthBar.transform.localScale = new Vector3(healthBarSize.x * (health / fullHealth), healthBarSize.y, healthBarSize.z);
             if (health <= 0)
