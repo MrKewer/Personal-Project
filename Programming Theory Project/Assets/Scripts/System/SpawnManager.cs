@@ -90,8 +90,6 @@ public class SpawnManager : MonoBehaviour
                 GameObject pooledObstacle = Instantiate(obstaclesToSpawn[i]);
                 pooledObstacle.SetActive(false);
                 pooledObstacle.AddComponent<Obstacles>();                
-                //GameObject boxCollider = Instantiate(boxColliderPrefab);
-                //boxCollider.transform.SetParent(pooledObstacle.transform);
                 obstaclesPool.Add(pooledObstacle);
             }
         }

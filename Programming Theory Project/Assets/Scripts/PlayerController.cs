@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody playerRb;
     private Vector3 startPos;
     [SerializeField] private GameObject Explode;
-    private SpawnManager spawnManager;
+    [SerializeField] private SpawnManager spawnManager;
 
     public float VerticalStep
     {
@@ -188,10 +188,20 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Obstacle"))
         {
             //Instantiate(CollideFx, collision.gameObject.transform.position, CollideFx.transform.rotation);
+            if(collision.gameObject.transform.parent.gameObject != null)
+            {
+                collision.gameObject.transform.parent.gameObject.SetActive(false);
+            }
+            else
+            {
+                collision.gameObject.SetActive(false);
+            }
+            
+            GameObject particalEffect = spawnManager.GetAvailableObstacleHitPartical();
+            particalEffect.SetActive(true);
+            particalEffect.transform.position = collision.gameObject.transform.parent.gameObject.transform.position;
 
-            //collision.gameObject.SetActive(false);
-            collision.gameObject.transform.parent.gameObject.SetActive(false);
-            health -= 10;
+            //health -= 10;
             //healthBar.transform.localScale = new Vector3(healthBarSize.x * (health / fullHealth), healthBarSize.y, healthBarSize.z);
             if (health <= 0)
             {
