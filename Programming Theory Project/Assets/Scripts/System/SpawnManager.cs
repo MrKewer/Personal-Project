@@ -13,8 +13,8 @@ public class SpawnManager : MonoBehaviour
     private List<GameObject> BossesToSpawn;
 
     private List<GameObject> obstaclesPool = new List<GameObject>();
-    private List<GameObject> EnemiesPool;
-    private List<GameObject> BossesPool;
+    private List<GameObject> EnemiesPool = new List<GameObject>();
+    private List<GameObject> BossesPool = new List<GameObject>();
 
     private float xSpawnPos = 30.0f;
     private float startDelay = 2f;
@@ -123,4 +123,28 @@ public class SpawnManager : MonoBehaviour
         }
     }
     #endregion
+    private void OnDestroy()
+    {
+        for (int i = 0; i < obstacleHitParticalPool.Count; i++)
+        {
+            Destroy(obstacleHitParticalPool[i]);
+        }
+        for (int i = 0; i < obstaclesPool.Count; i++)
+        {
+            Destroy(obstaclesPool[i]);
+        }
+        for (int i = 0; i < EnemiesPool.Count; i++)
+        {
+            Destroy(EnemiesPool[i]);
+        }
+        for (int i = 0; i < BossesPool.Count; i++)
+        {
+            Destroy(BossesPool[i]);
+        }
+        for (int i = 0; i < explosionParticalPool.Count; i++)
+        {
+            Destroy(explosionParticalPool[i]);
+        }
+    }
+
 }

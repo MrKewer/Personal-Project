@@ -40,17 +40,25 @@ public class MainMenu : MonoBehaviour
     private List<GameObject> characterPool = new List<GameObject>();
     [SerializeField] private int levelNumber = 0;
     [SerializeField] private int characterNumber = 0;
+
     // Start is called before the first frame update
 
-
-
+    private void OnEnable()
+    {
+        TitleScreen();
+    }
     void Start()
     {
         TitleScreen();
         characterList = characterListPrefab.GetComponent<CharacterList>().characterList;
         levelList = levelListPrefab.GetComponent<LevelList>().levelSelectList;
         PoolCharacters();
-        newGameButton.onClick.AddListener(EnterNameScreen);
+        AddListeners();
+    }
+
+    void AddListeners()
+    {
+        newGameButton.onClick.AddListener(NewGame);
         exitButton.onClick.AddListener(ExitGame);
 
         enterNameNextButton.onClick.AddListener(CharacterSelectScreen);
@@ -65,8 +73,6 @@ public class MainMenu : MonoBehaviour
         levelSelectRightScrollButton.onClick.AddListener(LevelSelectScrollRight);
         levelSelectStartButton.onClick.AddListener(StartGame);
         levelSelectBackButton.onClick.AddListener(CharacterSelectScreen);
-    
-
     }
 
     #region Title Screen
@@ -183,7 +189,21 @@ public class MainMenu : MonoBehaviour
     }
     #endregion
 
+    private void NewGame()
+    {
+        ClearInfo();
+        EnterNameScreen();
+    }
+    private void ClearInfo()
+    {
+        playerName.text = "";
+        characterNumber = 0;
+        levelNumber = 0;
+        level.sprite = levelList[levelNumber];
+        CharacterSelectDeactivatePool();
+        characterPool[characterNumber].SetActive(true);
 
+    }
 
     private void StartGame()
     {
@@ -191,7 +211,6 @@ public class MainMenu : MonoBehaviour
         GameManager.Instance.characterSelectedNumber = characterNumber;
         GameManager.Instance.levelSelectedNumber = levelNumber;
         GameManager.Instance.StartGame();
-        Destroy(gameObject);
     }
     private void DeactivateAllScreens()
     {

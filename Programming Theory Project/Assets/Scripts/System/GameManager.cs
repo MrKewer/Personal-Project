@@ -20,8 +20,9 @@ public class GameManager : Singleton<GameManager>
                                           //To be able to load alot of levels and to know if all the loads are completed
                                           //Or prevent other levels to be loaded at the same time
 
-    private string _currentLevelName = string.Empty;
+    [SerializeField] private string _currentLevelName = string.Empty;
 
+    #region Game States
     public enum GameState //Enumerating the states
     {
         MAINMENU,
@@ -32,7 +33,7 @@ public class GameManager : Singleton<GameManager>
         DEAD
     }
 
-    GameState _currentGameState = GameState.MAINMENU; //Setup the Current State
+    [SerializeField] GameState _currentGameState = GameState.MAINMENU; //Setup the Current State
     public GameState CurrentGameState //If you want to know what the current game state is
     {
         get { return _currentGameState; }
@@ -50,12 +51,21 @@ public class GameManager : Singleton<GameManager>
                 break;
 
             case GameState.RUNNING:
-                Time.timeScale = 1.0f; 
+                Time.timeScale = 1.0f;
+                break;
+
+            case GameState.BOSSFIGHT:
+                Time.timeScale = 1.0f;
                 break;
 
             case GameState.PAUSED:
-                Time.timeScale = 0.0f; 
+                Time.timeScale = 0.0f;
                 break;
+
+            case GameState.ENDGAME:
+                Time.timeScale = 1.0f;
+                break;
+
             case GameState.DEAD:
                 Time.timeScale = 1.0f;
                 break;
@@ -66,18 +76,24 @@ public class GameManager : Singleton<GameManager>
         //Invoke method is used to distinguish between events and methods located inside of a class
         OnGameStateChanged.Invoke(_currentGameState, previousGameState);
     }
+    #endregion
+
     void Start()
     {
         DontDestroyOnLoad(gameObject); //Called to keep this script even if it loads a complete new level
         _loadOperations = new List<AsyncOperation>(); //Initialize the list
         _instancedSystemPrefabs = new List<GameObject>(); //Initialize the list
         InstantiateSystemPrefabs(); //Create all the managers
+       // UpdateState(GameState.RUNNING);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Escape) && (_currentGameState == GameState.RUNNING || _currentGameState == GameState.PAUSED))
+        {
+            TogglePause();
+        }
     }
 
     #region Level Load
@@ -113,7 +129,7 @@ public class GameManager : Singleton<GameManager>
         {
             _loadOperations.Remove(ao); //Remove the operation form the list
 
-            if (_loadOperations.Count == 0) //5.3 - When the level load is complete
+            if (_loadOperations.Count == 0) // When the level load is complete
             {
                 UpdateState(GameState.RUNNING);
             }
@@ -124,21 +140,56 @@ public class GameManager : Singleton<GameManager>
     {
         Debug.Log("Unload Complete.");
     }
+    #endregion
 
-    public void StartGame() //5.3 - Call to start the game
+    public void StartGame() //Call to start the game
     {
         LoadLevel("Game");
     }
 
-    #endregion
-
-    void InstantiateSystemPrefabs() //3.3 - Create all the Managers
+    void InstantiateSystemPrefabs()// Create all the Managers
     {
         GameObject prefabInstance;
         for (int i = 0; i < SystemPrefabs.Length; ++i)
         {
-            prefabInstance = Instantiate(SystemPrefabs[i]); //3.3 - Create the Manager
-            _instancedSystemPrefabs.Add(prefabInstance); //3.3 - Add the Manager
+            prefabInstance = Instantiate(SystemPrefabs[i]); //Create the Manager
+            _instancedSystemPrefabs.Add(prefabInstance); //Add the Manager
         }
     }
+    protected override void OnDestroy() //Override the Destroy Method form Singleton script
+    {
+        base.OnDestroy(); //Call the same destroy script
+        for (int i = 0; i < _instancedSystemPrefabs.Count; ++i) //Destroy all the managers created
+        {
+            Destroy(_instancedSystemPrefabs[i]);
+        }
+        _instancedSystemPrefabs.Clear(); //Clear the list
+    }
+    #region Game State Functions
+    public void RestartGame()
+    {
+        UpdateState(GameState.RUNNING);
+    }
+    public void ResumeGame()
+    {
+        UpdateState(GameState.RUNNING);
+    }
+    public void ExitToMain()
+    {
+        UnloadLevel(_currentLevelName);
+        UpdateState(GameState.MAINMENU);
+    }
+    public void GameOver()
+    {
+        UpdateState(GameState.DEAD);
+    }
+    public void EndGame()
+    {
+        UpdateState(GameState.ENDGAME);
+    }
+    public void TogglePause()
+    {
+        UpdateState(_currentGameState == GameState.RUNNING ? GameState.PAUSED : GameState.RUNNING);
+    }
+    #endregion
 }

@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject Explode;
     [SerializeField] private SpawnManager spawnManager;
 
+
     public float VerticalStep
     {
         get { return verticalStep; } private set { }
@@ -46,8 +47,6 @@ public class PlayerController : MonoBehaviour
         startPos = transform.position;
 
         runAnimation = characterSelected.GetComponent<Animator>();
-        
-
     }
 
     // Update is called once per frame
@@ -193,7 +192,7 @@ public class PlayerController : MonoBehaviour
             particalEffect.SetActive(true);
             particalEffect.transform.position = collision.gameObject.transform.parent.gameObject.transform.position;
 
-            //health -= 10;
+            health -= 40;
             //healthBar.transform.localScale = new Vector3(healthBarSize.x * (health / fullHealth), healthBarSize.y, healthBarSize.z);
             if (health <= 0)
             {
@@ -215,5 +214,10 @@ public class PlayerController : MonoBehaviour
     {
         Instantiate(Explode, gameObject.transform.position, Explode.transform.rotation);
         Destroy(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        Physics.gravity /= gravityModifier;
     }
 }

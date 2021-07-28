@@ -25,6 +25,7 @@ public class Singleton<T> //<> inside the brackets is the type(variable), T for 
         if (instance != null) //To see that there are not already an instance
         {
             Debug.LogError("[Singleton] Trying to instantiate a second instance of a singleton class.");
+            Destroy(gameObject);
         }
         else
         {

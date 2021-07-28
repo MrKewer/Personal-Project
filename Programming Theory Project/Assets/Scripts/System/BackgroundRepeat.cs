@@ -6,12 +6,10 @@ public class BackgroundRepeat : MonoBehaviour
 {
     private Vector3 startPos;
     private float repeatWidth;
-    [SerializeField] private SpriteRenderer sprite;
     [SerializeField] private GameObject levelList;
  
     void Start()
     {
-        
         startPos = transform.position;
         repeatWidth = GetComponent<BoxCollider>().size.x / 2;
         if (gameObject.CompareTag("Ground"))
