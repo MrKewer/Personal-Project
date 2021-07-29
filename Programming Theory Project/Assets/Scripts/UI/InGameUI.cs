@@ -28,11 +28,15 @@ public class InGameUI : MonoBehaviour
         playerHealthBar.maxValue = playerController.maxHealth;
         playerHealthBar.value = playerController.health;
         scoreText.text = "Score: " + playerController.score.ToString();
+        playerController.DamageDealt += PlayerController_DamageDealt;
     }
-    
+    private void OnDisable()
+    {
+        playerController.DamageDealt -= PlayerController_DamageDealt;
+    }
     void Start()
     {
-        playerController.DamageDealt += PlayerController_DamageDealt;
+        
     }
 
     private void PlayerController_DamageDealt(float amount)

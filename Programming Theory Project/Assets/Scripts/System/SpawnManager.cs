@@ -56,12 +56,14 @@ public class SpawnManager : MonoBehaviour
     {
         if (currentState == GameManager.GameState.DEAD)
         {
-            DisableAll();
+            DisableAllObstacles();
+            DisableAllEnemies();
             isPlaying = false;
         }
         if (currentState == GameManager.GameState.RUNNING && previousState == GameManager.GameState.DEAD)
         {
             isPlaying = true;
+            DisableAllParticals();
         }
     }
 
@@ -172,16 +174,26 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    void DisableAll()
+    void DisableAllObstacles()
+    {
+        for (int i = 0; i < obstaclesPool.Count; i++)
+        {
+            obstaclesPool[i].SetActive(false);
+        }
+    }
+    void DisableAllParticals()
     {
         for (int i = 0; i < obstacleHitParticalPool.Count; i++)
         {
             obstacleHitParticalPool[i].SetActive(false);
         }
-        for (int i = 0; i < obstaclesPool.Count; i++)
+        for (int i = 0; i < explosionParticalPool.Count; i++)
         {
-            obstaclesPool[i].SetActive(false);
+            explosionParticalPool[i].SetActive(false);
         }
+    }
+    void DisableAllEnemies()
+    {
         for (int i = 0; i < EnemiesPool.Count; i++)
         {
             EnemiesPool[i].SetActive(false);
@@ -190,10 +202,7 @@ public class SpawnManager : MonoBehaviour
         {
             BossesPool[i].SetActive(false);
         }
-        for (int i = 0; i < explosionParticalPool.Count; i++)
-        {
-            explosionParticalPool[i].SetActive(false);
-        }
+
     }
 
 }

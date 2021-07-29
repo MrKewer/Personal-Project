@@ -97,7 +97,7 @@ MonoBehaviour:
   moveCenterFR: 0
   moveRight: 0
   maxHealth: 100
-  health: 20
+  health: 100
   score: 0
   Explode: {fileID: 191186, guid: 079954accd64b32419ec069129c81273, type: 3}
   spawnManager: {fileID: 0}
