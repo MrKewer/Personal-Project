@@ -4,13 +4,15 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
+//UnityEvent<Current GameState, Previous GameState>
+//Serializable in order to register via the inspecter
 [System.Serializable] public class EventGameState : UnityEvent<GameManager.GameState, GameManager.GameState> { }
 public class GameManager : Singleton<GameManager>
 {
-    public float gameSpeed = 10f;
-    public int levelSelectedNumber = 2;
-    public int characterSelectedNumber = 0;
-    public string playerName = "a";
+    public float gameSpeed = 10f; //The speed at which the game will run
+    public int levelSelectedNumber = 2; //The level the player will choose in the MainMenu
+    public int characterSelectedNumber = 0; //The Character the player will choose in the MainMenu
+    public string playerName = "a"; //The Name the player will type in, in the MainMenu
 
     public EventGameState OnGameStateChanged; //Create event to know when the game state changes
     public GameObject[] SystemPrefabs; //The list of all the Managers you want to create. (UI, Sound, Gameplay ect)
@@ -20,7 +22,7 @@ public class GameManager : Singleton<GameManager>
                                           //To be able to load alot of levels and to know if all the loads are completed
                                           //Or prevent other levels to be loaded at the same time
 
-    [SerializeField] private string _currentLevelName = string.Empty;
+    [SerializeField] private string _currentLevelName = string.Empty; //The current level selected
 
     #region Game States
     public enum GameState //Enumerating the states
@@ -84,15 +86,15 @@ public class GameManager : Singleton<GameManager>
         _loadOperations = new List<AsyncOperation>(); //Initialize the list
         _instancedSystemPrefabs = new List<GameObject>(); //Initialize the list
         InstantiateSystemPrefabs(); //Create all the managers
-       // UpdateState(GameState.RUNNING);
     }
 
     // Update is called once per frame
     void Update()
     {
+        //When the game is running or if it is paused
         if (Input.GetKeyDown(KeyCode.Escape) && (_currentGameState == GameState.RUNNING || _currentGameState == GameState.PAUSED))
         {
-            TogglePause();
+            TogglePause(); //Will swich between pause and unpause
         }
     }
 
@@ -115,13 +117,13 @@ public class GameManager : Singleton<GameManager>
 
     public void UnloadLevel(string levelName)
     {
-        AsyncOperation ao = SceneManager.UnloadSceneAsync(levelName);
+        AsyncOperation ao = SceneManager.UnloadSceneAsync(levelName); //Unload the named scene
         if (ao == null)
         {
             Debug.LogError("[GameManager] Unable to unload level " + levelName);
             return;
         }
-        ao.completed += OnUnloadOperationComplete;
+        ao.completed += OnUnloadOperationComplete; //Add a listener for when the unload is complete
     }
     void OnLoadOperationComplete(AsyncOperation ao) //Needs a AsyncOpertation
     {
@@ -131,7 +133,7 @@ public class GameManager : Singleton<GameManager>
 
             if (_loadOperations.Count == 0) // When the level load is complete
             {
-                UpdateState(GameState.RUNNING);
+                UpdateState(GameState.RUNNING); // Asuming that the game only has the one gameplay type
             }
         }
         Debug.Log("Load Complete.");
@@ -140,13 +142,14 @@ public class GameManager : Singleton<GameManager>
     {
         Debug.Log("Unload Complete.");
     }
-    #endregion
-
     public void StartGame() //Call to start the game
     {
         LoadLevel("Game");
     }
 
+    #endregion
+
+    #region Create + Destroy Managers
     void InstantiateSystemPrefabs()// Create all the Managers
     {
         GameObject prefabInstance;
@@ -165,6 +168,8 @@ public class GameManager : Singleton<GameManager>
         }
         _instancedSystemPrefabs.Clear(); //Clear the list
     }
+    #endregion
+
     #region Game State Functions
     public void RestartGame()
     {

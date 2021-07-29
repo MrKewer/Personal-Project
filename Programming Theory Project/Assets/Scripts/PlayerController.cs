@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System;
 public class PlayerController : MonoBehaviour
 {
+    public event Action<float> DamageTaken;
     private GameObject characterSelected;
     [SerializeField] private GameObject CharacterListPrefab;
     private Animator runAnimation;

@@ -2,73 +2,77 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-#if UNITY_EDITOR
+#if UNITY_EDITOR //Only editor can read this
 using UnityEditor;
 #endif
 
 public class MainMenu : MonoBehaviour
 {
+    //UI screens inside the Main Menu
     [SerializeField] private GameObject titleScreen;
     [SerializeField] private GameObject enterName;
     [SerializeField] private GameObject characterSelect;
     [SerializeField] private GameObject levelSelect;
 
+    //The buttons on the title screen
     [SerializeField] private Button newGameButton;
     [SerializeField] private Button optionButton;
     [SerializeField] private Button exitButton;
 
+    //Enter Name Screen
     [SerializeField] private InputField playerName;
     [SerializeField] private Button enterNameNextButton;
     [SerializeField] private Button enterNameBackButton;
 
+    //Character Select Screen
     [SerializeField] private Button characterSelectLeftScrollButton;
     [SerializeField] private Button characterSelectRightScrollButton;
     [SerializeField] private Button characterSelectNextButton;
     [SerializeField] private Button characterSelectBackButton;
+    [SerializeField] private GameObject characterListPrefab; //The list of all the playable characters
+    private List<GameObject> characterList; //List from characterListPrefab
+    private List<GameObject> characterPool = new List<GameObject>(); //Created Game Objects, that will be displayed
+    [SerializeField] private int characterNumber = 0; //Current character in the list
 
+    //Level Select Screen
     [SerializeField] private Button levelSelectLeftScrollButton;
     [SerializeField] private Button levelSelectRightScrollButton;
     [SerializeField] private Button levelSelectStartButton;
     [SerializeField] private Button levelSelectBackButton;
-
-    //[SerializeField] private GameObject character;
-    [SerializeField] private Image level;
-    [SerializeField] private GameObject levelListPrefab;
-    private List<Sprite> levelList;
-    [SerializeField] private GameObject characterListPrefab;
-    private List<GameObject> characterList;
-    private List<GameObject> characterPool = new List<GameObject>();
-    [SerializeField] private int levelNumber = 0;
-    [SerializeField] private int characterNumber = 0;
-
-    // Start is called before the first frame update
+    [SerializeField] private Image level; //The displayed level sprite
+    [SerializeField] private GameObject levelListPrefab; //The list of all the levels
+    private List<Sprite> levelList; //The list from the levelListPrefab
+    [SerializeField] private int levelNumber = 0; //Current Level in the list
 
     private void OnEnable()
     {
-        TitleScreen();
+        TitleScreen(); //The fist screen to show
     }
     void Start()
     {
-        TitleScreen();
-        characterList = characterListPrefab.GetComponent<CharacterList>().characterList;
-        levelList = levelListPrefab.GetComponent<LevelList>().levelSelectList;
-        PoolCharacters();
-        AddListeners();
+        characterList = characterListPrefab.GetComponent<CharacterList>().characterList; //Gets the list of the characters
+        levelList = levelListPrefab.GetComponent<LevelList>().levelSelectList; //Gets the list of the levels
+        PoolCharacters(); //Pool the characters
+        AddListeners(); //All the button listeners
     }
 
-    void AddListeners()
+    void AddListeners()//All the button listeners
     {
+        //Title Screen
         newGameButton.onClick.AddListener(NewGame);
         exitButton.onClick.AddListener(ExitGame);
 
+        //Enter Name Screen
         enterNameNextButton.onClick.AddListener(CharacterSelectScreen);
         enterNameBackButton.onClick.AddListener(TitleScreen);
-
+        
+        //Character Select Screen
         characterSelectLeftScrollButton.onClick.AddListener(CharacterSelectScrollLeft);
         characterSelectRightScrollButton.onClick.AddListener(CharacterSelectScrollRight);
         characterSelectNextButton.onClick.AddListener(LevelSelectScreen);
         characterSelectBackButton.onClick.AddListener(EnterNameScreen);
 
+        //Level Select Screen
         levelSelectLeftScrollButton.onClick.AddListener(LevelSelectScrollLeft);
         levelSelectRightScrollButton.onClick.AddListener(LevelSelectScrollRight);
         levelSelectStartButton.onClick.AddListener(StartGame);
@@ -81,6 +85,23 @@ public class MainMenu : MonoBehaviour
         DeactivateAllScreens();
         titleScreen.SetActive(true);
     }
+    #region New Game
+    private void NewGame()
+    {
+        ClearInfo();
+        EnterNameScreen();
+    }
+    private void ClearInfo()
+    {
+        playerName.text = "";
+        characterNumber = 0;
+        levelNumber = 0;
+        level.sprite = levelList[levelNumber];
+        CharacterSelectDeactivatePool();
+        characterPool[characterNumber].SetActive(true);
+    }
+    #endregion
+
     #endregion
 
     #region Enter Name Screen
@@ -95,7 +116,7 @@ public class MainMenu : MonoBehaviour
 
     #region Character Select
 
-    void PoolCharacters()
+    void PoolCharacters() //Create characters + set their position
     {
         Vector3 characterPosition = new Vector3(0, 0, 0);
         Quaternion characterRotation = Quaternion.Euler(0, 126, 0);
@@ -107,7 +128,7 @@ public class MainMenu : MonoBehaviour
             characterPool.Add(pooledCharacter);
         }
     }
-    private void CharacterSelectDeactivatePool()
+    private void CharacterSelectDeactivatePool() //Set all characters inActive
     {
         for (int i = 0; i < characterPool.Count; i++)
         {
@@ -124,7 +145,7 @@ public class MainMenu : MonoBehaviour
             characterPool[characterNumber].SetActive(true);
         }
     }
-    private void CharacterSelectScrollRight()
+    private void CharacterSelectScrollRight() //Scroll right
     {
         characterNumber++;        
         if (characterNumber <= characterList.Count -1)
@@ -132,14 +153,14 @@ public class MainMenu : MonoBehaviour
             CharacterSelectDeactivatePool();
             characterPool[characterNumber].SetActive(true);
         }
-        else
+        else //Loop the character selection
         {
             characterNumber = 0;
             CharacterSelectDeactivatePool();
             characterPool[characterNumber].SetActive(true);
         }
     }
-    private void CharacterSelectScrollLeft()
+    private void CharacterSelectScrollLeft() //Scroll Left
     {
         characterNumber--;        
         if (characterNumber >= 0)
@@ -147,7 +168,7 @@ public class MainMenu : MonoBehaviour
             CharacterSelectDeactivatePool();
             characterPool[characterNumber].SetActive(true);
         }
-        else
+        else //Loop the character selection
         {
             characterNumber = characterList.Count - 1;
             CharacterSelectDeactivatePool();
@@ -163,48 +184,33 @@ public class MainMenu : MonoBehaviour
         DeactivateAllScreens();
         levelSelect.SetActive(true);
     }
-    private void LevelSelectScrollLeft()
-    {
-        levelNumber--;
-        if (levelNumber >= 0)
-        {
-            level.sprite = levelList[levelNumber];
-        }
-        else
-        {
-            levelNumber = 0;
-        }
-    }
-    private void LevelSelectScrollRight()
+    private void LevelSelectScrollRight() //Scroll Right
     {
         levelNumber++;
         if (levelNumber <= levelList.Count - 1)
         {
             level.sprite = levelList[levelNumber];
         }
-        else
+        else //Max level Number
         {
             levelNumber = levelList.Count - 1;
         }
     }
+    private void LevelSelectScrollLeft() //Scroll Left
+    {
+        levelNumber--;
+        if (levelNumber >= 0)
+        {
+            level.sprite = levelList[levelNumber];
+        }
+        else //Min level number
+        {
+            levelNumber = 0;
+        }
+    }
+
     #endregion
-
-    private void NewGame()
-    {
-        ClearInfo();
-        EnterNameScreen();
-    }
-    private void ClearInfo()
-    {
-        playerName.text = "";
-        characterNumber = 0;
-        levelNumber = 0;
-        level.sprite = levelList[levelNumber];
-        CharacterSelectDeactivatePool();
-        characterPool[characterNumber].SetActive(true);
-
-    }
-
+    
     private void StartGame()
     {
         GameManager.Instance.playerName = playerName.text;
@@ -212,6 +218,7 @@ public class MainMenu : MonoBehaviour
         GameManager.Instance.levelSelectedNumber = levelNumber;
         GameManager.Instance.StartGame();
     }
+
     private void DeactivateAllScreens()
     {
         titleScreen.SetActive(false);

@@ -4,39 +4,32 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    private PlayerController playerControllerScript;
-    [SerializeField] private GameObject spawnListPrefab;
+    private PlayerController playerControllerScript; //Gets the player Controller Script
+    [SerializeField] private GameObject spawnListPrefab; //Gets the list of all obstacles, enemies and bosses
 
-    private GameObject listToSpawnPrefab;
-    private List<GameObject> obstaclesToSpawn;
+    private GameObject listToSpawnPrefab; //Get the lists of all to spawn based on the selected level (gets from spawnListPrefab's spawnList)
+    private List<GameObject> obstaclesToSpawn; //The list that is gotten from the listToSpawnPrefab
     private List<GameObject> EnemiesToSpawn;
     private List<GameObject> BossesToSpawn;
 
-    private List<GameObject> obstaclesPool = new List<GameObject>();
+    private List<GameObject> obstaclesPool = new List<GameObject>(); //The pool that is created that is used to store the items
     private List<GameObject> EnemiesPool = new List<GameObject>();
     private List<GameObject> BossesPool = new List<GameObject>();
 
-    private float xSpawnPos = 30.0f;
-    private float startDelay = 2f;
-    public float obstacleSpawnTime = 0.5f;
+    private float xSpawnPos = 30.0f; //The spawn position in the x direction
+    private float startDelay = 2f; //Delay before spawning 
+    public float obstacleSpawnTime = 0.5f; //Spawning delay intervals
     private float powerupSpawnTime = 5f;
 
-    [SerializeField] private GameObject boxColliderPrefab;
-    [SerializeField] private GameObject obstacleHitParticalPrefab;
-    [SerializeField] private GameObject explosionParticalPrefab;
-    private int particalPoolDepth = 10;
-    private bool canGrow = true;
-    private List<GameObject> obstacleHitParticalPool = new List<GameObject>();
+    [SerializeField] private GameObject obstacleHitParticalPrefab; //Hit Particals
+    [SerializeField] private GameObject explosionParticalPrefab; //Explosion Particals
+    private int particalPoolDepth = 10; // The amount that will be spawned
+    private bool canGrow = true; //If the need for more particals it will create more
+    private List<GameObject> obstacleHitParticalPool = new List<GameObject>(); // The pool that is created that is used to store the items
     private List<GameObject> explosionParticalPool = new List<GameObject>();
 
     [SerializeField] private int poolDuplicates = 3;
 
-    private void Awake()
-    {
-
-
-
-    }
     void Start()
     {
         playerControllerScript = GameObject.Find("Player").GetComponent<PlayerController>();
@@ -44,14 +37,17 @@ public class SpawnManager : MonoBehaviour
         obstaclesToSpawn = listToSpawnPrefab.GetComponent<SpawnList>().obstacles;
         EnemiesToSpawn = listToSpawnPrefab.GetComponent<SpawnList>().enemies;
         BossesToSpawn = listToSpawnPrefab.GetComponent<SpawnList>().bosses;
+        
+        //Pool the needed objects
         PoolObstacles();
         PoolObsticalHitPartical();
 
+        //Spawning obstacles with intervals
         InvokeRepeating("SpawnRandomObstacle", startDelay, obstacleSpawnTime);
     }
     #region Obstacles
 
-    void PoolObsticalHitPartical()
+    void PoolObsticalHitPartical() //Create and disable particals used to indicate on hit
     {
         for(int i=0; i<particalPoolDepth; i++)
         {
@@ -62,14 +58,14 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    public GameObject GetAvailableObstacleHitPartical()
+    public GameObject GetAvailableObstacleHitPartical() //Gets available hit particals
     {
         for(int i = 0; i < obstacleHitParticalPool.Count; i++)
         {
             if (obstacleHitParticalPool[i].activeInHierarchy == false)
                 return obstacleHitParticalPool[i];
         }
-        if (canGrow == true)
+        if (canGrow == true) //If there arent enough, it will create more
         {
             GameObject pooledParticle = Instantiate(obstacleHitParticalPrefab);
             pooledParticle.AddComponent<Obstacles>();
@@ -81,9 +77,9 @@ public class SpawnManager : MonoBehaviour
             return null;
     }
 
-    void PoolObstacles()
+    void PoolObstacles() //Create and disable obstacles
     {
-        for(int a = 0; a < 3; a++)
+        for(int a = 0; a < poolDuplicates; a++) //Create more times to have duplicates in game
         {
             for (int i = 0; i < obstaclesToSpawn.Count; i++)
             {
@@ -96,7 +92,7 @@ public class SpawnManager : MonoBehaviour
 
     }
 
-    private GameObject GetAvailableObstacle()
+    private GameObject GetAvailableObstacle() //Get an available obstacle
     {
         for (int i = 0; i < 5; i++) { //Try to random a few times
             int randomIndex = Random.Range(0, obstaclesPool.Count);
@@ -108,7 +104,7 @@ public class SpawnManager : MonoBehaviour
         return null;
     }
 
-    private void SpawnRandomObstacle()
+    private void SpawnRandomObstacle() //Will set an random obstacle active and set it to a new position
     {
         int randomPathway = Random.Range(-1, 2);
         GameObject obstacleToSpawn = GetAvailableObstacle();   
@@ -123,7 +119,7 @@ public class SpawnManager : MonoBehaviour
         }
     }
     #endregion
-    private void OnDestroy()
+    private void OnDestroy() //Clear all created objects from game
     {
         for (int i = 0; i < obstacleHitParticalPool.Count; i++)
         {
