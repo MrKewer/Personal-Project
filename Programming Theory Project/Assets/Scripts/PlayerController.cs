@@ -6,8 +6,6 @@ using System;
 public delegate void DamageDealtHandler(float amount);
 public class PlayerController : MonoBehaviour, IDamageable<float>
 {
-    //public event Action<float> DamageTaken;
-
     public event DamageDealtHandler DamageDealt;
     private GameObject characterSelected;
     [SerializeField] private GameObject CharacterListPrefab;
@@ -42,18 +40,42 @@ public class PlayerController : MonoBehaviour, IDamageable<float>
     void Start()
     {
 
+        GameManager.Instance.OnGameStateChanged.AddListener(HandleGameStateChanged); //Add a Listener to the event
+
         Vector3 characterTransform = new Vector3(0, 0, 0);
         Quaternion characterRotation = Quaternion.Euler(0, 90, 0);
         characterSelected = CharacterListPrefab.GetComponent<CharacterList>().characterList[GameManager.Instance.characterSelectedNumber];
         characterSelected = Instantiate(characterSelected, characterTransform, characterRotation);
         characterSelected.transform.SetParent(gameObject.transform);
-        //character = characterSelected;
+
         playerRb = GetComponent<Rigidbody>();
         Physics.gravity *= gravityModifier;
         startPos = transform.position;
-
+        resetAll();
         //runAnimation = GetComponentInChildren<Animator>();
         runAnimation = characterSelected.GetComponent<Animator>();
+    }
+
+    private void HandleGameStateChanged(GameManager.GameState currentState, GameManager.GameState previousState) //When the state changes in the GameManager
+    {
+        if(currentState == GameManager.GameState.DEAD)
+        {
+            resetAll();
+        }
+        if (currentState == GameManager.GameState.RUNNING && previousState == GameManager.GameState.DEAD)
+        {
+            characterSelected.SetActive(true);
+        }
+    }
+    private void resetAll()
+    {
+        gameObject.transform.position = new Vector3(0, 0, 0);
+        moveLeft = false;
+        moveCenterFL = false;
+        moveCenterFR = false;
+        moveRight = false;
+        health = maxHealth;
+        score = 0;
     }
 
     // Update is called once per frame
@@ -210,7 +232,7 @@ public class PlayerController : MonoBehaviour, IDamageable<float>
     private void Death()
     {
         Instantiate(Explode, gameObject.transform.position, Explode.transform.rotation);
-        Destroy(gameObject);
+        characterSelected.SetActive(false);
     }
 
     private void OnDestroy()
@@ -224,6 +246,11 @@ public class PlayerController : MonoBehaviour, IDamageable<float>
         if (DamageDealt != null)
         {
             DamageDealt(damageTaken);
+        }
+        if(health<= 0)
+        {
+            GameManager.Instance.GameOver();
+            Death();
         }
     }
 }

@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    [SerializeField] private GameObject playerPrefab;
+    //[SerializeField] private GameObject playerPrefab;
     private PlayerController playerControllerScript; //Gets the player Controller Script
-    private GameObject characterSelected;
-    [SerializeField] private GameObject CharacterListPrefab;
+    //private GameObject characterSelected;
+    //[SerializeField] private GameObject CharacterListPrefab;
 
     [SerializeField] private GameObject spawnListPrefab; //Gets the list of all obstacles, enemies and bosses
 
@@ -22,8 +22,9 @@ public class SpawnManager : MonoBehaviour
 
     private float xSpawnPos = 30.0f; //The spawn position in the x direction
     private float startDelay = 2f; //Delay before spawning 
-    public float obstacleSpawnTime = 0.5f; //Spawning delay intervals
+    public float obstacleSpawnTime = 0.2f; //Spawning delay intervals
     private float powerupSpawnTime = 5f;
+    private bool isPlaying = true;
 
     [SerializeField] private GameObject obstacleHitParticalPrefab; //Hit Particals
     [SerializeField] private GameObject explosionParticalPrefab; //Explosion Particals
@@ -36,6 +37,7 @@ public class SpawnManager : MonoBehaviour
 
     void Start()
     {
+        GameManager.Instance.OnGameStateChanged.AddListener(HandleGameStateChanged); //Add a Listener to the event
 
         playerControllerScript = GameObject.Find("Player").GetComponent<PlayerController>();
         listToSpawnPrefab = spawnListPrefab.GetComponent<LevelList>().spawnList[GameManager.Instance.levelSelectedNumber];
@@ -43,7 +45,6 @@ public class SpawnManager : MonoBehaviour
         EnemiesToSpawn = listToSpawnPrefab.GetComponent<SpawnList>().enemies;
         BossesToSpawn = listToSpawnPrefab.GetComponent<SpawnList>().bosses;
 
-        //SpawnPlayer(); // Spawn Player
         //Pool the needed objects
         PoolObstacles();
         PoolObsticalHitPartical();
@@ -51,24 +52,25 @@ public class SpawnManager : MonoBehaviour
         //Spawning obstacles with intervals
         InvokeRepeating("SpawnRandomObstacle", startDelay, obstacleSpawnTime);
     }
-
-    private void SpawnPlayer()
+    private void HandleGameStateChanged(GameManager.GameState currentState, GameManager.GameState previousState) //When the state changes in the GameManager
     {
-        GameObject Player = Instantiate(playerPrefab);
-        playerControllerScript = Player.GetComponent<PlayerController>();
-
-        Vector3 characterTransform = new Vector3(0, 0, 0);
-        Quaternion characterRotation = Quaternion.Euler(0, 90, 0);
-        characterSelected = CharacterListPrefab.GetComponent<CharacterList>().characterList[GameManager.Instance.characterSelectedNumber];
-        characterSelected = Instantiate(characterSelected, characterTransform, characterRotation);
-        characterSelected.transform.SetParent(Player.transform);
+        if (currentState == GameManager.GameState.DEAD)
+        {
+            DisableAll();
+            isPlaying = false;
+        }
+        if (currentState == GameManager.GameState.RUNNING && previousState == GameManager.GameState.DEAD)
+        {
+            isPlaying = true;
+        }
     }
+
 
     #region Hit Partical
 
     void PoolObsticalHitPartical() //Create and disable particals used to indicate on hit
     {
-        for(int i=0; i<particalPoolDepth; i++)
+        for (int i = 0; i < particalPoolDepth; i++)
         {
             GameObject pooledParticle = Instantiate(obstacleHitParticalPrefab);
             pooledParticle.AddComponent<Obstacles>();
@@ -79,7 +81,7 @@ public class SpawnManager : MonoBehaviour
 
     public GameObject GetAvailableObstacleHitPartical() //Gets available hit particals
     {
-        for(int i = 0; i < obstacleHitParticalPool.Count; i++)
+        for (int i = 0; i < obstacleHitParticalPool.Count; i++)
         {
             if (obstacleHitParticalPool[i].activeInHierarchy == false)
                 return obstacleHitParticalPool[i];
@@ -100,13 +102,13 @@ public class SpawnManager : MonoBehaviour
     #region Obstacles
     void PoolObstacles() //Create and disable obstacles
     {
-        for(int a = 0; a < poolDuplicates; a++) //Create more times to have duplicates in game
+        for (int a = 0; a < poolDuplicates; a++) //Create more times to have duplicates in game
         {
             for (int i = 0; i < obstaclesToSpawn.Count; i++)
             {
                 GameObject pooledObstacle = Instantiate(obstaclesToSpawn[i]);
                 pooledObstacle.SetActive(false);
-                pooledObstacle.AddComponent<Obstacles>();                
+                pooledObstacle.AddComponent<Obstacles>();
                 obstaclesPool.Add(pooledObstacle);
             }
         }
@@ -115,7 +117,8 @@ public class SpawnManager : MonoBehaviour
 
     private GameObject GetAvailableObstacle() //Get an available obstacle
     {
-        for (int i = 0; i < 5; i++) { //Try to random a few times
+        for (int i = 0; i < 5; i++)
+        { //Try to random a few times
             int randomIndex = Random.Range(0, obstaclesPool.Count);
             if (obstaclesPool[randomIndex].activeInHierarchy == false)
             {
@@ -127,16 +130,19 @@ public class SpawnManager : MonoBehaviour
 
     private void SpawnRandomObstacle() //Will set an random obstacle active and set it to a new position
     {
-        int randomPathway = Random.Range(-1, 2);
-        GameObject obstacleToSpawn = GetAvailableObstacle();   
-
-        if (obstacleToSpawn != null)
+        if (isPlaying)
         {
-            float yPos = obstacleToSpawn.transform.position.y;
-            Vector3 spawnPos = new Vector3(xSpawnPos, yPos, randomPathway * playerControllerScript.VerticalStep);
+            int randomPathway = Random.Range(-1, 2);
+            GameObject obstacleToSpawn = GetAvailableObstacle();
 
-            obstacleToSpawn.SetActive(true);
-            obstacleToSpawn.transform.position = spawnPos;
+            if (obstacleToSpawn != null)
+            {
+                float yPos = obstacleToSpawn.transform.position.y;
+                Vector3 spawnPos = new Vector3(xSpawnPos, yPos, randomPathway * playerControllerScript.VerticalStep);
+
+                obstacleToSpawn.SetActive(true);
+                obstacleToSpawn.transform.position = spawnPos;
+            }
         }
     }
     #endregion
@@ -163,6 +169,30 @@ public class SpawnManager : MonoBehaviour
         for (int i = 0; i < explosionParticalPool.Count; i++)
         {
             Destroy(explosionParticalPool[i]);
+        }
+    }
+
+    void DisableAll()
+    {
+        for (int i = 0; i < obstacleHitParticalPool.Count; i++)
+        {
+            obstacleHitParticalPool[i].SetActive(false);
+        }
+        for (int i = 0; i < obstaclesPool.Count; i++)
+        {
+            obstaclesPool[i].SetActive(false);
+        }
+        for (int i = 0; i < EnemiesPool.Count; i++)
+        {
+            EnemiesPool[i].SetActive(false);
+        }
+        for (int i = 0; i < BossesPool.Count; i++)
+        {
+            BossesPool[i].SetActive(false);
+        }
+        for (int i = 0; i < explosionParticalPool.Count; i++)
+        {
+            explosionParticalPool[i].SetActive(false);
         }
     }
 

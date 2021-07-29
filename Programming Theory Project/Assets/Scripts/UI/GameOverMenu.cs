@@ -1,18 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameOverMenu : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] private Button restartButton;
+    [SerializeField] private Button exitButton;
+
     void Start()
     {
-        
+        restartButton.onClick.AddListener(RestartGame);
+        exitButton.onClick.AddListener(ExitToMain);
     }
 
-    // Update is called once per frame
-    void Update()
+    void RestartGame()
     {
-        
+        GameManager.Instance.RestartGame();
+    }
+
+    void ExitToMain()
+    {
+        GameManager.Instance.ExitToMain();
     }
 }

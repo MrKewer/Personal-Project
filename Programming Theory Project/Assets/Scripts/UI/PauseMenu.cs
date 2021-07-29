@@ -8,7 +8,7 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private Button resumeButton;
     [SerializeField] private Button optionButton;
     [SerializeField] private Button exitButton;
-    // Start is called before the first frame update
+
     void Start()
     {
         resumeButton.onClick.AddListener(ResumeGame);

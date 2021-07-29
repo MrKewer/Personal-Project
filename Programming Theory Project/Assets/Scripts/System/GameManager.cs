@@ -65,11 +65,11 @@ public class GameManager : Singleton<GameManager>
                 break;
 
             case GameState.ENDGAME:
-                Time.timeScale = 1.0f;
+                Time.timeScale = 0.5f;
                 break;
 
             case GameState.DEAD:
-                Time.timeScale = 1.0f;
+                Time.timeScale = 0.5f;
                 break;
 
             default:
