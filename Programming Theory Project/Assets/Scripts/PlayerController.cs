@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour, IDamageable<float>
     [SerializeField] private bool moveCenterFR = false;
     [SerializeField] private bool moveRight = false;
 
+    public bool invulnerable = false;
     public float maxHealth = 100f;
     public float health = 100f;
     public int score = 0;
@@ -34,7 +35,8 @@ public class PlayerController : MonoBehaviour, IDamageable<float>
 
     public float VerticalStep
     {
-        get { return verticalStep; } private set { }
+        get { return verticalStep; }
+        private set { }
     }
     // Start is called before the first frame update
     void Start()
@@ -58,7 +60,7 @@ public class PlayerController : MonoBehaviour, IDamageable<float>
 
     private void HandleGameStateChanged(GameManager.GameState currentState, GameManager.GameState previousState) //When the state changes in the GameManager
     {
-        if(currentState == GameManager.GameState.DEAD)
+        if (currentState == GameManager.GameState.DEAD)
         {
             resetAll();
         }
@@ -220,7 +222,7 @@ public class PlayerController : MonoBehaviour, IDamageable<float>
             particalEffect.transform.position = collision.gameObject.transform.parent.gameObject.transform.position;
         }
     }
-    
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Powerup"))
@@ -242,15 +244,18 @@ public class PlayerController : MonoBehaviour, IDamageable<float>
 
     void IDamageable<float>.Damage(float damageTaken)
     {
-        health -= damageTaken;
-        if (DamageDealt != null)
+        if (invulnerable == false)
         {
-            DamageDealt(damageTaken);
-        }
-        if(health<= 0)
-        {
-            GameManager.Instance.GameOver();
-            Death();
+            health -= damageTaken;
+            if (DamageDealt != null)
+            {
+                DamageDealt(damageTaken);
+            }
+            if (health <= 0)
+            {
+                GameManager.Instance.GameOver();
+                Death();
+            }
         }
     }
 }

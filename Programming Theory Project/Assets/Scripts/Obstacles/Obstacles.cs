@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Obstacles : MonoBehaviour
 {
-    [SerializeField] BoxCollider ObstacleHitCollider;
     private float xDestroy = -35f; //The x position for when the object will be disabled
+    [SerializeField] private float damageAmount = 10f;
     void Update()
     {
         transform.Translate(Vector3.left * GameManager.Instance.gameSpeed * Time.deltaTime);//Move the object on the x position, times the speed
@@ -13,6 +13,18 @@ public class Obstacles : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Enemy") {
+        IDamageable<float> hit = (IDamageable<float>)collision.gameObject.GetComponent(typeof(IDamageable<float>));
+        if (hit != null)
+        {
+            hit.Damage(damageAmount);
+            gameObject.SetActive(false);
+        }
+    }
     }
 
 }
