@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3661971110059508768}
   - component: {fileID: 3661971110059508775}
   - component: {fileID: -8529754531989282449}
+  - component: {fileID: 486370296435667152}
   m_Layer: 0
   m_Name: ObstacleHitCollider
   m_TagString: Obstacle
@@ -43,8 +44,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.11150113, y: 1.3769304, z: 1.3747356}
-  m_Center: {x: 0, y: -0.35183936, z: 0.02112338}
+  m_Size: {x: 0.11150113, y: 1.3769304, z: 1.1416441}
+  m_Center: {x: 0, y: -0.35183936, z: -0.027136028}
 --- !u!54 &-8529754531989282449
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -61,3 +62,16 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 124
   m_CollisionDetection: 0
+--- !u!114 &486370296435667152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3661971110059508774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d9d1d61cc1cca44d9cf7467427d06f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageAmount: 10

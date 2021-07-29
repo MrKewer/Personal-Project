@@ -2,9 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-public class PlayerController : MonoBehaviour
+
+public delegate void DamageDealtHandler(float amount);
+public class PlayerController : MonoBehaviour, IDamageable<float>
 {
-    public event Action<float> DamageTaken;
+    //public event Action<float> DamageTaken;
+
+    public event DamageDealtHandler DamageDealt;
     private GameObject characterSelected;
     [SerializeField] private GameObject CharacterListPrefab;
     private Animator runAnimation;
@@ -21,8 +25,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool moveCenterFR = false;
     [SerializeField] private bool moveRight = false;
 
-    [SerializeField] private float fullHealth = 100f;
-    [SerializeField] private float health = 100f;
+    public float maxHealth = 100f;
+    public float health = 100f;
+    public int score = 0;
     private Rigidbody playerRb;
     private Vector3 startPos;
     [SerializeField] private GameObject Explode;
@@ -36,17 +41,18 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
         Vector3 characterTransform = new Vector3(0, 0, 0);
         Quaternion characterRotation = Quaternion.Euler(0, 90, 0);
         characterSelected = CharacterListPrefab.GetComponent<CharacterList>().characterList[GameManager.Instance.characterSelectedNumber];
-        characterSelected = Instantiate(characterSelected,characterTransform, characterRotation);
+        characterSelected = Instantiate(characterSelected, characterTransform, characterRotation);
         characterSelected.transform.SetParent(gameObject.transform);
         //character = characterSelected;
         playerRb = GetComponent<Rigidbody>();
         Physics.gravity *= gravityModifier;
         startPos = transform.position;
 
+        //runAnimation = GetComponentInChildren<Animator>();
         runAnimation = characterSelected.GetComponent<Animator>();
     }
 
@@ -74,7 +80,7 @@ public class PlayerController : MonoBehaviour
 
         // move player forward and backwards
         transform.Translate(Vector3.right * Time.deltaTime * horizontalInput * speed);
-        runAnimation.SetFloat("Speed_f", GameManager.Instance.gameSpeed/10);
+        runAnimation.SetFloat("Speed_f", GameManager.Instance.gameSpeed / 10);
         // move player from center to left
         #region Move Left
         // when the player is in position of the center
@@ -187,18 +193,9 @@ public class PlayerController : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("Obstacle"))
         {
-            collision.gameObject.transform.parent.gameObject.SetActive(false);
-
             GameObject particalEffect = spawnManager.GetAvailableObstacleHitPartical();
             particalEffect.SetActive(true);
             particalEffect.transform.position = collision.gameObject.transform.parent.gameObject.transform.position;
-
-            health -= 40;
-            //healthBar.transform.localScale = new Vector3(healthBarSize.x * (health / fullHealth), healthBarSize.y, healthBarSize.z);
-            if (health <= 0)
-            {
-                Death();
-            }
         }
     }
     
@@ -210,7 +207,6 @@ public class PlayerController : MonoBehaviour
             Destroy(other.gameObject);
         }
     }
-
     private void Death()
     {
         Instantiate(Explode, gameObject.transform.position, Explode.transform.rotation);
@@ -220,5 +216,14 @@ public class PlayerController : MonoBehaviour
     private void OnDestroy()
     {
         Physics.gravity /= gravityModifier;
+    }
+
+    void IDamageable<float>.Damage(float damageTaken)
+    {
+        health -= damageTaken;
+        if (DamageDealt != null)
+        {
+            DamageDealt(damageTaken);
+        }
     }
 }

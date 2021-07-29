@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
+    [SerializeField] private GameObject playerPrefab;
     private PlayerController playerControllerScript; //Gets the player Controller Script
+    private GameObject characterSelected;
+    [SerializeField] private GameObject CharacterListPrefab;
+
     [SerializeField] private GameObject spawnListPrefab; //Gets the list of all obstacles, enemies and bosses
 
     private GameObject listToSpawnPrefab; //Get the lists of all to spawn based on the selected level (gets from spawnListPrefab's spawnList)
@@ -32,12 +36,14 @@ public class SpawnManager : MonoBehaviour
 
     void Start()
     {
+
         playerControllerScript = GameObject.Find("Player").GetComponent<PlayerController>();
         listToSpawnPrefab = spawnListPrefab.GetComponent<LevelList>().spawnList[GameManager.Instance.levelSelectedNumber];
         obstaclesToSpawn = listToSpawnPrefab.GetComponent<SpawnList>().obstacles;
         EnemiesToSpawn = listToSpawnPrefab.GetComponent<SpawnList>().enemies;
         BossesToSpawn = listToSpawnPrefab.GetComponent<SpawnList>().bosses;
-        
+
+        //SpawnPlayer(); // Spawn Player
         //Pool the needed objects
         PoolObstacles();
         PoolObsticalHitPartical();
@@ -45,7 +51,20 @@ public class SpawnManager : MonoBehaviour
         //Spawning obstacles with intervals
         InvokeRepeating("SpawnRandomObstacle", startDelay, obstacleSpawnTime);
     }
-    #region Obstacles
+
+    private void SpawnPlayer()
+    {
+        GameObject Player = Instantiate(playerPrefab);
+        playerControllerScript = Player.GetComponent<PlayerController>();
+
+        Vector3 characterTransform = new Vector3(0, 0, 0);
+        Quaternion characterRotation = Quaternion.Euler(0, 90, 0);
+        characterSelected = CharacterListPrefab.GetComponent<CharacterList>().characterList[GameManager.Instance.characterSelectedNumber];
+        characterSelected = Instantiate(characterSelected, characterTransform, characterRotation);
+        characterSelected.transform.SetParent(Player.transform);
+    }
+
+    #region Hit Partical
 
     void PoolObsticalHitPartical() //Create and disable particals used to indicate on hit
     {
@@ -76,7 +95,9 @@ public class SpawnManager : MonoBehaviour
         else
             return null;
     }
+    #endregion
 
+    #region Obstacles
     void PoolObstacles() //Create and disable obstacles
     {
         for(int a = 0; a < poolDuplicates; a++) //Create more times to have duplicates in game
@@ -119,6 +140,8 @@ public class SpawnManager : MonoBehaviour
         }
     }
     #endregion
+
+
     private void OnDestroy() //Clear all created objects from game
     {
         for (int i = 0; i < obstacleHitParticalPool.Count; i++)

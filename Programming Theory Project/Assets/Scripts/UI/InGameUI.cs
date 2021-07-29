@@ -6,6 +6,8 @@ using TMPro;
 
 public class InGameUI : MonoBehaviour
 {
+    //public event DamageDealtHandler UpdateHealth;
+    private PlayerController playerController;
     [SerializeField] private TextMeshProUGUI playerNameText; //The text to display player name
     [SerializeField] private Slider playerHealthBar; //The health bar of the player
     [SerializeField] private TextMeshProUGUI scoreText; //The text of the displayed score
@@ -19,14 +21,21 @@ public class InGameUI : MonoBehaviour
     private void OnEnable()
     {
         //Set all equal to the player's input in the MainMenu
+        playerController = GameObject.Find("Player").GetComponent<PlayerController>();
         playerNameText.text = GameManager.Instance.playerName;
-        playerHealthBar.maxValue = 100;
-        playerHealthBar.value = 100;
-        scoreText.text = "Score: 0";
+        playerHealthBar.maxValue = playerController.maxHealth;
+        playerHealthBar.value = playerController.health;
+        scoreText.text = "Score: " + playerController.score.ToString();
     }
+    
     void Start()
     {
-        
+        playerController.DamageDealt += PlayerController_DamageDealt;
+    }
+
+    private void PlayerController_DamageDealt(float amount)
+    {
+        playerHealthBar.value = playerController.health;
     }
 
     // Update is called once per frame

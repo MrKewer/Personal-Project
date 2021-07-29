@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class Obstacles : MonoBehaviour
 {
+    [SerializeField] BoxCollider ObstacleHitCollider;
     private float xDestroy = -35f; //The x position for when the object will be disabled
-
-    // Update is called once per frame
     void Update()
     {
         transform.Translate(Vector3.left * GameManager.Instance.gameSpeed * Time.deltaTime);//Move the object on the x position, times the speed
@@ -15,5 +14,5 @@ public class Obstacles : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
-    
+
 }

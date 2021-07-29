@@ -45,7 +45,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnListPrefab: {fileID: 0}
   obstacleSpawnTime: 1
-  boxColliderPrefab: {fileID: 3661971110059508774, guid: a51074686b82bd043834f27cc01c9963, type: 3}
   obstacleHitParticalPrefab: {fileID: 180128, guid: 6586ff0f14125534cae2f5d8f04b7871, type: 3}
   explosionParticalPrefab: {fileID: 191186, guid: 079954accd64b32419ec069129c81273, type: 3}
   poolDuplicates: 3

@@ -1,4 +1,4 @@
-public class IDamageable
+public interface IDamageable<T>
 {
-    void Damage(float damageTaken) {}
+    void Damage(T damageTaken);
 }

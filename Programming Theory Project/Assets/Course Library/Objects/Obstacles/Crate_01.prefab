@@ -120,6 +120,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 456524}
     m_Modifications:
+    - target: {fileID: 486370296435667152, guid: a51074686b82bd043834f27cc01c9963, type: 3}
+      propertyPath: damageAmount
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 3661971110059508768, guid: a51074686b82bd043834f27cc01c9963, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -167,6 +171,18 @@ PrefabInstance:
     - target: {fileID: 3661971110059508774, guid: a51074686b82bd043834f27cc01c9963, type: 3}
       propertyPath: m_Name
       value: ObstacleHitCollider
+      objectReference: {fileID: 0}
+    - target: {fileID: 3661971110059508775, guid: a51074686b82bd043834f27cc01c9963, type: 3}
+      propertyPath: m_Size.y
+      value: 1.0916824
+      objectReference: {fileID: 0}
+    - target: {fileID: 3661971110059508775, guid: a51074686b82bd043834f27cc01c9963, type: 3}
+      propertyPath: m_Center.y
+      value: -0.49446332
+      objectReference: {fileID: 0}
+    - target: {fileID: 3661971110059508775, guid: a51074686b82bd043834f27cc01c9963, type: 3}
+      propertyPath: m_Center.z
+      value: 0.02112341
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a51074686b82bd043834f27cc01c9963, type: 3}
