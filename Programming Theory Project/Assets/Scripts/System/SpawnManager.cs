@@ -26,11 +26,17 @@ public class SpawnManager : MonoBehaviour
     private float powerupSpawnTime = 5f;
     private bool isPlaying = true;
 
-    [SerializeField] private GameObject obstacleHitParticalPrefab; //Hit Particals
+    [SerializeField] private GameObject yellowSmallParticalPrefab; //Hit Particals
+    private List<GameObject> yellowSmallParticalPool = new List<GameObject>(); // The pool that is created that is used to store the items
+
+    [SerializeField] private GameObject purpleSmallParticalPrefab; //Hit Particals
+    private List<GameObject> purpleSmallParticalPool = new List<GameObject>(); // The pool that is created that is used to store the items
+
+
     [SerializeField] private GameObject explosionParticalPrefab; //Explosion Particals
     private int particalPoolDepth = 10; // The amount that will be spawned
     private bool canGrow = true; //If the need for more particals it will create more
-    private List<GameObject> obstacleHitParticalPool = new List<GameObject>(); // The pool that is created that is used to store the items
+
     private List<GameObject> explosionParticalPool = new List<GameObject>();
 
     [SerializeField] private int poolDuplicates = 3;
@@ -47,8 +53,8 @@ public class SpawnManager : MonoBehaviour
 
         //Pool the needed objects
         PoolObstacles();
-        PoolObsticalHitPartical();
-
+        PoolYellowSmallPartical();
+        PoolPurpleSmallPartical();
         //Spawning obstacles with intervals
         InvokeRepeating("SpawnRandomObstacle", startDelay, obstacleSpawnTime);
     }
@@ -67,33 +73,65 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
+    #region Yellow Partical
 
-    #region Hit Partical
-
-    void PoolObsticalHitPartical() //Create and disable particals used to indicate on hit
+    void PoolYellowSmallPartical() //Create and disable particals used to indicate on hit
     {
         for (int i = 0; i < particalPoolDepth; i++)
         {
-            GameObject pooledParticle = Instantiate(obstacleHitParticalPrefab);
+            GameObject pooledParticle = Instantiate(yellowSmallParticalPrefab);
             pooledParticle.AddComponent<Obstacles>();
             pooledParticle.SetActive(false);
-            obstacleHitParticalPool.Add(pooledParticle);
+            yellowSmallParticalPool.Add(pooledParticle);
         }
     }
 
-    public GameObject GetAvailableObstacleHitPartical() //Gets available hit particals
+    public GameObject GetAvailableYellowSmallPartical() //Gets available hit particals
     {
-        for (int i = 0; i < obstacleHitParticalPool.Count; i++)
+        for (int i = 0; i < yellowSmallParticalPool.Count; i++)
         {
-            if (obstacleHitParticalPool[i].activeInHierarchy == false)
-                return obstacleHitParticalPool[i];
+            if (yellowSmallParticalPool[i].activeInHierarchy == false)
+                return yellowSmallParticalPool[i];
         }
         if (canGrow == true) //If there arent enough, it will create more
         {
-            GameObject pooledParticle = Instantiate(obstacleHitParticalPrefab);
+            GameObject pooledParticle = Instantiate(yellowSmallParticalPrefab);
             pooledParticle.AddComponent<Obstacles>();
             pooledParticle.SetActive(false);
-            obstacleHitParticalPool.Add(pooledParticle);
+            yellowSmallParticalPool.Add(pooledParticle);
+            return pooledParticle;
+        }
+        else
+            return null;
+    }
+    #endregion
+
+    #region Purple Partical
+
+    void PoolPurpleSmallPartical() //Create and disable particals used to indicate on hit
+    {
+        for (int i = 0; i < particalPoolDepth; i++)
+        {
+            GameObject pooledParticle = Instantiate(purpleSmallParticalPrefab);
+            pooledParticle.AddComponent<Obstacles>();
+            pooledParticle.SetActive(false);
+            purpleSmallParticalPool.Add(pooledParticle);
+        }
+    }
+
+    public GameObject GetAvailablePurpleSmallPartical() //Gets available hit particals
+    {
+        for (int i = 0; i < purpleSmallParticalPool.Count; i++)
+        {
+            if (purpleSmallParticalPool[i].activeInHierarchy == false)
+                return purpleSmallParticalPool[i];
+        }
+        if (canGrow == true) //If there arent enough, it will create more
+        {
+            GameObject pooledParticle = Instantiate(purpleSmallParticalPrefab);
+            pooledParticle.AddComponent<Obstacles>();
+            pooledParticle.SetActive(false);
+            purpleSmallParticalPool.Add(pooledParticle);
             return pooledParticle;
         }
         else
@@ -152,9 +190,13 @@ public class SpawnManager : MonoBehaviour
 
     private void OnDestroy() //Clear all created objects from game
     {
-        for (int i = 0; i < obstacleHitParticalPool.Count; i++)
+        for (int i = 0; i < yellowSmallParticalPool.Count; i++)
         {
-            Destroy(obstacleHitParticalPool[i]);
+            Destroy(yellowSmallParticalPool[i]);
+        }
+        for (int i = 0; i < purpleSmallParticalPool.Count; i++)
+        {
+            Destroy(purpleSmallParticalPool[i]);
         }
         for (int i = 0; i < obstaclesPool.Count; i++)
         {
@@ -183,9 +225,13 @@ public class SpawnManager : MonoBehaviour
     }
     void DisableAllParticals()
     {
-        for (int i = 0; i < obstacleHitParticalPool.Count; i++)
+        for (int i = 0; i < yellowSmallParticalPool.Count; i++)
         {
-            obstacleHitParticalPool[i].SetActive(false);
+            yellowSmallParticalPool[i].SetActive(false);
+        }
+        for (int i = 0; i < purpleSmallParticalPool.Count; i++)
+        {
+            purpleSmallParticalPool[i].SetActive(false);
         }
         for (int i = 0; i < explosionParticalPool.Count; i++)
         {

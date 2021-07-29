@@ -7,10 +7,12 @@ public class ObstacleHitCollider : MonoBehaviour
     [SerializeField] private float damageAmount = 10f;
     private void OnCollisionEnter(Collision collision)
     {
-        IDamageable<float> hit = (IDamageable<float>)collision.gameObject.GetComponent(typeof(IDamageable<float>));
+        ContactPoint contact = collision.contacts[0];
+        Vector3 pos = contact.point;
+        IDamageable<float, string, Vector3> hit = (IDamageable<float, string, Vector3>)collision.gameObject.GetComponent(typeof(IDamageable<float, string, Vector3>));
         if (hit != null)
         {
-            hit.Damage(damageAmount);
+            hit.Damage(damageAmount, "Collision", pos);
             gameObject.transform.parent.gameObject.SetActive(false);
         }
     }

@@ -17,11 +17,13 @@ public class Obstacles : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Enemy") {
-        IDamageable<float> hit = (IDamageable<float>)collision.gameObject.GetComponent(typeof(IDamageable<float>));
+        ContactPoint contact = collision.contacts[0];
+        Vector3 pos = contact.point;
+        if (collision.gameObject.CompareTag("Enemy")) {
+        IDamageable<float, string, Vector3> hit = (IDamageable<float, string, Vector3>)collision.gameObject.GetComponent(typeof(IDamageable<float, string, Vector3>));
         if (hit != null)
         {
-            hit.Damage(damageAmount);
+            hit.Damage(damageAmount,"Collision", pos);
             gameObject.SetActive(false);
         }
     }

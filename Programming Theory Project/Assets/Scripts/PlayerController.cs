@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 public delegate void DamageDealtHandler(float amount);
-public class PlayerController : MonoBehaviour, IDamageable<float>
+public class PlayerController : MonoBehaviour, IDamageable<float, string, Vector3>
 {
     public event DamageDealtHandler DamageDealt;
     private GameObject characterSelected;
@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour, IDamageable<float>
     // Start is called before the first frame update
     void Start()
     {
-
+        
         GameManager.Instance.OnGameStateChanged.AddListener(HandleGameStateChanged); //Add a Listener to the event
 
         Vector3 characterTransform = new Vector3(0, 0, 0);
@@ -215,12 +215,6 @@ public class PlayerController : MonoBehaviour, IDamageable<float>
         {
             isOnGround = true;
         }
-        if (collision.gameObject.CompareTag("Obstacle"))
-        {
-            GameObject particalEffect = spawnManager.GetAvailableObstacleHitPartical();
-            particalEffect.SetActive(true);
-            particalEffect.transform.position = collision.gameObject.transform.parent.gameObject.transform.position;
-        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -242,7 +236,7 @@ public class PlayerController : MonoBehaviour, IDamageable<float>
         Physics.gravity /= gravityModifier;
     }
 
-    void IDamageable<float>.Damage(float damageTaken)
+    public void Damage(float damageTaken, string damageType, Vector3 damageLocation)
     {
         if (invulnerable == false)
         {
@@ -257,5 +251,12 @@ public class PlayerController : MonoBehaviour, IDamageable<float>
                 Death();
             }
         }
+        if(damageType == "Collision")
+        {
+            GameObject particalEffect = spawnManager.GetAvailableYellowSmallPartical();
+            particalEffect.SetActive(true);
+            particalEffect.transform.position = damageLocation;
+        }
+
     }
 }

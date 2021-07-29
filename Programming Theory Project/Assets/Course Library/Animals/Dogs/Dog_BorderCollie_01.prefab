@@ -1592,7 +1592,7 @@ GameObject:
   - component: {fileID: 295173135}
   m_Layer: 0
   m_Name: Dog_BorderCollie_01
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1712,8 +1712,10 @@ MonoBehaviour:
   maxHealth: 100
   health: 100
   speed: 10
-  forwardSpeed: 0
-  healthBar: {fileID: 2146675107549934363}
+  forwardSpeed: 3
+  backwardSpeed: -15
+  collisionDamage: 30
+  healthBar: {fileID: 4970735746038631065}
 --- !u!1 &125648
 GameObject:
   m_ObjectHideFlags: 0
@@ -6130,11 +6132,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 485318332437026396, guid: 0f2e492c5a3f212419e3a1bfb74064b8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.144
       objectReference: {fileID: 0}
     - target: {fileID: 485318332437026396, guid: 0f2e492c5a3f212419e3a1bfb74064b8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.25107777
+      value: 0.247
       objectReference: {fileID: 0}
     - target: {fileID: 485318332437026396, guid: 0f2e492c5a3f212419e3a1bfb74064b8, type: 3}
       propertyPath: m_LocalPosition.z
@@ -6172,15 +6174,31 @@ PrefabInstance:
       propertyPath: m_Name
       value: HealthBar
       objectReference: {fileID: 0}
+    - target: {fileID: 4916664464047290853, guid: 0f2e492c5a3f212419e3a1bfb74064b8, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 0b6e14022e8bc7448a33cd93007c0092, type: 3}
+    - target: {fileID: 4916664464047290853, guid: 0f2e492c5a3f212419e3a1bfb74064b8, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4916664464047290853, guid: 0f2e492c5a3f212419e3a1bfb74064b8, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4957605184907651971, guid: 0f2e492c5a3f212419e3a1bfb74064b8, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: cc9db974393f3b74faf0b4ce704b367e, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f2e492c5a3f212419e3a1bfb74064b8, type: 3}
---- !u!1 &2146675107549934363 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4664607209728445806, guid: 0f2e492c5a3f212419e3a1bfb74064b8, type: 3}
-  m_PrefabInstance: {fileID: 6734717799290699381}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6614297308884117545 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 485318332437026396, guid: 0f2e492c5a3f212419e3a1bfb74064b8, type: 3}
+  m_PrefabInstance: {fileID: 6734717799290699381}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4970735746038631065 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1841162986228610284, guid: 0f2e492c5a3f212419e3a1bfb74064b8, type: 3}
   m_PrefabInstance: {fileID: 6734717799290699381}
   m_PrefabAsset: {fileID: 0}

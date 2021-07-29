@@ -140,7 +140,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 455240, guid: d3273ee892cdcf749a22b49daf393a91, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.523557
+      value: -10.85
       objectReference: {fileID: 0}
     - target: {fileID: 455240, guid: d3273ee892cdcf749a22b49daf393a91, type: 3}
       propertyPath: m_LocalPosition.y
@@ -379,12 +379,12 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 413474409, guid: 4abc3c69c42e4f941b77c1999ace2138, type: 3}
-      propertyPath: health
-      value: 100
-      objectReference: {fileID: 0}
+      propertyPath: Explode
+      value: 
+      objectReference: {fileID: 110790, guid: 0f75f6db4a318f54382e0c98b2226db8, type: 3}
     - target: {fileID: 413474409, guid: 4abc3c69c42e4f941b77c1999ace2138, type: 3}
       propertyPath: invulnerable
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 413474409, guid: 4abc3c69c42e4f941b77c1999ace2138, type: 3}
       propertyPath: spawnManager
@@ -550,7 +550,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 455240, guid: d3273ee892cdcf749a22b49daf393a91, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -10.4417
+      value: -13.85
       objectReference: {fileID: 0}
     - target: {fileID: 455240, guid: d3273ee892cdcf749a22b49daf393a91, type: 3}
       propertyPath: m_LocalPosition.y
@@ -618,7 +618,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 455240, guid: d3273ee892cdcf749a22b49daf393a91, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.8443217
+      value: -14.2
       objectReference: {fileID: 0}
     - target: {fileID: 455240, guid: d3273ee892cdcf749a22b49daf393a91, type: 3}
       propertyPath: m_LocalPosition.y
@@ -779,17 +779,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dog_BorderCollie_01
       objectReference: {fileID: 0}
-    - target: {fileID: 125240, guid: d3273ee892cdcf749a22b49daf393a91, type: 3}
-      propertyPath: m_TagString
-      value: Enemy
-      objectReference: {fileID: 0}
     - target: {fileID: 455240, guid: d3273ee892cdcf749a22b49daf393a91, type: 3}
       propertyPath: m_RootOrder
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 455240, guid: d3273ee892cdcf749a22b49daf393a91, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.4199998
+      value: -9.4
       objectReference: {fileID: 0}
     - target: {fileID: 455240, guid: d3273ee892cdcf749a22b49daf393a91, type: 3}
       propertyPath: m_LocalPosition.y
@@ -827,9 +823,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 295173133, guid: d3273ee892cdcf749a22b49daf393a91, type: 3}
-      propertyPath: m_Constraints
-      value: 112
+    - target: {fileID: 295173135, guid: d3273ee892cdcf749a22b49daf393a91, type: 3}
+      propertyPath: forwardSpeed
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d3273ee892cdcf749a22b49daf393a91, type: 3}
@@ -927,6 +923,22 @@ PrefabInstance:
       propertyPath: obstacleSpawnTime
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7782296552925202882, guid: 951ebfd5b569221488a5f0974b815308, type: 3}
+      propertyPath: explosionParticalPrefab
+      value: 
+      objectReference: {fileID: 110790, guid: 0f75f6db4a318f54382e0c98b2226db8, type: 3}
+    - target: {fileID: 7782296552925202882, guid: 951ebfd5b569221488a5f0974b815308, type: 3}
+      propertyPath: obstacleHitParticalPrefab
+      value: 
+      objectReference: {fileID: 180128, guid: 6586ff0f14125534cae2f5d8f04b7871, type: 3}
+    - target: {fileID: 7782296552925202882, guid: 951ebfd5b569221488a5f0974b815308, type: 3}
+      propertyPath: purpleSmallParticalPrefab
+      value: 
+      objectReference: {fileID: 180128, guid: e2b09876c4cfaf041b31e5c1130e8f4c, type: 3}
+    - target: {fileID: 7782296552925202882, guid: 951ebfd5b569221488a5f0974b815308, type: 3}
+      propertyPath: yellowSmallParticalPrefab
+      value: 
+      objectReference: {fileID: 180128, guid: 6586ff0f14125534cae2f5d8f04b7871, type: 3}
     - target: {fileID: 7782296552925202883, guid: 951ebfd5b569221488a5f0974b815308, type: 3}
       propertyPath: m_Name
       value: SpawnManager

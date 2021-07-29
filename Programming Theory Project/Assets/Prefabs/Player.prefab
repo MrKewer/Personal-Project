@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 413474409}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -96,6 +96,7 @@ MonoBehaviour:
   moveCenterFL: 0
   moveCenterFR: 0
   moveRight: 0
+  invulnerable: 0
   maxHealth: 100
   health: 100
   score: 0
