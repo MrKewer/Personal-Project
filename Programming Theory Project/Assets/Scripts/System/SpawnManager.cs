@@ -13,14 +13,14 @@ public class SpawnManager : MonoBehaviour
 
     private GameObject listToSpawnPrefab; //Get the lists of all to spawn based on the selected level (gets from spawnListPrefab's spawnList)
     private List<GameObject> obstaclesToSpawn; //The list that is gotten from the listToSpawnPrefab
-    private List<GameObject> EnemiesToSpawn;
-    private List<GameObject> BossesToSpawn;
+    private List<GameObject> enemiesToSpawn;
+    private List<GameObject> bossesToSpawn;
 
     private List<GameObject> obstaclesPool = new List<GameObject>(); //The pool that is created that is used to store the items
-    private List<GameObject> EnemiesPool = new List<GameObject>();
-    private List<GameObject> BossesPool = new List<GameObject>();
+    private List<GameObject> enemiesPool = new List<GameObject>();
+    private List<GameObject> bossesPool = new List<GameObject>();
 
-    private float xSpawnPos = 30.0f; //The spawn position in the x direction
+    private float xObstacleSpawnPos = 30.0f; //The spawn position in the x direction
     private float startDelay = 2f; //Delay before spawning 
     public float obstacleSpawnTime = 0.2f; //Spawning delay intervals
     private float powerupSpawnTime = 5f;
@@ -78,30 +78,41 @@ public class SpawnManager : MonoBehaviour
         playerControllerScript = GameObject.Find("Player").GetComponent<PlayerController>();
         listToSpawnPrefab = spawnListPrefab.GetComponent<LevelList>().spawnList[GameManager.Instance.levelSelectedNumber];
         obstaclesToSpawn = listToSpawnPrefab.GetComponent<SpawnList>().obstacles;
-        EnemiesToSpawn = listToSpawnPrefab.GetComponent<SpawnList>().enemies;
-        BossesToSpawn = listToSpawnPrefab.GetComponent<SpawnList>().bosses;
+        enemiesToSpawn = listToSpawnPrefab.GetComponent<SpawnList>().enemies;
+        bossesToSpawn = listToSpawnPrefab.GetComponent<SpawnList>().bosses;
 
-        //Pool the needed objects
-        PoolObstacles();
+
+        PoolGameObject(obstaclesToSpawn, obstaclesPool, poolDuplicates);
+        PoolGameObject(enemiesToSpawn, enemiesPool, 1);
+
+
         //Pool Small particals
-        PoolGameObject(yellowSmallParticalPrefab, yellowSmallParticalPool);
-        PoolGameObject(purpleSmallParticalPrefab, purpleSmallParticalPool);
-        PoolGameObject(redSmallParticalPrefab, redSmallParticalPool);
-        PoolGameObject(blueSmallParticalPrefab, blueSmallParticalPool);
-        PoolGameObject(greenSmallParticalPrefab, greenSmallParticalPool);
+        PoolGameObject(yellowSmallParticalPrefab, yellowSmallParticalPool, PoolDepth);
+        PoolGameObject(purpleSmallParticalPrefab, purpleSmallParticalPool, PoolDepth);
+        PoolGameObject(redSmallParticalPrefab, redSmallParticalPool, PoolDepth);
+        PoolGameObject(blueSmallParticalPrefab, blueSmallParticalPool, PoolDepth);
+        PoolGameObject(greenSmallParticalPrefab, greenSmallParticalPool, PoolDepth);
 
         //Pool Large particals
-        PoolGameObject(yellowLargeParticalPrefab, yellowLargeParticalPool);
-        PoolGameObject(purpleLargeParticalPrefab, purpleLargeParticalPool);
-        PoolGameObject(redLargeParticalPrefab, redLargeParticalPool);
-        PoolGameObject(blueLargeParticalPrefab, blueLargeParticalPool);
-        PoolGameObject(greenLargeParticalPrefab, greenLargeParticalPool);
+        PoolGameObject(yellowLargeParticalPrefab, yellowLargeParticalPool, PoolDepth);
+        PoolGameObject(purpleLargeParticalPrefab, purpleLargeParticalPool, PoolDepth);
+        PoolGameObject(redLargeParticalPrefab, redLargeParticalPool, PoolDepth);
+        PoolGameObject(blueLargeParticalPrefab, blueLargeParticalPool, PoolDepth);
+        PoolGameObject(greenLargeParticalPrefab, greenLargeParticalPool, PoolDepth);
 
         //Spawning obstacles with intervals
-        InvokeRepeating("SpawnRandomObstacle", startDelay, obstacleSpawnTime);
+        InvokeRepeating("SpawnObstacle", startDelay, obstacleSpawnTime);
+        InvokeRepeating("SpawnEnemy", startDelay, 3);
+
     }
     private void HandleGameStateChanged(GameManager.GameState currentState, GameManager.GameState previousState) //When the state changes in the GameManager
     {
+        if (currentState == GameManager.GameState.BOSSFIGHT)
+        {
+            DisableAllEnemies();
+            CancelInvoke();
+            InvokeRepeating("SpawnObstacle", startDelay, obstacleSpawnTime);            
+        }
         if (currentState == GameManager.GameState.DEAD)
         {
             CancelInvoke();
@@ -112,15 +123,16 @@ public class SpawnManager : MonoBehaviour
         {
             isPlaying = true;
             InvokeRepeating("SpawnRandomObstacle", startDelay, obstacleSpawnTime);
+            InvokeRepeating("SpawnEnemy", startDelay, 3);
             DisableAllParticals();
             DisableAllEnemies();
         }
     }
 
     #region Pool Game Object
-    void PoolGameObject(GameObject prefab, List<GameObject> pool) //Create and disable particals used to indicate on hit
+    void PoolGameObject(GameObject prefab, List<GameObject> pool, int poolSize) //Create and disable particals used to indicate on hit
     {
-        for (int i = 0; i < PoolDepth; i++)
+        for (int i = 0; i < poolSize; i++)
         {
             GameObject pooledParticle = Instantiate(prefab);
             pooledParticle.AddComponent<Obstacles>();
@@ -136,6 +148,35 @@ public class SpawnManager : MonoBehaviour
         {
             if (pool[i].activeInHierarchy == false)
                 return pool[i];
+        }
+        return null;
+    }
+
+    //Method Overloading
+    void PoolGameObject(List<GameObject> prefab, List<GameObject> pool, int duplicates)
+    {
+        for (int a = 0; a < duplicates; a++) //Create more times to have duplicates in game
+        {
+            for (int i = 0; i < prefab.Count; i++)
+            {
+                GameObject pooledGameObject = Instantiate(prefab[i]);
+                pooledGameObject.SetActive(false);
+                //pooledObstacle.AddComponent<Obstacles>();
+                pool.Add(pooledGameObject);
+                pooledGameObject.transform.SetParent(gameObject.transform);
+            }
+        }
+
+    }
+    private GameObject GetAvailableRandomGameObject(List<GameObject> pool) //Get an available obstacle
+    {
+        for (int i = 0; i < 5; i++)
+        { //Try to random a few times
+            int randomIndex = Random.Range(0, pool.Count);
+            if (pool[randomIndex].activeInHierarchy == false)
+            {
+                return pool[randomIndex];
+            }
         }
         return null;
     }
@@ -234,49 +275,44 @@ public class SpawnManager : MonoBehaviour
     #endregion
 
     #region Obstacles
-    void PoolObstacles() //Create and disable obstacles
-    {
-        for (int a = 0; a < poolDuplicates; a++) //Create more times to have duplicates in game
-        {
-            for (int i = 0; i < obstaclesToSpawn.Count; i++)
-            {
-                GameObject pooledObstacle = Instantiate(obstaclesToSpawn[i]);
-                pooledObstacle.SetActive(false);
-                pooledObstacle.AddComponent<Obstacles>();
-                obstaclesPool.Add(pooledObstacle);
-                pooledObstacle.transform.SetParent(gameObject.transform);
-            }
-        }
 
-    }
-
-    private GameObject GetAvailableObstacle() //Get an available obstacle
-    {
-        for (int i = 0; i < 5; i++)
-        { //Try to random a few times
-            int randomIndex = Random.Range(0, obstaclesPool.Count);
-            if (obstaclesPool[randomIndex].activeInHierarchy == false)
-            {
-                return obstaclesPool[randomIndex];
-            }
-        }
-        return null;
-    }
-
-    private void SpawnRandomObstacle() //Will set an random obstacle active and set it to a new position
+    private void SpawnObstacle() //Will set an random obstacle active and set it to a new position
     {
         if (isPlaying)
         {
             int randomPathway = Random.Range(-1, 2);
-            GameObject obstacleToSpawn = GetAvailableObstacle();
+            GameObject obstacleToSpawn = GetAvailableRandomGameObject(obstaclesPool);
 
             if (obstacleToSpawn != null)
             {
                 float yPos = obstacleToSpawn.transform.position.y;
-                Vector3 spawnPos = new Vector3(xSpawnPos, yPos, randomPathway * playerControllerScript.VerticalStep);
+                Vector3 spawnPos = new Vector3(xObstacleSpawnPos, yPos, randomPathway * playerControllerScript.VerticalStep);
 
                 obstacleToSpawn.SetActive(true);
                 obstacleToSpawn.transform.position = spawnPos;
+            }
+        }
+    }
+    #endregion
+
+    #region Enemies
+
+    private void SpawnEnemy() //Will set an random obstacle active and set it to a new position
+    {
+        if (isPlaying)
+        {
+            int randomPathway = Random.Range(-1, 2);
+            GameObject enemyToSpawn = GetAvailableRandomGameObject(enemiesPool);
+
+            if (enemyToSpawn != null)
+            {
+                EnemyBasic enemyScript = enemyToSpawn.GetComponent<EnemyBasic>();
+                float xPos = Random.Range(enemyScript.spawnPos - enemyScript.spawnPosRange, enemyScript.spawnPos + enemyScript.spawnPosRange);
+                float yPos = enemyToSpawn.transform.position.y;
+                Vector3 spawnPos = new Vector3(xPos, yPos, randomPathway * playerControllerScript.VerticalStep);
+
+                enemyToSpawn.SetActive(true);
+                enemyToSpawn.transform.position = spawnPos;
             }
         }
     }
@@ -333,13 +369,13 @@ public class SpawnManager : MonoBehaviour
         {
             Destroy(obstaclesPool[i]);
         }
-        for (int i = 0; i < EnemiesPool.Count; i++)
+        for (int i = 0; i < enemiesPool.Count; i++)
         {
-            Destroy(EnemiesPool[i]);
+            Destroy(enemiesPool[i]);
         }
-        for (int i = 0; i < BossesPool.Count; i++)
+        for (int i = 0; i < bossesPool.Count; i++)
         {
-            Destroy(BossesPool[i]);
+            Destroy(bossesPool[i]);
         }
 
     }
@@ -403,13 +439,13 @@ public class SpawnManager : MonoBehaviour
     }
     void DisableAllEnemies()
     {
-        for (int i = 0; i < EnemiesPool.Count; i++)
+        for (int i = 0; i < enemiesPool.Count; i++)
         {
-            EnemiesPool[i].SetActive(false);
+            enemiesPool[i].SetActive(false);
         }
-        for (int i = 0; i < BossesPool.Count; i++)
+        for (int i = 0; i < bossesPool.Count; i++)
         {
-            BossesPool[i].SetActive(false);
+            bossesPool[i].SetActive(false);
         }
     }
 

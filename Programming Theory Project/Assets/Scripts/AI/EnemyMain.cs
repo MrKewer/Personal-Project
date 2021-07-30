@@ -1,36 +1,46 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
+//using System;
 
 //public delegate void DamageDealtHandler(float amount);
 public class EnemyMain : MonoBehaviour, IDamageable<float, string, Vector3>
 {
-    public float maxHealth = 100f;
-    public float health = 100f;
+    public float maxHealth;
+    public float health;
     public float speed = 10f;
-    public float forwardSpeed = 5f;
-    public float backwardSpeed = -10f;
+    public float forwardSpeed;
+    public float backwardSpeed;
     private float runSpeed = -10f;
-    public float collisionDamage = 30f;
+    public float collisionDamage;
     private GameObject player;
+    private PlayerController playerController;
     public GameObject healthBar;
-    Vector3 healthBarSize;
+    private Vector3 healthBarSize;
     private SpawnManager spawnManager;
-    private float spawnPos = -14f;
+    public float spawnPos = -14f;
+    public float spawnPosRange = 3f;
+    public float zRandom;
 
-    void Start()
+    private void Awake()
     {
-        runSpeed = forwardSpeed;
-        player = GameObject.Find("Player");
-        spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         healthBarSize = healthBar.transform.localScale;
+        player = GameObject.Find("Player");
+        playerController = player.GetComponent<PlayerController>();
+        spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
+    }
+    private void OnEnable()
+    {
+        health = maxHealth;
+        runSpeed = forwardSpeed;        
+        zRandom = UnityEngine.Random.Range(-playerController.VerticalStep / 20, playerController.VerticalStep / 20);
+        healthBar.transform.localScale = new Vector3(healthBarSize.x * (health / maxHealth), healthBarSize.y, healthBarSize.z);
     }
 
     void Update()
     {
         Vector3 FollowDirection = (player.transform.position - transform.position).normalized;
-        FollowDirection = new Vector3((FollowDirection.x * runSpeed) / 100, 0, FollowDirection.z);
+        FollowDirection = new Vector3((FollowDirection.x * runSpeed) / 100, 0, (FollowDirection.z + zRandom));
         transform.Translate(FollowDirection * speed * Time.deltaTime);
         if(gameObject.transform.position.x <= spawnPos)
         {            
@@ -56,6 +66,11 @@ public class EnemyMain : MonoBehaviour, IDamageable<float, string, Vector3>
     public void Death()
     {
         spawnManager.SpawnPartical("PurpleLarge", gameObject.transform.position);
+        GameManager.Instance.EnemiesDead += 1;
+        if (GameManager.Instance.EnemiesDead >= 2)
+        {
+            GameManager.Instance.BossFight();
+        }
         gameObject.SetActive(false);
     }
 
@@ -70,6 +85,7 @@ public class EnemyMain : MonoBehaviour, IDamageable<float, string, Vector3>
         if (damageType == "Collision")
         {
             spawnManager.SpawnPartical("PurpleSmall", damageLocation);
+            runSpeed = backwardSpeed;
         }
     }
 }

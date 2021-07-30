@@ -92,6 +92,7 @@ GameObject:
   - component: {fileID: 445980}
   - component: {fileID: 9178729818585806748}
   - component: {fileID: 2784036053943555452}
+  - component: {fileID: 8259949577674011608}
   m_Layer: 0
   m_Name: Prop_Barrier03
   m_TagString: Ground
@@ -144,6 +145,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 124
   m_CollisionDetection: 0
+--- !u!114 &8259949577674011608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 145980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02b5bc5cde99a2b45a0d85ab4b16925f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageAmount: 12
 --- !u!1001 &279463388979349981
 PrefabInstance:
   m_ObjectHideFlags: 0

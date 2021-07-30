@@ -23,7 +23,7 @@ public class UIManager : Singleton<UIManager>
         _pauseMenu.gameObject.SetActive(GameManager.Instance.CurrentGameState == GameManager.GameState.PAUSED);
         _mainMenu.gameObject.SetActive(GameManager.Instance.CurrentGameState == GameManager.GameState.MAINMENU);
         mainMenuCamera.gameObject.SetActive(GameManager.Instance.CurrentGameState == GameManager.GameState.MAINMENU);
-        _inGameUI.gameObject.SetActive(GameManager.Instance.CurrentGameState == GameManager.GameState.RUNNING);
+        _inGameUI.gameObject.SetActive(GameManager.Instance.CurrentGameState == GameManager.GameState.RUNNING || GameManager.Instance.CurrentGameState == GameManager.GameState.BOSSFIGHT);
         _endGameMenu.gameObject.SetActive(GameManager.Instance.CurrentGameState == GameManager.GameState.ENDGAME);
         _gameOverMenu.gameObject.SetActive(GameManager.Instance.CurrentGameState == GameManager.GameState.DEAD);
     }
@@ -32,7 +32,7 @@ public class UIManager : Singleton<UIManager>
         _pauseMenu.gameObject.SetActive(currentState == GameManager.GameState.PAUSED);
         _mainMenu.gameObject.SetActive(currentState == GameManager.GameState.MAINMENU);
         mainMenuCamera.gameObject.SetActive(currentState == GameManager.GameState.MAINMENU);
-        _inGameUI.gameObject.SetActive(currentState == GameManager.GameState.RUNNING);
+        _inGameUI.gameObject.SetActive(currentState == GameManager.GameState.RUNNING || currentState == GameManager.GameState.BOSSFIGHT);
         _endGameMenu.gameObject.SetActive(currentState == GameManager.GameState.ENDGAME);
         _gameOverMenu.gameObject.SetActive(currentState == GameManager.GameState.DEAD);
     }

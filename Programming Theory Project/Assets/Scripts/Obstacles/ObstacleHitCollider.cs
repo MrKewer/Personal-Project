@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObstacleHitCollider : MonoBehaviour
+public class ObstacleHitCollider : Obstacles
 {
-    [SerializeField] private float damageAmount = 10f;
-    private void OnCollisionEnter(Collision collision)
+    void Update()
+    {
+
+    }
+        private void OnCollisionEnter(Collision collision)
     {
         ContactPoint contact = collision.contacts[0];
         Vector3 pos = contact.point;

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2332604}
   - component: {fileID: 1152289471407478993}
   - component: {fileID: 3365923549249557534}
+  - component: {fileID: 4634589167157417061}
   m_Layer: 0
   m_Name: Prop_Spool_02
   m_TagString: Ground
@@ -113,6 +114,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 124
   m_CollisionDetection: 0
+--- !u!114 &4634589167157417061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 114304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02b5bc5cde99a2b45a0d85ab4b16925f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageAmount: 12
 --- !u!1001 &2520472005999394707
 PrefabInstance:
   m_ObjectHideFlags: 0

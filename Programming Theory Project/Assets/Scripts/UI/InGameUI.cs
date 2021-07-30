@@ -40,6 +40,10 @@ public class InGameUI : MonoBehaviour
     }
     private void HandleGameStateChanged(GameManager.GameState currentState, GameManager.GameState previousState) //When the state changes in the GameManager
     {
+        if (currentState == GameManager.GameState.BOSSFIGHT)
+        {
+            bossHealthBar.gameObject.SetActive(true);
+        }
         if (currentState == GameManager.GameState.DEAD)
         {
             CancelInvoke();

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Obstacles : MonoBehaviour
 {
     private float xDestroy = -35f; //The x position for when the object will be disabled
-    [SerializeField] private float damageAmount = 10f;
+    [SerializeField] protected float damageAmount = 10f;
     void Update()
     {
         transform.Translate(Vector3.left * GameManager.Instance.gameSpeed * Time.deltaTime);//Move the object on the x position, times the speed
