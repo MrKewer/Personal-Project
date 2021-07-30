@@ -104,12 +104,14 @@ public class SpawnManager : MonoBehaviour
     {
         if (currentState == GameManager.GameState.DEAD)
         {
+            CancelInvoke();
             DisableAllObstacles();
             isPlaying = false;
         }
         if (currentState == GameManager.GameState.RUNNING && previousState == GameManager.GameState.DEAD)
         {
             isPlaying = true;
+            InvokeRepeating("SpawnRandomObstacle", startDelay, obstacleSpawnTime);
             DisableAllParticals();
             DisableAllEnemies();
         }
