@@ -1714,7 +1714,7 @@ MonoBehaviour:
   speed: 10
   forwardSpeed: 3
   backwardSpeed: -15
-  collisionDamage: 30
+  collisionDamage: 15
   healthBar: {fileID: 4970735746038631065}
 --- !u!1 &125648
 GameObject:

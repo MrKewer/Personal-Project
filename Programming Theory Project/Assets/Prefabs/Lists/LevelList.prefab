@@ -53,6 +53,9 @@ MonoBehaviour:
   - {fileID: 134104, guid: 71782582b9d2cac4cba5251a3b767d13, type: 3}
   - {fileID: 114304, guid: 3daef342e8f3f9548b04424eac7d4d0d, type: 3}
   - {fileID: 3632747045727499139, guid: 5aef617cfc2a8c74a93fa3ab893ec3a7, type: 3}
+  - {fileID: 1891226220610369881, guid: cd0d10efcefec6b45ba0fa40a659dc74, type: 3}
+  - {fileID: 7839782203983241193, guid: 21218a1d0d7670945b4332fa0616113d, type: 3}
+  - {fileID: 3174363914807593747, guid: 55faeab27760eec43b58c9f792f205ff, type: 3}
   enemies: []
   bosses: []
 --- !u!1 &1252277190
@@ -103,6 +106,8 @@ MonoBehaviour:
   - {fileID: 181666, guid: ee7d0c4ddd804dd4e95f705d43c9135e, type: 3}
   - {fileID: 151096, guid: 367149bd17c4d4d4e8868ec6a5cf8d45, type: 3}
   - {fileID: 145980, guid: 84a102c1bf03d0a43bd4b342185c2811, type: 3}
+  - {fileID: 1891226220610369881, guid: cd0d10efcefec6b45ba0fa40a659dc74, type: 3}
+  - {fileID: 3174363914807593747, guid: 55faeab27760eec43b58c9f792f205ff, type: 3}
   enemies: []
   bosses: []
 --- !u!1 &1955289380
@@ -159,6 +164,8 @@ MonoBehaviour:
   - {fileID: 1732272334065596, guid: cdcb19fde9e8cba40b7bff849baf2c1b, type: 3}
   - {fileID: 3632747045727499139, guid: 5aef617cfc2a8c74a93fa3ab893ec3a7, type: 3}
   - {fileID: 151096, guid: 367149bd17c4d4d4e8868ec6a5cf8d45, type: 3}
+  - {fileID: 4133590028768158191, guid: 7ba2754b39d17bd4c86ba3d7c6f74d38, type: 3}
+  - {fileID: 3174363914807593747, guid: 55faeab27760eec43b58c9f792f205ff, type: 3}
   enemies: []
   bosses: []
 --- !u!1 &6599522259516073843

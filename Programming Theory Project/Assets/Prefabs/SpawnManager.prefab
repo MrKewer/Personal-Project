@@ -44,13 +44,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 328162daa77af32458b295ea9f1d3718, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 3671785523353117188, guid: 4abc3c69c42e4f941b77c1999ace2138, type: 3}
-  CharacterListPrefab: {fileID: 6679317179552467172}
   spawnListPrefab: {fileID: 6599522259516073843, guid: 1f5358da87480524d818a45a301333d0, type: 3}
   obstacleSpawnTime: 1
-  obstacleHitParticalPrefab: {fileID: 180128, guid: 6586ff0f14125534cae2f5d8f04b7871, type: 3}
-  explosionParticalPrefab: {fileID: 191186, guid: 079954accd64b32419ec069129c81273, type: 3}
   poolDuplicates: 3
+  yellowSmallParticalPrefab: {fileID: 180128, guid: 6586ff0f14125534cae2f5d8f04b7871, type: 3}
+  purpleSmallParticalPrefab: {fileID: 180128, guid: e2b09876c4cfaf041b31e5c1130e8f4c, type: 3}
+  redSmallParticalPrefab: {fileID: 180128, guid: 0973631397cd98f49a927f3b10f4ccac, type: 3}
+  blueSmallParticalPrefab: {fileID: 120410, guid: 6636b3078b0905e489f698a11b7a6b6b, type: 3}
+  greenSmallParticalPrefab: {fileID: 100748, guid: cd4d7020429cde74db076ffa72495419, type: 3}
+  yellowLargeParticalPrefab: {fileID: 110790, guid: 0f75f6db4a318f54382e0c98b2226db8, type: 3}
+  purpleLargeParticalPrefab: {fileID: 110790, guid: 178082d4cc2ec474996c7bb6fbc96b1a, type: 3}
+  redLargeParticalPrefab: {fileID: 110790, guid: 260f38159761dd1458dcfae508f52445, type: 3}
+  blueLargeParticalPrefab: {fileID: 168542, guid: 5702e2a6fea804b45b49b70d8feaf7ae, type: 3}
+  greenLargeParticalPrefab: {fileID: 175238, guid: 26d069e6f78e6f8478e4dc0152bd6939, type: 3}
 --- !u!1001 &7782296552928885815
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -108,11 +114,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c50712b1cb56194a9c33f2acb4860a4, type: 3}
---- !u!1 &6679317179552467172 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3508857084939678931, guid: 0c50712b1cb56194a9c33f2acb4860a4, type: 3}
-  m_PrefabInstance: {fileID: 7782296552928885815}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1967392803914048461 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8596756165560786938, guid: 0c50712b1cb56194a9c33f2acb4860a4, type: 3}

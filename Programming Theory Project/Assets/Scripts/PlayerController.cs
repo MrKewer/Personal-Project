@@ -221,13 +221,14 @@ public class PlayerController : MonoBehaviour, IDamageable<float, string, Vector
     {
         if (other.gameObject.CompareTag("Powerup"))
         {
-            Debug.Log("Powerup has been triggered");
-            Destroy(other.gameObject);
+            //Debug.Log("Powerup has been triggered");
+            //Destroy(other.gameObject);
         }
     }
     private void Death()
     {
-        Instantiate(Explode, gameObject.transform.position, Explode.transform.rotation);
+        spawnManager.SpawnPartical("YellowLarge", gameObject.transform.position);
+        //gameObject.SetActive()
         characterSelected.SetActive(false);
     }
 
@@ -253,9 +254,7 @@ public class PlayerController : MonoBehaviour, IDamageable<float, string, Vector
         }
         if(damageType == "Collision")
         {
-            GameObject particalEffect = spawnManager.GetAvailableYellowSmallPartical();
-            particalEffect.SetActive(true);
-            particalEffect.transform.position = damageLocation;
+            spawnManager.SpawnPartical("YellowSmall", damageLocation);
         }
 
     }

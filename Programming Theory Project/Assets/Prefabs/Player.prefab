@@ -69,8 +69,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.672763, y: 2.312088, z: 2.271574}
-  m_Center: {x: -0.00073462725, y: 1.1192718, z: 0.125866}
+  m_Size: {x: 1.212007, y: 3.0573277, z: 1.5097692}
+  m_Center: {x: -0.095142126, y: 1.4918916, z: 0.015756011}
 --- !u!114 &413474409
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96,9 +96,9 @@ MonoBehaviour:
   moveCenterFL: 0
   moveCenterFR: 0
   moveRight: 0
-  invulnerable: 0
+  invulnerable: 1
   maxHealth: 100
   health: 100
   score: 0
-  Explode: {fileID: 191186, guid: 079954accd64b32419ec069129c81273, type: 3}
+  Explode: {fileID: 110790, guid: 0f75f6db4a318f54382e0c98b2226db8, type: 3}
   spawnManager: {fileID: 0}

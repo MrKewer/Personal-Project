@@ -18,7 +18,7 @@ public class EnemyMain : MonoBehaviour, IDamageable<float, string, Vector3>
     Vector3 healthBarSize;
     private SpawnManager spawnManager;
     private float spawnPos = -14f;
-    // Start is called before the first frame update
+
     void Start()
     {
         runSpeed = forwardSpeed;
@@ -27,14 +27,13 @@ public class EnemyMain : MonoBehaviour, IDamageable<float, string, Vector3>
         healthBarSize = healthBar.transform.localScale;
     }
 
-    // Update is called once per frame
     void Update()
     {
         Vector3 FollowDirection = (player.transform.position - transform.position).normalized;
         FollowDirection = new Vector3((FollowDirection.x * runSpeed) / 100, 0, FollowDirection.z);
         transform.Translate(FollowDirection * speed * Time.deltaTime);
         if(gameObject.transform.position.x <= spawnPos)
-        {
+        {            
             runSpeed = forwardSpeed;
         }
     }
@@ -49,12 +48,14 @@ public class EnemyMain : MonoBehaviour, IDamageable<float, string, Vector3>
             if (hit != null)
             {
                 hit.Damage(collisionDamage, "Byte", pos);
-                runSpeed = backwardSpeed;
+                spawnManager.SpawnPartical("RedSmall", pos);
+                runSpeed = backwardSpeed;                
             }
         }
     }
     public void Death()
     {
+        spawnManager.SpawnPartical("PurpleLarge", gameObject.transform.position);
         gameObject.SetActive(false);
     }
 
@@ -68,9 +69,7 @@ public class EnemyMain : MonoBehaviour, IDamageable<float, string, Vector3>
         }
         if (damageType == "Collision")
         {
-            GameObject particalEffect = spawnManager.GetAvailablePurpleSmallPartical();
-            particalEffect.SetActive(true);
-            particalEffect.transform.position = damageLocation;
+            spawnManager.SpawnPartical("PurpleSmall", damageLocation);
         }
     }
 }
