@@ -5239,16 +5239,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68fd84819f414874ead43ddb9c416d22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 15
-  health: 40
+  AnimationSpeed: 2
+  maxHealth: 10
+  health: 10
   speed: 10
   forwardSpeed: 20
   backwardSpeed: -30
   collisionDamage: 3
-  healthBar: {fileID: 2964923246169180428}
   spawnPos: -14
   spawnPosRange: 3
   zRandom: 0
+  healthBar: {fileID: 2964923246169180428}
 --- !u!54 &6471914852027130538
 Rigidbody:
   m_ObjectHideFlags: 0

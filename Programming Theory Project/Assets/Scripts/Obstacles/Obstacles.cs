@@ -19,7 +19,7 @@ public class Obstacles : MonoBehaviour
     {
         ContactPoint contact = collision.contacts[0];
         Vector3 pos = contact.point;
-        if (collision.gameObject.CompareTag("Enemy")) {
+        if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Boss")) {
         IDamageable<float, string, Vector3> hit = (IDamageable<float, string, Vector3>)collision.gameObject.GetComponent(typeof(IDamageable<float, string, Vector3>));
         if (hit != null)
         {

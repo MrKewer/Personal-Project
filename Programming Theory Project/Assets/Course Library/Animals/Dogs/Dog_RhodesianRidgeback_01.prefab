@@ -335,16 +335,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68fd84819f414874ead43ddb9c416d22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  health: 100
+  AnimationSpeed: 1
+  maxHealth: 70
+  health: 70
   speed: 10
   forwardSpeed: 5
   backwardSpeed: -10
   collisionDamage: 30
-  healthBar: {fileID: 6654990000790878172}
   spawnPos: -14
   spawnPosRange: 3
   zRandom: 0
+  healthBar: {fileID: 6654990000790878172}
 --- !u!54 &4797661200319639984
 Rigidbody:
   m_ObjectHideFlags: 0

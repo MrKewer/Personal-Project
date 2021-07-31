@@ -122,6 +122,8 @@ MonoBehaviour:
   - {fileID: 187040, guid: 7d00371be302bed4680c2b3ece7d44b9, type: 3}
   - {fileID: 125240, guid: 7a81c2ec3eebca046ae28a95dc1c7ef2, type: 3}
   - {fileID: 187040, guid: 7d00371be302bed4680c2b3ece7d44b9, type: 3}
+  - {fileID: 187040, guid: 7d00371be302bed4680c2b3ece7d44b9, type: 3}
+  - {fileID: 187040, guid: 7d00371be302bed4680c2b3ece7d44b9, type: 3}
   bosses:
   - {fileID: 187016, guid: c35f3b540532d1747b95a8a2eea9991d, type: 3}
 --- !u!1 &1955289380

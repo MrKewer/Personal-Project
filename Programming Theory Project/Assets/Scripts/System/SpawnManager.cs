@@ -14,11 +14,11 @@ public class SpawnManager : MonoBehaviour
     private GameObject listToSpawnPrefab; //Get the lists of all to spawn based on the selected level (gets from spawnListPrefab's spawnList)
     private List<GameObject> obstaclesToSpawn; //The list that is gotten from the listToSpawnPrefab
     private List<GameObject> enemiesToSpawn;
-    private List<GameObject> bossesToSpawn;
+    [SerializeField] private List<GameObject> bossesToSpawn;
 
     private List<GameObject> obstaclesPool = new List<GameObject>(); //The pool that is created that is used to store the items
     private List<GameObject> enemiesPool = new List<GameObject>();
-    private List<GameObject> bossesPool = new List<GameObject>();
+    [SerializeField] private List<GameObject> bossesPool = new List<GameObject>();
 
     private float xObstacleSpawnPos = 30.0f; //The spawn position in the x direction
     private float startDelay = 2f; //Delay before spawning 
@@ -29,6 +29,8 @@ public class SpawnManager : MonoBehaviour
     private int PoolDepth = 10; // The amount that will be spawned
     private bool canGrow = true; //If the need for more particals it will create more
     [SerializeField] private int poolDuplicates = 3;
+    public string[] LargeParticals = new string[] { "YellowLarge", "PurpleLarge","RedLarge", "BlueLarge","GreenLarge" };
+    public string[] SmallParticals = new string[] { "YellowSmall", "PurpleSmall", "RedSmall", "BlueSmall", "GreenSmall" };
 
     [Space]
     [Header("Particals Small")]
@@ -81,10 +83,9 @@ public class SpawnManager : MonoBehaviour
         enemiesToSpawn = listToSpawnPrefab.GetComponent<SpawnList>().enemies;
         bossesToSpawn = listToSpawnPrefab.GetComponent<SpawnList>().bosses;
 
-
         PoolGameObject(obstaclesToSpawn, obstaclesPool, poolDuplicates);
-        PoolGameObject(enemiesToSpawn, enemiesPool, 1);
-
+        PoolGameObject(enemiesToSpawn, enemiesPool, poolDuplicates);
+        PoolGameObject(bossesToSpawn, bossesPool, 1);
 
         //Pool Small particals
         PoolGameObject(yellowSmallParticalPrefab, yellowSmallParticalPool, PoolDepth);
@@ -109,9 +110,13 @@ public class SpawnManager : MonoBehaviour
     {
         if (currentState == GameManager.GameState.BOSSFIGHT)
         {
-            DisableAllEnemies();
+            //DisableAllEnemies();
             CancelInvoke();
-            InvokeRepeating("SpawnObstacle", startDelay, obstacleSpawnTime);            
+            InvokeRepeating("SpawnObstacle", startDelay, obstacleSpawnTime);    
+            for(int i = 0; i<bossesPool.Count; i++)
+            {
+                SpawnBoss();
+            }
         }
         if (currentState == GameManager.GameState.DEAD)
         {
@@ -134,11 +139,11 @@ public class SpawnManager : MonoBehaviour
     {
         for (int i = 0; i < poolSize; i++)
         {
-            GameObject pooledParticle = Instantiate(prefab);
-            pooledParticle.AddComponent<Obstacles>();
-            pooledParticle.SetActive(false);
-            pool.Add(pooledParticle);
-            pooledParticle.transform.SetParent(gameObject.transform);
+            GameObject pooledGameObject = Instantiate(prefab);
+            pooledGameObject.AddComponent<Obstacles>();
+            pooledGameObject.SetActive(false);
+            pool.Add(pooledGameObject);
+            pooledGameObject.transform.SetParent(gameObject.transform);
         }
     }
 
@@ -161,7 +166,6 @@ public class SpawnManager : MonoBehaviour
             {
                 GameObject pooledGameObject = Instantiate(prefab[i]);
                 pooledGameObject.SetActive(false);
-                //pooledObstacle.AddComponent<Obstacles>();
                 pool.Add(pooledGameObject);
                 pooledGameObject.transform.SetParent(gameObject.transform);
             }
@@ -183,6 +187,14 @@ public class SpawnManager : MonoBehaviour
     #endregion
 
     #region Spawn Partical
+    
+    public void SpawnRandomPartical(string[] list, Vector3 location, float locationRange)
+    {
+        int randomNumber = Random.Range(0, list.Length);
+        Vector3 randomLocation = new Vector3(Random.Range(-locationRange, locationRange), Random.Range(-locationRange, locationRange), Random.Range(-locationRange, locationRange));
+        SpawnPartical(list[randomNumber], randomLocation + location);
+    }
+
     public void SpawnPartical(string partical, Vector3 location)
     {
         GameObject particalEffect;
@@ -306,7 +318,7 @@ public class SpawnManager : MonoBehaviour
 
             if (enemyToSpawn != null)
             {
-                EnemyBasic enemyScript = enemyToSpawn.GetComponent<EnemyBasic>();
+                EnemyMain enemyScript = enemyToSpawn.GetComponent<EnemyMain>();
                 float xPos = Random.Range(enemyScript.spawnPos - enemyScript.spawnPosRange, enemyScript.spawnPos + enemyScript.spawnPosRange);
                 float yPos = enemyToSpawn.transform.position.y;
                 Vector3 spawnPos = new Vector3(xPos, yPos, randomPathway * playerControllerScript.VerticalStep);
@@ -316,6 +328,50 @@ public class SpawnManager : MonoBehaviour
             }
         }
     }
+    #endregion
+
+    #region Bosses
+
+    private void SpawnBoss() //Will set an random obstacle active and set it to a new position
+    {
+        if (isPlaying)
+        {
+            int randomPathway = Random.Range(-1, 2);
+            GameObject bossToSpawn = GetAvailableRandomGameObject(bossesPool);
+
+            if (bossToSpawn != null)
+            {
+                EnemyMain enemyScript = bossToSpawn.GetComponent<EnemyMain>();
+                float xPos = Random.Range(enemyScript.spawnPos - enemyScript.spawnPosRange, enemyScript.spawnPos + enemyScript.spawnPosRange);
+                float yPos = bossToSpawn.transform.position.y;
+                Vector3 spawnPos = new Vector3(xPos, yPos, randomPathway * playerControllerScript.VerticalStep);
+
+                bossToSpawn.SetActive(true);
+                bossToSpawn.transform.position = spawnPos;
+            }
+        }
+    }
+
+    public void BossDeath(Vector3 location)
+    {
+        CancelInvoke();
+        DisableAllObstacles();
+        StartCoroutine(CoSpawnParticles(location));
+    }
+    IEnumerator CoSpawnParticles( Vector3 location)
+    {
+        int count = 0;
+        while (count<=10)
+        {
+            float randomTime = Random.Range(0, 0.75f);
+            WaitForSeconds waitTime = new WaitForSeconds(randomTime);
+            yield return waitTime;
+            SpawnRandomPartical(LargeParticals, location, 10);
+            count++;
+        }
+
+    }
+
     #endregion
 
     private void OnDestroy() //Clear all created objects from game
