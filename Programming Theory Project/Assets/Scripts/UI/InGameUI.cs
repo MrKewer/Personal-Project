@@ -33,8 +33,6 @@ public class InGameUI : MonoBehaviour
 
     }
 
-
-
     private void OnDisable()
     {
         playerController.DamageDealt -= PlayerController_DamageDealt;
@@ -59,6 +57,7 @@ public class InGameUI : MonoBehaviour
         }
         if (currentState == GameManager.GameState.DEAD)
         {
+            bossHealthBar.gameObject.SetActive(false);
             CancelInvoke();
         }
         if (currentState == GameManager.GameState.RUNNING && previousState == GameManager.GameState.DEAD)

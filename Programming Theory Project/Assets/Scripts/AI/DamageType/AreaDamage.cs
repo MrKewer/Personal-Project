@@ -5,7 +5,7 @@ using UnityEngine;
 public class AreaDamage : MonoBehaviour
 {
     private SpawnManager spawnManager;
-    private float damage;
+    [SerializeField] private float damage;
     void Awake()
     {
         spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
@@ -22,12 +22,12 @@ public class AreaDamage : MonoBehaviour
         }
         if (other.CompareTag("Player"))
         {
-            //IDamageable<float, string, Vector3> hit = (IDamageable<float, string, Vector3>)collision.gameObject.GetComponent(typeof(IDamageable<float, string, Vector3>));
-            //if (hit != null)
-            //{
-            //    hit.Damage(damage, "Byte", other.gameObject.transform.position);
-            //    spawnManager.SpawnPartical("GreenSmall", other.gameObject.transform.position);
-            //}
+            IDamageable<float, string, Vector3> hit = (IDamageable<float, string, Vector3>)other.gameObject.GetComponent(typeof(IDamageable<float, string, Vector3>));
+            if (hit != null)
+            {
+                hit.Damage(damage, "Byte", other.gameObject.transform.position);
+                spawnManager.SpawnPartical("GreenSmall", other.gameObject.transform.position);
+            }
             Debug.Log("Area Damage");
 
         }
