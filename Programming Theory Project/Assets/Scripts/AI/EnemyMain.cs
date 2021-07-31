@@ -6,6 +6,7 @@ using UnityEngine;
 //public delegate void DamageDealtHandler(float amount);
 public class EnemyMain : MonoBehaviour, IDamageable<float, string, Vector3>
 {
+
     protected Animator runAnimation;
     public float AnimationSpeed = 10;
     public float maxHealth;

@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossPugDog : EnemyMain
+public class BossPugDog : BossMain
 {
+
     protected override void Awake()
     {
         base.Awake();
@@ -25,7 +26,7 @@ public class BossPugDog : EnemyMain
     public override void Damage(float damageTaken, string damageType, Vector3 damageLocation)
     {
         base.Damage(damageTaken, damageType, damageLocation);
-        
+
         if (damageType == "Collision")
         {
             spawnManager.SpawnPartical("BlueSmall", damageLocation);

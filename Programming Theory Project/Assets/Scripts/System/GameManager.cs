@@ -36,7 +36,6 @@ public class GameManager : Singleton<GameManager>
         PAUSED,
         DEAD
     }
-
     [SerializeField] GameState _currentGameState = GameState.MAINMENU; //Setup the Current State
     public GameState CurrentGameState //If you want to know what the current game state is
     {

@@ -4865,8 +4865,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AnimationSpeed: 0.3
-  maxHealth: 200
-  health: 200
+  maxHealth: 500
+  health: 500
   speed: 10
   forwardSpeed: 10
   backwardSpeed: -10

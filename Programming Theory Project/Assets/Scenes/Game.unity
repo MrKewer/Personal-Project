@@ -297,6 +297,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3773716152588090686, guid: 1476d889c7d691d44bba25c9c19d530b, type: 3}
+      propertyPath: _selectedGameState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3773716152588090686, guid: 1476d889c7d691d44bba25c9c19d530b, type: 3}
       propertyPath: levelSelectedNumber
       value: 0
       objectReference: {fileID: 0}

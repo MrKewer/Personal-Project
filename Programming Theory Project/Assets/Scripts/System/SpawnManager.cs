@@ -356,6 +356,7 @@ public class SpawnManager : MonoBehaviour
     {
         CancelInvoke();
         DisableAllObstacles();
+        DisableAllEnemies();
         StartCoroutine(CoSpawnParticles(location));
     }
     IEnumerator CoSpawnParticles( Vector3 location)

@@ -8,6 +8,7 @@ public class InGameUI : MonoBehaviour
 {
     //public event DamageDealtHandler UpdateHealth;
     private PlayerController playerController;
+    private BossMain bossMain;
     [SerializeField] private TextMeshProUGUI playerNameText; //The text to display player name
     [SerializeField] private Slider playerHealthBar; //The health bar of the player
     [SerializeField] private TextMeshProUGUI scoreText; //The text of the displayed score
@@ -23,12 +24,17 @@ public class InGameUI : MonoBehaviour
     {
         //Set all equal to the player's input in the MainMenu
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
+
         playerNameText.text = GameManager.Instance.playerName;
         playerHealthBar.maxValue = playerController.maxHealth;
         playerHealthBar.value = playerController.health;
         scoreText.text = "Score: " + playerController.score.ToString();
         playerController.DamageDealt += PlayerController_DamageDealt;
+
     }
+
+
+
     private void OnDisable()
     {
         playerController.DamageDealt -= PlayerController_DamageDealt;
@@ -43,6 +49,13 @@ public class InGameUI : MonoBehaviour
         if (currentState == GameManager.GameState.BOSSFIGHT)
         {
             bossHealthBar.gameObject.SetActive(true);
+            bossMain = GameObject.FindGameObjectWithTag("Boss").GetComponent<BossMain>();
+            bossHealthBar.maxValue = bossMain.maxHealth;
+            bossHealthBar.value = bossMain.health;
+            if (bossMain != null)
+            {
+                bossMain.DamageDealt += BossMain_DamageDealt;
+            }            
         }
         if (currentState == GameManager.GameState.DEAD)
         {
@@ -67,9 +80,8 @@ public class InGameUI : MonoBehaviour
     {
         playerHealthBar.value = playerController.health;
     }
-
-    public void BossFight()
+    private void BossMain_DamageDealt(float amount)
     {
-
+        bossHealthBar.value = bossMain.health;
     }
 }
