@@ -8,6 +8,8 @@ TagManager:
   - Obstacle
   - Enemy
   - Boss
+  - StinkBreath
+  - Powerup
   layers:
   - Default
   - TransparentFX

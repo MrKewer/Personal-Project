@@ -4,10 +4,55 @@ using UnityEngine;
 
 public class BossPugDog : BossMain
 {
-
+    [SerializeField] private bool bInPos = false;
+    [SerializeField] private GameObject stinkBreathPrefab;
+    [SerializeField] private GameObject stinkBreathColliderPrefab;
+    private float healthAttackInterval = -50;
+    private float nextAttackHealth = 0;
     protected override void Awake()
     {
         base.Awake();
+        nextAttackHealth = health + healthAttackInterval;
+        stinkBreathPrefab.SetActive(false);
+        stinkBreathColliderPrefab.SetActive(false);
+    }
+    protected override void Update()
+    {
+        if (health > nextAttackHealth)
+        {
+            base.Update();
+        }
+        else
+        {
+            if (bInPos)
+            {
+                stinkBreathPrefab.SetActive(true);
+                stinkBreathColliderPrefab.SetActive(true);
+                StartCoroutine(CoAbilityAttack());
+            }
+            else
+            {
+                runSpeed = -40;
+                Vector3 FollowDirection = (player.transform.position - transform.position).normalized;
+                FollowDirection = new Vector3((FollowDirection.x * runSpeed) / 100, 0, 0);
+                transform.Translate(FollowDirection * speed * Time.deltaTime);
+                runAnimation.SetFloat("Speed_f", GameManager.Instance.gameSpeed * AnimationSpeed / 10);
+                if (gameObject.transform.position.x <= -10)
+                {
+                    runSpeed = 1;
+                    bInPos = true;
+                }
+            }
+        }        
+    }
+    IEnumerator CoAbilityAttack()
+    {
+        yield return new WaitForSeconds(4);
+        bInPos = false;
+        nextAttackHealth = health + healthAttackInterval;
+        runSpeed = forwardSpeed;
+        stinkBreathPrefab.SetActive(false);
+        stinkBreathColliderPrefab.SetActive(false);
     }
     protected override void OnCollisionEnter(Collision collision)
     {
