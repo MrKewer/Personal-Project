@@ -50,6 +50,14 @@ public class EnemyMain : MonoBehaviour, IDamageable<float, string, Vector3>
         {            
             runSpeed = forwardSpeed;
         }
+        if(runSpeed < 0)
+        {
+            gameObject.GetComponent<Rigidbody>().interpolation = RigidbodyInterpolation.Interpolate; //When they run back they will run through the other enemies
+        }
+        else
+        {
+            gameObject.GetComponent<Rigidbody>().interpolation = RigidbodyInterpolation.Extrapolate;
+        }
     }
 
     protected virtual void OnCollisionEnter(Collision collision)
@@ -67,6 +75,7 @@ public class EnemyMain : MonoBehaviour, IDamageable<float, string, Vector3>
             }
         }
     }
+
     protected virtual void Death()
     {
         gameObject.SetActive(false);

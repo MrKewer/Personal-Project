@@ -161,13 +161,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68fd84819f414874ead43ddb9c416d22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AnimationSpeed: 1
-  maxHealth: 0
-  health: 0
+  AnimationSpeed: 0.9
+  maxHealth: 30
+  health: 30
   speed: 10
-  forwardSpeed: 0
-  backwardSpeed: 0
-  collisionDamage: 0
+  forwardSpeed: 20
+  backwardSpeed: -30
+  collisionDamage: 5
   spawnPos: -14
   spawnPosRange: 3
   zRandom: 0
@@ -640,13 +640,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 151728}
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.13337907, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 441440}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!137 &13745158
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0

@@ -159,12 +159,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AnimationSpeed: 1
-  maxHealth: 100
-  health: 100
+  maxHealth: 10
+  health: 10
   speed: 10
   forwardSpeed: 20
   backwardSpeed: -30
-  collisionDamage: 0
+  collisionDamage: 3
   spawnPos: -14
   spawnPosRange: 3
   zRandom: 0

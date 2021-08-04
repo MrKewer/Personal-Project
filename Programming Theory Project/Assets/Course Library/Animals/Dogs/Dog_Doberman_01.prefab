@@ -281,7 +281,7 @@ MonoBehaviour:
   speed: 10
   forwardSpeed: 5
   backwardSpeed: -10
-  collisionDamage: 30
+  collisionDamage: 10
   spawnPos: -14
   spawnPosRange: 3
   zRandom: 0
