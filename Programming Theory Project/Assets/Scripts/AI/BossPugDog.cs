@@ -9,6 +9,7 @@ public class BossPugDog : BossMain
     [SerializeField] private GameObject stinkBreathColliderPrefab;
     private float healthAttackInterval = -50;
     private float nextAttackHealth = 0;
+    private float abilityTime = 5;
     protected override void Awake()
     {
         base.Awake();
@@ -47,7 +48,7 @@ public class BossPugDog : BossMain
     }
     IEnumerator CoAbilityAttack()
     {
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(abilityTime);
         bInPos = false;
         nextAttackHealth = health + healthAttackInterval;
         runSpeed = forwardSpeed;
