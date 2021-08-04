@@ -57,7 +57,18 @@ MonoBehaviour:
   - {fileID: 7839782203983241193, guid: 21218a1d0d7670945b4332fa0616113d, type: 3}
   - {fileID: 3174363914807593747, guid: 55faeab27760eec43b58c9f792f205ff, type: 3}
   enemies:
-  - {fileID: 180406, guid: 3b3cb28f974c42c4481d72da460937c9, type: 3}
+  - {fileID: 112640, guid: c7ca0992ba00761469f731111e56b107, type: 3}
+  - {fileID: 119940, guid: 49b874b9460c6754c829d7cb541a99db, type: 3}
+  - {fileID: 120214, guid: 9bf484c5ec3d3bf43b2034c829f1abbe, type: 3}
+  - {fileID: 134694, guid: 50f1d192ccb21a24b95a7e4e403a9bb5, type: 3}
+  - {fileID: 102230, guid: 85de8c5eef336ad48900b2ac3e7bf65d, type: 3}
+  - {fileID: 120214, guid: 71d4c437bd3f5b745b0a5d0ff31b8071, type: 3}
+  - {fileID: 120214, guid: 8753a0a18e314d74790abc617a2d96a7, type: 3}
+  - {fileID: 120214, guid: eb4e68888c0be4b4ea495930c500207f, type: 3}
+  - {fileID: 139514, guid: 03e4c5418c1e9164bb1955135d815833, type: 3}
+  - {fileID: 151702, guid: 68a45bf17ac566545b70a13c90a7ee65, type: 3}
+  - {fileID: 127534, guid: 4ddb5b12f2cf4744da3191afdc8c08ff, type: 3}
+  - {fileID: 127534, guid: 3fe800c166ae0d04881a20247bde736d, type: 3}
   bosses: []
 --- !u!1 &1252277190
 GameObject:
@@ -182,7 +193,18 @@ MonoBehaviour:
   - {fileID: 151096, guid: 367149bd17c4d4d4e8868ec6a5cf8d45, type: 3}
   - {fileID: 4133590028768158191, guid: 7ba2754b39d17bd4c86ba3d7c6f74d38, type: 3}
   - {fileID: 3174363914807593747, guid: 55faeab27760eec43b58c9f792f205ff, type: 3}
-  enemies: []
+  enemies:
+  - {fileID: 165520, guid: 06aceaf909fec8f4081af49b1eea892e, type: 3}
+  - {fileID: 131568, guid: 2fdf2b8525a6fa54ba867925b16564e3, type: 3}
+  - {fileID: 127546, guid: e3245acddde40bf49aa555d6bdc14998, type: 3}
+  - {fileID: 110416, guid: d08ba223a91fb3440afcbed27fafa936, type: 3}
+  - {fileID: 148086, guid: 72d1e1ec46e639c47a81658b0d9e230e, type: 3}
+  - {fileID: 140746, guid: 02eca77e7e6a2ec41ba4c68f20e26098, type: 3}
+  - {fileID: 127546, guid: ea455f15ec74cbd49873396466d52ed3, type: 3}
+  - {fileID: 127546, guid: 9f227fed4482176479b4f490fcad68d0, type: 3}
+  - {fileID: 114920, guid: ff249e9534924c744bdfa6a3d2d1746c, type: 3}
+  - {fileID: 142896, guid: e2b54f18a442ae84cb37b05e649edfc0, type: 3}
+  - {fileID: 127546, guid: 8c8f66173fef87d4d9bf690fc0f65377, type: 3}
   bosses: []
 --- !u!1 &6599522259516073843
 GameObject:

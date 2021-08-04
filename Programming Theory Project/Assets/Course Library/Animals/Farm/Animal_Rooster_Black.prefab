@@ -565,10 +565,10 @@ GameObject:
   - component: {fileID: 471710}
   - component: {fileID: 9520126}
   - component: {fileID: 8719434096464806054}
-  - component: {fileID: 1387963403389792615}
-  - component: {fileID: 5085709117819191163}
+  - component: {fileID: 9049918589117968360}
+  - component: {fileID: 5600762073656290251}
   m_Layer: 0
-  m_Name: Animal_Rooster_Brown
+  m_Name: Animal_Rooster_Black
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -593,7 +593,7 @@ Transform:
   - {fileID: 444122}
   - {fileID: 485688}
   - {fileID: 404852}
-  - {fileID: 4531656823606809358}
+  - {fileID: 5292159513317177374}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -638,8 +638,8 @@ MonoBehaviour:
   spawnPos: -14
   spawnPosRange: 3
   zRandom: 0
-  healthBar: {fileID: 2437151462181777854}
---- !u!65 &1387963403389792615
+  healthBar: {fileID: 6215154958373575342}
+--- !u!65 &9049918589117968360
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -652,7 +652,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 21.27922, y: 17.261862, z: 7.420369}
   m_Center: {x: -0.46185017, y: 8.130934, z: -0.013828725}
---- !u!54 &5085709117819191163
+--- !u!54 &5600762073656290251
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -715,7 +715,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &485688
 Transform:
   m_ObjectHideFlags: 0
@@ -1202,7 +1202,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &404852
 Transform:
   m_ObjectHideFlags: 0
@@ -1409,7 +1409,7 @@ Transform:
   m_Father: {fileID: 414222}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &4062140953097127250
+--- !u!1001 &5750451836861394498
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -1454,13 +1454,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f2e492c5a3f212419e3a1bfb74064b8, type: 3}
---- !u!4 &4531656823606809358 stripped
+--- !u!4 &5292159513317177374 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 485318332437026396, guid: 0f2e492c5a3f212419e3a1bfb74064b8, type: 3}
-  m_PrefabInstance: {fileID: 4062140953097127250}
+  m_PrefabInstance: {fileID: 5750451836861394498}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2437151462181777854 stripped
+--- !u!1 &6215154958373575342 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1841162986228610284, guid: 0f2e492c5a3f212419e3a1bfb74064b8, type: 3}
-  m_PrefabInstance: {fileID: 4062140953097127250}
+  m_PrefabInstance: {fileID: 5750451836861394498}
   m_PrefabAsset: {fileID: 0}

@@ -46,31 +46,31 @@ BlendTree:
     m_Motion: {fileID: 7400000, guid: f000ecb3e2f790d45bb3459ad897cb3e, type: 3}
     m_Threshold: 0
     m_Position: {x: 0, y: 0}
-    m_TimeScale: 1
+    m_TimeScale: 0.01
     m_CycleOffset: 0
     m_DirectBlendParameter: Blend
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: 7400002, guid: f000ecb3e2f790d45bb3459ad897cb3e, type: 3}
-    m_Threshold: 0.5
+    m_Threshold: 0.1
     m_Position: {x: 0, y: 0}
-    m_TimeScale: 1
+    m_TimeScale: 0.01
     m_CycleOffset: 0
     m_DirectBlendParameter: Blend
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: 7400004, guid: f000ecb3e2f790d45bb3459ad897cb3e, type: 3}
-    m_Threshold: 1
+    m_Threshold: 0.2
     m_Position: {x: 0, y: 0}
-    m_TimeScale: 1.25
+    m_TimeScale: 3
     m_CycleOffset: 0
     m_DirectBlendParameter: Blend
     m_Mirror: 0
   m_BlendParameter: Speed_f
   m_BlendParameterY: Blend
   m_MinThreshold: 0
-  m_MaxThreshold: 1
-  m_UseAutomaticThresholds: 1
+  m_MaxThreshold: 0.2
+  m_UseAutomaticThresholds: 0
   m_NormalizedBlendValues: 0
   m_BlendType: 0
 --- !u!1101 &110135146
@@ -128,7 +128,7 @@ AnimatorStateTransition:
   m_CanTransitionToSelf: 1
 --- !u!1102 &110258660
 AnimatorState:
-  serializedVersion: 5
+  serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -143,19 +143,19 @@ AnimatorState:
   m_IKOnFeet: 1
   m_WriteDefaultValues: 1
   m_Mirror: 0
-  m_SpeedParameterActive: 0
+  m_SpeedParameterActive: 1
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 20695594}
   m_Tag: 
-  m_SpeedParameter: 
+  m_SpeedParameter: Speed_f
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
 --- !u!1102 &110264418
 AnimatorState:
-  serializedVersion: 5
+  serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -182,7 +182,7 @@ AnimatorState:
   m_TimeParameter: 
 --- !u!1107 &110772746
 AnimatorStateMachine:
-  serializedVersion: 5
+  serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}

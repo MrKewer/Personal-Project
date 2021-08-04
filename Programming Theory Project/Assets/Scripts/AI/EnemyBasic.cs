@@ -35,7 +35,7 @@ public class EnemyBasic : EnemyMain
     {
         spawnManager.SpawnPartical("PurpleLarge", gameObject.transform.position);
         GameManager.Instance.EnemiesDead += 1;
-        if (GameManager.Instance.EnemiesDead >= 0)
+        if (GameManager.Instance.EnemiesDead >= 20)
         {
             GameManager.Instance.BossFight();
         }

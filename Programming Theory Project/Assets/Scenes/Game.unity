@@ -302,7 +302,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3773716152588090686, guid: 1476d889c7d691d44bba25c9c19d530b, type: 3}
       propertyPath: levelSelectedNumber
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3773716152588090686, guid: 1476d889c7d691d44bba25c9c19d530b, type: 3}
       propertyPath: characterSelectedNumber
@@ -335,7 +335,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 413474409, guid: 4abc3c69c42e4f941b77c1999ace2138, type: 3}
       propertyPath: invulnerable
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 413474409, guid: 4abc3c69c42e4f941b77c1999ace2138, type: 3}
       propertyPath: spawnManager
@@ -705,15 +705,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7782296552925202893, guid: 951ebfd5b569221488a5f0974b815308, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.413495
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7782296552925202893, guid: 951ebfd5b569221488a5f0974b815308, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5.7086225
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7782296552925202893, guid: 951ebfd5b569221488a5f0974b815308, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 66.92134
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7782296552925202893, guid: 951ebfd5b569221488a5f0974b815308, type: 3}
       propertyPath: m_LocalRotation.w

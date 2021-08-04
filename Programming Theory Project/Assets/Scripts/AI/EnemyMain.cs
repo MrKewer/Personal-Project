@@ -8,7 +8,7 @@ public class EnemyMain : MonoBehaviour, IDamageable<float, string, Vector3>
 {
 
     protected Animator runAnimation;
-    public float AnimationSpeed = 10;
+    public float AnimationSpeed = 1;
     public float maxHealth;
     public float health;
     public float speed = 10f;
