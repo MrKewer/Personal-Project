@@ -46,7 +46,7 @@ public class EnemyMain : MonoBehaviour, IDamageable<float, Enums.DamageType, Vec
         FollowDirection = new Vector3((FollowDirection.x * runSpeed) / 100, 0, (FollowDirection.z + zRandom)); //Setup the vector to only use the x direction
         transform.Translate(FollowDirection * speed * Time.deltaTime); //Translate the character to the location
         runAnimation.SetFloat("Speed_f", GameManager.Instance.gameSpeed * AnimationSpeed / 10); //Set the run animation to sinc in with game speed
-        if (gameObject.transform.position.x <= spawnPos)
+        if (gameObject.transform.position.x <= spawnPos) //If running back and gets to spawn position then run forward
         {            
             runSpeed = forwardSpeed;
         }
@@ -84,15 +84,9 @@ public class EnemyMain : MonoBehaviour, IDamageable<float, Enums.DamageType, Vec
     public virtual void Damage(float damageTaken, Enums.DamageType damageType, Vector3 damageLocation)
     {
         health -= damageTaken;
-        //healthBar.transform.localScale = new Vector3(healthBarSize.x * (health / maxHealth), healthBarSize.y, healthBarSize.z);
         if (health <= 0)
         {
             Death();
         }
-        //if (damageType == "Collision")
-        //{
-        //    spawnManager.SpawnPartical("PurpleSmall", damageLocation);
-        //    runSpeed = backwardSpeed;
-        //}
     }
 }

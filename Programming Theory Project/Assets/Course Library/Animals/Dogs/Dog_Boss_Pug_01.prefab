@@ -4877,6 +4877,7 @@ MonoBehaviour:
   spawnPosRange: 3
   zRandom: 0
   collisionParticle: 2
+  BossName: Pugzilla
   bInPos: 0
   stinkBreathPrefab: {fileID: 3919497053142629747}
   stinkBreathColliderPrefab: {fileID: 4393670501901490587}
@@ -6173,7 +6174,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damagePerSecond: 10
-  particleToSpawnOnDamage: 4
+  particleToSpawnOnDamage: 8
 --- !u!1001 &3919497053142742141
 PrefabInstance:
   m_ObjectHideFlags: 0

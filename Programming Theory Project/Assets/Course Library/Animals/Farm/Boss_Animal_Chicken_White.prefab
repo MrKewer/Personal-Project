@@ -246,9 +246,10 @@ MonoBehaviour:
   spawnPosRange: 3
   zRandom: 0
   collisionParticle: 1
+  BossName: Dora the eggs-plorer
   bInPos: 0
-  stinkBreathPrefab: {fileID: 8217564156081155228}
-  stinkBreathColliderPrefab: {fileID: 6863434417532000627}
+  fireBreathPrefab: {fileID: 8217564156081155228}
+  fireBreathColliderPrefab: {fileID: 6863434417532000627}
 --- !u!1 &130812
 GameObject:
   m_ObjectHideFlags: 0
@@ -1482,6 +1483,10 @@ PrefabInstance:
     - target: {fileID: 182542, guid: 5cd5599e01f32bd418f20a3b9eac1c57, type: 3}
       propertyPath: m_Name
       value: FX_FlameThrower
+      objectReference: {fileID: 0}
+    - target: {fileID: 182542, guid: 5cd5599e01f32bd418f20a3b9eac1c57, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 479346, guid: 5cd5599e01f32bd418f20a3b9eac1c57, type: 3}
       propertyPath: m_RootOrder

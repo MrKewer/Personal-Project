@@ -217,6 +217,7 @@ MonoBehaviour:
   spawnPosRange: 3
   zRandom: 0
   healthBar: {fileID: 2822812596820820898}
+  healthDisplayText: {fileID: 5878505481042305828}
 --- !u!65 &7069041581940307071
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1488,3 +1489,14 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1841162986228610284, guid: 0f2e492c5a3f212419e3a1bfb74064b8, type: 3}
   m_PrefabInstance: {fileID: 4513093785500006222}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5878505481042305828 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8013345695815079018, guid: 0f2e492c5a3f212419e3a1bfb74064b8, type: 3}
+  m_PrefabInstance: {fileID: 4513093785500006222}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -14,8 +14,8 @@ public class GameManager : Singleton<GameManager>
     public int characterSelectedNumber = 0; //The Character the player will choose in the MainMenu
     public string playerName = "a"; //The Name the player will type in, in the MainMenu
 
-    public int EnemiesDead = 0;
-
+    public int enemiesDead = 0;
+    public int enemiesDeadBeforeBossFight = 2;
     public EventGameState OnGameStateChanged; //Create event to know when the game state changes
     public GameObject[] SystemPrefabs; //The list of all the Managers you want to create. (UI, Sound, Gameplay ect)
     private List<GameObject> _instancedSystemPrefabs; //A list to keep track of all the Managers: Create, Destroy

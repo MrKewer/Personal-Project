@@ -11,6 +11,7 @@ public class InGameUI : MonoBehaviour
     private BossMain bossMain;
     [SerializeField] private TextMeshProUGUI playerNameText; //The text to display player name
     [SerializeField] private Slider playerHealthBar; //The health bar of the player
+    [SerializeField] private TextMeshProUGUI playerHealthAmountDisplay; //The health bar of the player
     [SerializeField] private TextMeshProUGUI scoreText; //The text of the displayed score
     [SerializeField] private TextMeshProUGUI timeText; //The text to display time
     private int time = 0;
@@ -19,6 +20,7 @@ public class InGameUI : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI bossNameText; // The name of the boss
     [SerializeField] private Slider bossHealthBar; //The health bar of the boss
+    [SerializeField] private TextMeshProUGUI bossHealthAmountDisplay; //The health bar of the player
 
     private void OnEnable()
     {
@@ -30,7 +32,7 @@ public class InGameUI : MonoBehaviour
         playerHealthBar.value = playerController.health;
         scoreText.text = "Score: " + playerController.score.ToString();
         playerController.DamageDealt += PlayerController_DamageDealt;
-
+        playerHealthAmountDisplay.text = playerController.health + "/" + playerController.maxHealth;
     }
 
     private void OnDisable()
@@ -50,6 +52,9 @@ public class InGameUI : MonoBehaviour
             bossMain = GameObject.FindGameObjectWithTag("Boss").GetComponent<BossMain>();
             bossHealthBar.maxValue = bossMain.maxHealth;
             bossHealthBar.value = bossMain.health;
+            bossNameText.text = bossMain.BossName;
+            bossHealthAmountDisplay.text = bossMain.health +"/" + bossMain.maxHealth;
+
             if (bossMain != null)
             {
                 bossMain.DamageDealt += BossMain_DamageDealt;
@@ -78,9 +83,11 @@ public class InGameUI : MonoBehaviour
     private void PlayerController_DamageDealt(float amount)
     {
         playerHealthBar.value = playerController.health;
+        playerHealthAmountDisplay.text = playerController.health + "/" + playerController.maxHealth;
     }
     private void BossMain_DamageDealt(float amount)
     {
         bossHealthBar.value = bossMain.health;
+        bossHealthAmountDisplay.text = bossMain.health + "/" + bossMain.maxHealth;
     }
 }

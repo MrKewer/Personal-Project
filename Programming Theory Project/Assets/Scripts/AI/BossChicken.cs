@@ -5,8 +5,8 @@ using UnityEngine;
 public class BossChicken : BossMain
 {
     [SerializeField] private bool bInPos = false; //In Position to do ability attack
-    [SerializeField] private GameObject stinkBreathPrefab; //The Particle attached to the character
-    [SerializeField] private GameObject stinkBreathColliderPrefab; //The box collider attached
+    [SerializeField] private GameObject fireBreathPrefab; //The Particle attached to the character
+    [SerializeField] private GameObject fireBreathColliderPrefab; //The box collider attached
     private float healthAttackInterval = -50; //When the health gets this amount lower than before, it will do the ability 
     private float nextAttackHealth = 0; //Keep track of the new health to reach
     private float abilityTime = 5; //The amount of seconds the boss will do the ability
@@ -16,8 +16,8 @@ public class BossChicken : BossMain
     {
         base.Awake(); //Keeps the same Awake as the parent
         nextAttackHealth = health + healthAttackInterval; //Calculate the health amount that will cause the boss to use its ability
-        stinkBreathPrefab.SetActive(false); //Set the effects inactive
-        stinkBreathColliderPrefab.SetActive(false); //set the collider inactive
+        fireBreathPrefab.SetActive(false); //Set the effects inactive
+        fireBreathColliderPrefab.SetActive(false); //set the collider inactive
     }
     protected override void Update()
     {
@@ -29,8 +29,8 @@ public class BossChicken : BossMain
         {
             if (bInPos) //If in position use ability
             {
-                stinkBreathPrefab.SetActive(true);
-                stinkBreathColliderPrefab.SetActive(true);
+                fireBreathPrefab.SetActive(true);
+                fireBreathColliderPrefab.SetActive(true);
                 StartCoroutine(CoAbilityAttack());
             }
             else //Get in position to use ability
@@ -55,8 +55,8 @@ public class BossChicken : BossMain
         bInPos = false;
         nextAttackHealth = health + healthAttackInterval; //The next health amount before using ability again
         runSpeed = forwardSpeed;
-        stinkBreathPrefab.SetActive(false);
-        stinkBreathColliderPrefab.SetActive(false);
+        fireBreathPrefab.SetActive(false);
+        fireBreathColliderPrefab.SetActive(false);
     }
     protected override void OnCollisionEnter(Collision collision)
     {

@@ -6,6 +6,7 @@ public class BossMain : EnemyMain
 {
     public event DamageDealtHandler DamageDealt;
     [SerializeField] protected Enums.Particals collisionParticle;
+    public string BossName;
 
     // Start is called before the first frame update
     public override void Damage(float damageTaken, Enums.DamageType damageType, Vector3 damageLocation)
