@@ -59,7 +59,7 @@ MonoBehaviour:
   enemies:
   - {fileID: 112640, guid: c7ca0992ba00761469f731111e56b107, type: 3}
   - {fileID: 119940, guid: 49b874b9460c6754c829d7cb541a99db, type: 3}
-  - {fileID: 120214, guid: 9bf484c5ec3d3bf43b2034c829f1abbe, type: 3}
+  - {fileID: 112640, guid: c7ca0992ba00761469f731111e56b107, type: 3}
   - {fileID: 134694, guid: 50f1d192ccb21a24b95a7e4e403a9bb5, type: 3}
   - {fileID: 102230, guid: 85de8c5eef336ad48900b2ac3e7bf65d, type: 3}
   - {fileID: 120214, guid: 71d4c437bd3f5b745b0a5d0ff31b8071, type: 3}
@@ -69,7 +69,8 @@ MonoBehaviour:
   - {fileID: 151702, guid: 68a45bf17ac566545b70a13c90a7ee65, type: 3}
   - {fileID: 127534, guid: 4ddb5b12f2cf4744da3191afdc8c08ff, type: 3}
   - {fileID: 127534, guid: 3fe800c166ae0d04881a20247bde736d, type: 3}
-  bosses: []
+  bosses:
+  - {fileID: 120214, guid: 9bf484c5ec3d3bf43b2034c829f1abbe, type: 3}
 --- !u!1 &1252277190
 GameObject:
   m_ObjectHideFlags: 0
@@ -200,12 +201,13 @@ MonoBehaviour:
   - {fileID: 110416, guid: d08ba223a91fb3440afcbed27fafa936, type: 3}
   - {fileID: 148086, guid: 72d1e1ec46e639c47a81658b0d9e230e, type: 3}
   - {fileID: 140746, guid: 02eca77e7e6a2ec41ba4c68f20e26098, type: 3}
-  - {fileID: 127546, guid: ea455f15ec74cbd49873396466d52ed3, type: 3}
+  - {fileID: 127546, guid: 9f227fed4482176479b4f490fcad68d0, type: 3}
   - {fileID: 127546, guid: 9f227fed4482176479b4f490fcad68d0, type: 3}
   - {fileID: 114920, guid: ff249e9534924c744bdfa6a3d2d1746c, type: 3}
   - {fileID: 142896, guid: e2b54f18a442ae84cb37b05e649edfc0, type: 3}
   - {fileID: 127546, guid: 8c8f66173fef87d4d9bf690fc0f65377, type: 3}
-  bosses: []
+  bosses:
+  - {fileID: 127546, guid: ea455f15ec74cbd49873396466d52ed3, type: 3}
 --- !u!1 &6599522259516073843
 GameObject:
   m_ObjectHideFlags: 0

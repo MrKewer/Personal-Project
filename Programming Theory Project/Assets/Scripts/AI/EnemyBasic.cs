@@ -21,19 +21,19 @@ public class EnemyBasic : EnemyMain
         zRandom = UnityEngine.Random.Range(-playerController.VerticalStep / 20, playerController.VerticalStep / 20);
     }
 
-    public override void Damage(float damageTaken, string damageType, Vector3 damageLocation)
+    public override void Damage(float damageTaken, Enums.DamageType damageType, Vector3 damageLocation)
     {
         base.Damage(damageTaken, damageType, damageLocation);
         healthBar.transform.localScale = new Vector3(healthBarSize.x * (health / maxHealth), healthBarSize.y, healthBarSize.z);
-        if (damageType == "Collision")
+        if (damageType == Enums.DamageType.Collision)
         {
-            spawnManager.SpawnPartical("PurpleSmall", damageLocation);
+            spawnManager.SpawnParticle(Enums.Particals.PurpleSmall, damageLocation);
             runSpeed = backwardSpeed;
         }
     }
     protected override void Death()
     {
-        spawnManager.SpawnPartical("PurpleLarge", gameObject.transform.position);
+        spawnManager.SpawnParticle(Enums.Particals.PurpleLarge, gameObject.transform.position);
         GameManager.Instance.EnemiesDead += 1;
         if (GameManager.Instance.EnemiesDead >= 20)
         {

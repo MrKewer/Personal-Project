@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossPugDog : BossMain
+public class BossChicken : BossMain
 {
     [SerializeField] private bool bInPos = false; //In Position to do ability attack
     [SerializeField] private GameObject stinkBreathPrefab; //The Particle attached to the character
@@ -11,7 +11,7 @@ public class BossPugDog : BossMain
     private float nextAttackHealth = 0; //Keep track of the new health to reach
     private float abilityTime = 5; //The amount of seconds the boss will do the ability
     private float xPositionForAbility = -10;
-    
+
     protected override void Awake()
     {
         base.Awake(); //Keeps the same Awake as the parent
@@ -46,7 +46,7 @@ public class BossPugDog : BossMain
                     bInPos = true;
                 }
             }
-        }        
+        }
     }
     IEnumerator CoAbilityAttack()
     {
@@ -61,7 +61,7 @@ public class BossPugDog : BossMain
     protected override void OnCollisionEnter(Collision collision)
     {
         base.OnCollisionEnter(collision); //Use parrent collision method
-        ContactPoint contact = collision.contacts[0]; 
+        ContactPoint contact = collision.contacts[0];
         Vector3 pos = contact.point; //Get the position's point of the collision contact
         if (collision.gameObject.CompareTag("Enemy")) //If the boss runs over an enemy, just destroy the enemy instantly
         {

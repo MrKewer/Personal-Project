@@ -695,6 +695,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7782296552925202882, guid: 951ebfd5b569221488a5f0974b815308, type: 3}
+      propertyPath: grayLargeParticalPrefab
+      value: 
+      objectReference: {fileID: 110790, guid: cc381ac542cb6d94393b6346d3b20bfc, type: 3}
+    - target: {fileID: 7782296552925202882, guid: 951ebfd5b569221488a5f0974b815308, type: 3}
+      propertyPath: graySmallParticalPrefab
+      value: 
+      objectReference: {fileID: 180128, guid: a20fd619dd30bc14d8520bdaf3bbb840, type: 3}
+    - target: {fileID: 7782296552925202882, guid: 951ebfd5b569221488a5f0974b815308, type: 3}
+      propertyPath: whiteLargeParticalPrefab
+      value: 
+      objectReference: {fileID: 110790, guid: b68162cf1983c314c95c721a3fe88330, type: 3}
+    - target: {fileID: 7782296552925202882, guid: 951ebfd5b569221488a5f0974b815308, type: 3}
+      propertyPath: whiteSmallParticalPrefab
+      value: 
+      objectReference: {fileID: 180128, guid: d44608b0503ed5542b56872460daa374, type: 3}
     - target: {fileID: 7782296552925202883, guid: 951ebfd5b569221488a5f0974b815308, type: 3}
       propertyPath: m_Name
       value: SpawnManager

@@ -4,7 +4,7 @@ using UnityEngine;
 //using System;
 
 //public delegate void DamageDealtHandler(float amount);
-public class EnemyMain : MonoBehaviour, IDamageable<float, string, Vector3>
+public class EnemyMain : MonoBehaviour, IDamageable<float, Enums.DamageType, Vector3>
 {
 
     protected Animator runAnimation;
@@ -42,10 +42,10 @@ public class EnemyMain : MonoBehaviour, IDamageable<float, string, Vector3>
 
     protected virtual void Update()
     {
-        Vector3 FollowDirection = (player.transform.position - transform.position).normalized;
-        FollowDirection = new Vector3((FollowDirection.x * runSpeed) / 100, 0, (FollowDirection.z + zRandom));
-        transform.Translate(FollowDirection * speed * Time.deltaTime);
-         runAnimation.SetFloat("Speed_f", GameManager.Instance.gameSpeed * AnimationSpeed / 10);
+        Vector3 FollowDirection = (player.transform.position - transform.position).normalized; //Get the direction of this character and the player
+        FollowDirection = new Vector3((FollowDirection.x * runSpeed) / 100, 0, (FollowDirection.z + zRandom)); //Setup the vector to only use the x direction
+        transform.Translate(FollowDirection * speed * Time.deltaTime); //Translate the character to the location
+        runAnimation.SetFloat("Speed_f", GameManager.Instance.gameSpeed * AnimationSpeed / 10); //Set the run animation to sinc in with game speed
         if (gameObject.transform.position.x <= spawnPos)
         {            
             runSpeed = forwardSpeed;
@@ -66,11 +66,11 @@ public class EnemyMain : MonoBehaviour, IDamageable<float, string, Vector3>
         Vector3 pos = contact.point;
         if (collision.gameObject.CompareTag("Player"))
         {
-            IDamageable<float, string, Vector3> hit = (IDamageable<float, string, Vector3>)collision.gameObject.GetComponent(typeof(IDamageable<float, string, Vector3>));
+            IDamageable<float, Enums.DamageType, Vector3> hit = (IDamageable<float, Enums.DamageType, Vector3>)collision.gameObject.GetComponent(typeof(IDamageable<float, Enums.DamageType, Vector3>));
             if (hit != null)
             {
-                hit.Damage(collisionDamage, "Byte", pos);
-                spawnManager.SpawnPartical("RedSmall", pos);
+                hit.Damage(collisionDamage, Enums.DamageType.Bite, pos);
+                spawnManager.SpawnParticle(Enums.Particals.RedSmall, pos);
                 runSpeed = backwardSpeed;                
             }
         }
@@ -81,7 +81,7 @@ public class EnemyMain : MonoBehaviour, IDamageable<float, string, Vector3>
         gameObject.SetActive(false);
     }
 
-    public virtual void Damage(float damageTaken, string damageType, Vector3 damageLocation)
+    public virtual void Damage(float damageTaken, Enums.DamageType damageType, Vector3 damageLocation)
     {
         health -= damageTaken;
         //healthBar.transform.localScale = new Vector3(healthBarSize.x * (health / maxHealth), healthBarSize.y, healthBarSize.z);

@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 public delegate void DamageDealtHandler(float amount);
-public class PlayerController : MonoBehaviour, IDamageable<float, string, Vector3>
+public class PlayerController : MonoBehaviour, IDamageable<float, Enums.DamageType, Vector3>
 {
     public event DamageDealtHandler DamageDealt;
     private GameObject characterSelected;
@@ -227,7 +227,7 @@ public class PlayerController : MonoBehaviour, IDamageable<float, string, Vector
     }
     private void Death()
     {
-        spawnManager.SpawnPartical("YellowLarge", gameObject.transform.position);
+        spawnManager.SpawnParticle(Enums.Particals.BlueLarge, gameObject.transform.position);
         //gameObject.SetActive()
         characterSelected.SetActive(false);
     }
@@ -237,7 +237,7 @@ public class PlayerController : MonoBehaviour, IDamageable<float, string, Vector
         Physics.gravity /= gravityModifier;
     }
 
-    public void Damage(float damageTaken, string damageType, Vector3 damageLocation)
+    public void Damage(float damageTaken, Enums.DamageType damageType, Vector3 damageLocation)
     {
         if (invulnerable == false)
         {
@@ -252,9 +252,9 @@ public class PlayerController : MonoBehaviour, IDamageable<float, string, Vector
                 Death();
             }
         }
-        if(damageType == "Collision")
+        if(damageType == Enums.DamageType.Collision)
         {
-            spawnManager.SpawnPartical("YellowSmall", damageLocation);
+            spawnManager.SpawnParticle(Enums.Particals.BlueSmall, damageLocation);
         }
 
     }

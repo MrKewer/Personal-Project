@@ -20,10 +20,10 @@ public class Obstacles : MonoBehaviour
         ContactPoint contact = collision.contacts[0];
         Vector3 pos = contact.point;
         if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Boss")) {
-        IDamageable<float, string, Vector3> hit = (IDamageable<float, string, Vector3>)collision.gameObject.GetComponent(typeof(IDamageable<float, string, Vector3>));
+        IDamageable<float, Enums.DamageType, Vector3> hit = (IDamageable<float, Enums.DamageType, Vector3>)collision.gameObject.GetComponent(typeof(IDamageable<float, Enums.DamageType, Vector3>));
         if (hit != null)
         {
-            hit.Damage(damageAmount,"Collision", pos);
+            hit.Damage(damageAmount, Enums.DamageType.Collision, pos);
             gameObject.SetActive(false);
         }
     }

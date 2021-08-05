@@ -7,23 +7,23 @@ public class AreaDamage : MonoBehaviour
     private SpawnManager spawnManager;
     [SerializeField] private float damagePerSecond;
     private bool bDoDamage = false;
+    [SerializeField] private Enums.Particals particleToSpawnOnDamage;
     void Awake()
     {
         spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
     }
     private void OnTriggerEnter(Collider other)
     {
-        //ContactPoint contact = other.contactOffset();
-        //Vector3 pos = contact.point;
+
         if (other.CompareTag("Obstacle"))
         {
             other.gameObject.transform.parent.gameObject.SetActive(false);
-            spawnManager.SpawnPartical("GreenSmall", other.gameObject.transform.position);
+            spawnManager.SpawnParticle(particleToSpawnOnDamage, other.gameObject.transform.position);
 
         }
         if (other.CompareTag("Player"))
         {
-            IDamageable<float, string, Vector3> hit = (IDamageable<float, string, Vector3>)other.gameObject.GetComponent(typeof(IDamageable<float, string, Vector3>));
+            IDamageable<float, Enums.DamageType, Vector3> hit = (IDamageable<float, Enums.DamageType, Vector3>)other.gameObject.GetComponent(typeof(IDamageable<float, Enums.DamageType, Vector3>));
             if (hit != null)
             {
                 bDoDamage = true;
@@ -42,25 +42,15 @@ public class AreaDamage : MonoBehaviour
         }
 
     }
-    //private void OnTriggerStay(Collider other)
-    //{
-    //    if (other.CompareTag("Player"))
-    //    {
-    //        IDamageable<float, string, Vector3> hit = (IDamageable<float, string, Vector3>)other.gameObject.GetComponent(typeof(IDamageable<float, string, Vector3>));
-    //        if (hit != null)
-    //        {
-    //            StartCoroutine(DoDamagePerSecond(other, hit));
-    //        }
-    //    }
-    //}
-    IEnumerator DoDamagePerSecond(Collider other, IDamageable<float, string, Vector3> hit)
+
+    IEnumerator DoDamagePerSecond(Collider other, IDamageable<float, Enums.DamageType, Vector3> hit)
     {
         WaitForSeconds waitTime = new WaitForSeconds(1);
         while (bDoDamage)
         {
             yield return waitTime;
-            hit.Damage(damagePerSecond, "Poison", other.gameObject.transform.position);
-            spawnManager.SpawnPartical("GreenSmall", other.gameObject.transform.position);
+            hit.Damage(damagePerSecond, Enums.DamageType.Poison, other.gameObject.transform.position);
+            spawnManager.SpawnParticle(particleToSpawnOnDamage, other.gameObject.transform.position);
             Debug.Log("Coroutine");
         }
 
