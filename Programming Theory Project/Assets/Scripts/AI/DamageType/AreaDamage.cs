@@ -29,7 +29,6 @@ public class AreaDamage : MonoBehaviour
                 bDoDamage = true;
                 StartCoroutine(DoDamagePerSecond(other, hit));
             }
-            Debug.Log("Area Damage OnTriggerEnter");
         }
 
     }
@@ -38,7 +37,6 @@ public class AreaDamage : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             bDoDamage = false;
-            Debug.Log("Area Damage OnTriggerExit");
         }
 
     }
@@ -51,9 +49,6 @@ public class AreaDamage : MonoBehaviour
             yield return waitTime;
             hit.Damage(damagePerSecond, Enums.DamageType.Poison, other.gameObject.transform.position);
             spawnManager.SpawnParticle(particleToSpawnOnDamage, other.gameObject.transform.position);
-            Debug.Log("Coroutine");
         }
-
-
     }
 }

@@ -16,6 +16,9 @@ public class GameManager : Singleton<GameManager>
 
     public int enemiesDead = 0;
     public int enemiesDeadBeforeBossFight = 2;
+    public int maxSpawnedEnemies = 10;
+    public int basicEnemiesCount = 0;
+
     public EventGameState OnGameStateChanged; //Create event to know when the game state changes
     public GameObject[] SystemPrefabs; //The list of all the Managers you want to create. (UI, Sound, Gameplay ect)
     private List<GameObject> _instancedSystemPrefabs; //A list to keep track of all the Managers: Create, Destroy
@@ -174,6 +177,7 @@ public class GameManager : Singleton<GameManager>
     #region Game State Functions
     public void RestartGame()
     {
+        basicEnemiesCount = 0;
         UpdateState(GameState.RUNNING);
     }
     public void ResumeGame()
@@ -182,15 +186,18 @@ public class GameManager : Singleton<GameManager>
     }
     public void ExitToMain()
     {
+        basicEnemiesCount = 0;
         UnloadLevel(_currentLevelName);
         UpdateState(GameState.MAINMENU);
     }
     public void GameOver()
     {
+        basicEnemiesCount = 0;
         UpdateState(GameState.DEAD);
     }
     public void EndGame()
     {
+        basicEnemiesCount = 0;
         UpdateState(GameState.ENDGAME);
     }
     public void TogglePause()

@@ -19,7 +19,9 @@ public class EnemyBasic : EnemyMain
     protected override void OnEnable()
     {
         base.OnEnable();
+        GameManager.Instance.basicEnemiesCount++;
         healthBar.transform.localScale = new Vector3(healthBarSize.x * (health / maxHealth), healthBarSize.y, healthBarSize.z);
+        healthDisplayText.text = health + "/" + maxHealth;
         zRandom = UnityEngine.Random.Range(-playerController.VerticalStep / 20, playerController.VerticalStep / 20);
     }
 
@@ -45,5 +47,8 @@ public class EnemyBasic : EnemyMain
 
         base.Death();
     }
-
+    protected void OnDisable()
+    {
+        GameManager.Instance.basicEnemiesCount--;
+    }
 }

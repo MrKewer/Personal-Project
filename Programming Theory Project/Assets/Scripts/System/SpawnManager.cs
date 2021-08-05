@@ -14,11 +14,13 @@ public class SpawnManager : MonoBehaviour
     private GameObject listToSpawnPrefab; //Get the lists of all to spawn based on the selected level (gets from spawnListPrefab's spawnList)
     private List<GameObject> obstaclesToSpawn; //The list that is gotten from the listToSpawnPrefab
     private List<GameObject> enemiesToSpawn;
-    [SerializeField] private List<GameObject> bossesToSpawn;
+    private List<GameObject> bossesToSpawn;
 
     private List<GameObject> obstaclesPool = new List<GameObject>(); //The pool that is created that is used to store the items
     private List<GameObject> enemiesPool = new List<GameObject>();
-    [SerializeField] private List<GameObject> bossesPool = new List<GameObject>();
+    private List<GameObject> bossesPool = new List<GameObject>();
+
+    
 
     private float xObstacleSpawnPos = 30.0f; //The spawn position in the x direction
     private float startDelay = 2f; //Delay before spawning 
@@ -356,8 +358,8 @@ public class SpawnManager : MonoBehaviour
 
     private void SpawnEnemy() //Will set an random obstacle active and set it to a new position
     {
-        if (isPlaying)
-        {
+        if (isPlaying && GameManager.Instance.basicEnemiesCount <= GameManager.Instance.maxSpawnedEnemies)
+        {            
             int randomPathway = Random.Range(-1, 2);
             GameObject enemyToSpawn = GetAvailableRandomGameObject(enemiesPool);
 
