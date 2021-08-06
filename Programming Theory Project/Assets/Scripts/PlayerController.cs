@@ -23,19 +23,22 @@ public class PlayerController : MonoBehaviour, IDamageable<float, Enums.DamageTy
     [SerializeField] private bool moveRight = false; //Move from one lane to the other lane
 
     public bool invulnerable = false; //Make the player invulnerable to damage
+    public bool flameThrower = false;
+
     public float maxHealth = 100f; //Full health
     public float health = 100f; //Current health
     public int score = 0;
     private Rigidbody playerRb;
     private Vector3 startPos;
     [SerializeField] private SpawnManager spawnManager; //Gets reference of the SpawnManager
-
+    public InGameUI inGameUI; //This is set inside of the InGameUI
 
     public float VerticalStep
     {
         get { return verticalStep; }
         private set { }
     }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -89,7 +92,7 @@ public class PlayerController : MonoBehaviour, IDamageable<float, Enums.DamageTy
         }
     }
 
-    // Player Movement
+    #region Player Movement
     void MovePlayer()
     {
         float horizontalInput = Input.GetAxis("Horizontal");
@@ -191,7 +194,7 @@ public class PlayerController : MonoBehaviour, IDamageable<float, Enums.DamageTy
         #endregion
 
     }
-
+    
     //Limit player in x position
     void ConstrainPlayerPosition()
     {
@@ -204,7 +207,9 @@ public class PlayerController : MonoBehaviour, IDamageable<float, Enums.DamageTy
             transform.position = new Vector3(-xBound, transform.position.y, transform.position.z);
         }
     }
+    #endregion
 
+    #region Colliders
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
@@ -217,10 +222,76 @@ public class PlayerController : MonoBehaviour, IDamageable<float, Enums.DamageTy
     {
         if (other.gameObject.CompareTag("Powerup"))
         {
-            //Debug.Log("Powerup has been triggered");
-            //Destroy(other.gameObject);
+            Enums.Picups pickupType = other.gameObject.GetComponent<Pickups>().pickupType;
+            switch (pickupType)
+            {
+                case Enums.Picups.Heal:
+                    health = maxHealth;
+                    inGameUI.UpdatePlayerHealth();
+                    break;
+
+                case Enums.Picups.Invulnerability:
+                    invulnerable = true;
+                    inGameUI.Invulnerability(pickupType);
+                    break;
+
+                case Enums.Picups.Ball:
+                    inGameUI.Balls(pickupType);
+                    InvokeRepeating("SpawnBalls", 0.5f, 0.2f);
+                    break;
+
+                case Enums.Picups.DoubleCoins:
+                    inGameUI.DoubleCoins(pickupType);
+                    break;
+
+                case Enums.Picups.FlameThrower:
+                    inGameUI.FlameThrower(pickupType);
+                    break;
+
+                case Enums.Picups.Coin:
+                    score++;
+                    inGameUI.UpdateScore();
+                    break;
+
+                case Enums.Picups.Bomb:
+                    break;
+            }
+            other.gameObject.SetActive(false);
         }
     }
+    #endregion
+
+    #region Powerups
+
+    public void SpawnBalls()
+    { 
+        Vector3 spawnPos = new Vector3(transform.position.x - 1, transform.position.y + 3, transform.position.z);
+        spawnManager.SpawnBall(spawnPos);
+
+    }
+
+    public void StopPowerup(Enums.Picups pickupType)
+    {
+        switch (pickupType)
+        {
+            case Enums.Picups.Invulnerability:
+                invulnerable = false;
+                break;
+
+            case Enums.Picups.FlameThrower:
+
+                break;
+            case Enums.Picups.Ball:
+                CancelInvoke("SpawnBalls");
+                break;
+        }
+    }
+
+
+
+    #endregion
+
+    #region Damage + Death
     private void Death()
     {
         spawnManager.SpawnParticle(Enums.Particals.BlueLarge, gameObject.transform.position); //Spawn particle when dead
@@ -248,4 +319,5 @@ public class PlayerController : MonoBehaviour, IDamageable<float, Enums.DamageTy
         }
 
     }
+    #endregion
 }

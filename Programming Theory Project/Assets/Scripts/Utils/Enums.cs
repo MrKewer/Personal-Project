@@ -9,4 +9,6 @@ public class Enums
     //public enum SmallParticals { Yellow, Purple, Red, Blue, Green, NumberOfTypes};
 
     public enum Particals { YellowSmall, WhiteSmall, GraySmall, WhiteLarge, GrayLarge, PurpleSmall, RedSmall, BlueSmall, GreenSmall, YellowLarge, PurpleLarge, RedLarge, BlueLarge, GreenLarge, NumberOfTypes };
+    
+    public enum Picups { Heal, Invulnerability, Ball, FlameThrower, Coin, Bomb, DoubleCoins }
 }

@@ -19,11 +19,11 @@ public class BossRacoon : BossMain
         blackBreathPrefab.SetActive(false); //Set the effects inactive
         blackBreathColliderPrefab.SetActive(false); //set the collider inactive
     }
-    protected override void Update()
+    protected override void FixedUpdate()
     {
         if (health > nextAttackHealth) //Do the normal routine when health still good
         {
-            base.Update();
+            base.FixedUpdate();
         }
         else
         {

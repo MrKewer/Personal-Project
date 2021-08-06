@@ -13,7 +13,7 @@ public class EnemyMain : MonoBehaviour, IDamageable<float, Enums.DamageType, Vec
     public float speed = 10f; //The speed used basically when changing lanes
     public float forwardSpeed; //The speed when the enemy runs towards player
     public float backwardSpeed; //The speed the enemy will run when going back(should be negative)
-    protected float runSpeed = -10f; //This speed is used to calculate current speed. ForwardSpeed or BackwardSpeed
+    [SerializeField] protected float runSpeed = -10f; //This speed is used to calculate current speed. ForwardSpeed or BackwardSpeed
     public float collisionDamage; //The damage the enemy will dealt when it hits the player
     protected GameObject player; //Reference to player
     protected PlayerController playerController; //Reference to playerController
@@ -37,13 +37,13 @@ public class EnemyMain : MonoBehaviour, IDamageable<float, Enums.DamageType, Vec
         runSpeed = forwardSpeed; //Resets runspeed when enemy will be pooled again
     }
 
-    protected virtual void Update()
+    protected virtual void FixedUpdate()
     {
         Vector3 FollowDirection = (player.transform.position - transform.position).normalized; //Get the direction of this character and the player
         FollowDirection = new Vector3((FollowDirection.x * runSpeed) / 100, 0, (FollowDirection.z + zRandom)); //Setup the vector to only use the x direction
         transform.Translate(FollowDirection * speed * Time.deltaTime); //Translate the character to the location
         runAnimation.SetFloat("Speed_f", GameManager.Instance.gameSpeed * AnimationSpeed / 10); //Set the run animation to sinc in with game speed
-        if (gameObject.transform.position.x <= spawnPos || FollowDirection.x < 0) //If running back and gets to spawn position then run forward
+        if (gameObject.transform.position.x <= spawnPos || FollowDirection.x < -0.5) //If running back and gets to spawn position then run forward
         {            
             runSpeed = forwardSpeed;
         }

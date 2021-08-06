@@ -17,6 +17,8 @@ public class SpawnManager : MonoBehaviour
     private List<GameObject> enemiesPool = new List<GameObject>();
     private List<GameObject> bossesPool = new List<GameObject>();
 
+    [SerializeField] private List<GameObject> ballsToSpawn;
+    private List<GameObject> ballPool = new List<GameObject>();
 
     private float xObstacleSpawnPos = 30.0f; //The spawn position in the x direction
     private float startDelay = 2f; //Delay before spawning 
@@ -91,6 +93,8 @@ public class SpawnManager : MonoBehaviour
         PoolGameObject(enemiesToSpawn, enemiesPool, poolDuplicates);
         PoolGameObject(bossesToSpawn, bossesPool, 1);
 
+        PoolGameObject(ballsToSpawn, ballPool, poolDuplicates);
+
         //Pool Small particals
         PoolGameObject(yellowSmallParticalPrefab, yellowSmallParticalPool, PoolDepth);
         PoolGameObject(purpleSmallParticalPrefab, purpleSmallParticalPool, PoolDepth);
@@ -118,8 +122,7 @@ public class SpawnManager : MonoBehaviour
     {
         if (currentState == GameManager.GameState.BOSSFIGHT)
         {
-            CancelInvoke();
-            InvokeRepeating("SpawnObstacle", startDelay, obstacleSpawnTime); //keeps spawning Obstacles
+            CancelInvoke("SpawnEnemy");            
             for (int i = 0; i < bossesPool.Count; i++) //Spawn all bosses
             {
                 SpawnBoss();
@@ -340,6 +343,19 @@ public class SpawnManager : MonoBehaviour
             obstacleToSpawn.transform.position = spawnPos;
         }
     }
+
+    public void SpawnBall(Vector3 location) //Will set an random obstacle active and set it to a new position
+    {
+        GameObject ballToSpawn = GetAvailableRandomGameObject(ballPool);
+
+        if (ballToSpawn != null)
+        {
+            ballToSpawn.SetActive(true);
+            //ballToSpawn.GetComponent<Rigidbody>().AddForce(Vector3.left * 100, ForceMode.Impulse);
+            ballToSpawn.transform.position = location;
+        }
+    }
+
     #endregion
 
     #region Enemies
