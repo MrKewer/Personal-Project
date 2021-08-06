@@ -37,27 +37,27 @@ public class InGameUI : MonoBehaviour
 
     private void OnDisable()
     {
-        playerController.DamageDealt -= PlayerController_DamageDealt;
+        playerController.DamageDealt -= PlayerController_DamageDealt; //Remove call from event
     }
     void Start()
     {
-        InvokeRepeating("Timer", 0, 1);
+        InvokeRepeating("Timer", 0, 1); //InvokeRepeating, is said to be the most acurate timer
         GameManager.Instance.OnGameStateChanged.AddListener(HandleGameStateChanged); //Add a Listener to the event
     }
     private void HandleGameStateChanged(GameManager.GameState currentState, GameManager.GameState previousState) //When the state changes in the GameManager
     {
-        if (currentState == GameManager.GameState.BOSSFIGHT)
+        if (currentState == GameManager.GameState.BOSSFIGHT) //When the bossfight begins
         {
-            bossHealthBar.gameObject.SetActive(true);
+            bossHealthBar.gameObject.SetActive(true); 
             bossMain = GameObject.FindGameObjectWithTag("Boss").GetComponent<BossMain>();
             bossHealthBar.maxValue = bossMain.maxHealth;
             bossHealthBar.value = bossMain.health;
             bossNameText.text = bossMain.BossName;
             bossHealthAmountDisplay.text = bossMain.health +"/" + bossMain.maxHealth;
-
+            
             if (bossMain != null)
             {
-                bossMain.DamageDealt += BossMain_DamageDealt;
+                bossMain.DamageDealt += BossMain_DamageDealt; //Add function to method
             }            
         }
         if (currentState == GameManager.GameState.DEAD)
@@ -71,7 +71,7 @@ public class InGameUI : MonoBehaviour
             InvokeRepeating("Timer", 0, 1);
         }
     }
-    void Timer()
+    void Timer() //The timer to display time
     {
         float minutes = Mathf.FloorToInt(time / 60);
         float seconds = Mathf.FloorToInt(time % 60);
@@ -80,12 +80,12 @@ public class InGameUI : MonoBehaviour
         time += 1;
     }
 
-    private void PlayerController_DamageDealt(float amount)
+    private void PlayerController_DamageDealt(float amount) //Added to event when the player received damage
     {
         playerHealthBar.value = playerController.health;
         playerHealthAmountDisplay.text = playerController.health + "/" + playerController.maxHealth;
     }
-    private void BossMain_DamageDealt(float amount)
+    private void BossMain_DamageDealt(float amount) //Added to event when the boss received damage
     {
         bossHealthBar.value = bossMain.health;
         bossHealthAmountDisplay.text = bossMain.health + "/" + bossMain.maxHealth;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Enums
 {
-   public enum DamageType { Collision, Bite, Poison, Fire, NumberOfTypes };
+    public enum DamageType { Collision, Bite, Poison, Fire, NumberOfTypes };
     //public enum LargeParticals { Yellow, Purple, Red, Blue, Green, NumberOfTypes };
     //public enum SmallParticals { Yellow, Purple, Red, Blue, Green, NumberOfTypes};
 

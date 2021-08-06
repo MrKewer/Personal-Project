@@ -14,10 +14,12 @@ public class GameManager : Singleton<GameManager>
     public int characterSelectedNumber = 0; //The Character the player will choose in the MainMenu
     public string playerName = "a"; //The Name the player will type in, in the MainMenu
 
-    public int enemiesDead = 0;
-    public int enemiesDeadBeforeBossFight = 2;
-    public int maxSpawnedEnemies = 10;
-    public int basicEnemiesCount = 0;
+    public int enemiesDead = 0; //Keeps count of the enemies killed
+    public int enemiesDeadBeforeBossFight = 2; //The amount of enemies to kill before the boss comes out
+    public int maxSpawnedEnemies = 10; //The max amount of active enemies in level
+    public int basicEnemiesCount = 0; //The count of active enemies
+
+    [SerializeField] private float gravityModifier = 10f; //To make a nicer jump for the player
 
     public EventGameState OnGameStateChanged; //Create event to know when the game state changes
     public GameObject[] SystemPrefabs; //The list of all the Managers you want to create. (UI, Sound, Gameplay ect)
@@ -87,6 +89,7 @@ public class GameManager : Singleton<GameManager>
     void Start()
     {
         DontDestroyOnLoad(gameObject); //Called to keep this script even if it loads a complete new level
+        Physics.gravity *= gravityModifier; //This should only be done once in the game
         _loadOperations = new List<AsyncOperation>(); //Initialize the list
         _instancedSystemPrefabs = new List<GameObject>(); //Initialize the list
         InstantiateSystemPrefabs(); //Create all the managers
@@ -96,7 +99,7 @@ public class GameManager : Singleton<GameManager>
     void Update()
     {
         //When the game is running or if it is paused
-        if (Input.GetKeyDown(KeyCode.Escape) && (_currentGameState == GameState.RUNNING || _currentGameState == GameState.PAUSED))
+        if (Input.GetKeyDown(KeyCode.Escape) && (_currentGameState == GameState.RUNNING || _currentGameState == GameState.PAUSED || _currentGameState == GameState.BOSSFIGHT))
         {
             TogglePause(); //Will swich between pause and unpause
         }
@@ -177,7 +180,7 @@ public class GameManager : Singleton<GameManager>
     #region Game State Functions
     public void RestartGame()
     {
-        basicEnemiesCount = 0;
+        enemiesDead = 0;
         UpdateState(GameState.RUNNING);
     }
     public void ResumeGame()
@@ -186,18 +189,18 @@ public class GameManager : Singleton<GameManager>
     }
     public void ExitToMain()
     {
-        basicEnemiesCount = 0;
+        enemiesDead = 0;
         UnloadLevel(_currentLevelName);
         UpdateState(GameState.MAINMENU);
     }
     public void GameOver()
     {
-        basicEnemiesCount = 0;
+        enemiesDead = 0;
         UpdateState(GameState.DEAD);
     }
     public void EndGame()
     {
-        basicEnemiesCount = 0;
+        enemiesDead = 0;
         UpdateState(GameState.ENDGAME);
     }
     public void TogglePause()

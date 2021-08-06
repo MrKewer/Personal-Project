@@ -3,34 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public delegate void DamageDealtHandler(float amount);
+public delegate void DamageDealtHandler(float amount); //Create a delegate to use when damage is dealt
 public class PlayerController : MonoBehaviour, IDamageable<float, Enums.DamageType, Vector3>
 {
-    public event DamageDealtHandler DamageDealt;
-    private GameObject characterSelected;
-    [SerializeField] private GameObject CharacterListPrefab;
-    private Animator runAnimation;
-    [SerializeField] private float speed = 10.0f;
-    [SerializeField] private float verticalSpeed = 10.0f;
-    [SerializeField] private float verticalStep = 3f;
-    [SerializeField] private float xBound = 10.0f;
+    public event DamageDealtHandler DamageDealt; //This event will be used to update the InGameUI
+    private GameObject characterSelected; //The gameObject to spawn the character selected in MainMenu
+    [SerializeField] private GameObject CharacterListPrefab; //The List of the Characters 
+    private Animator runAnimation; //Gets the run animation to control the speed of the animation if the background speed increase
+    [SerializeField] private float speed = 10.0f; //Forward speed when user press forward and backwards
+    [SerializeField] private float verticalSpeed = 10.0f; //The speed used basically when changing lanes
+    [SerializeField] private float verticalStep = 3f; //The distance of the lanes
+    [SerializeField] private float xBound = 10.0f; // the maximum position the player can go forward or backwards
     [SerializeField] private float jumpForce = 250.0f;
-    [SerializeField] private float gravityModifier = 10f;
-    [SerializeField] private float tolerance = 0;
-    [SerializeField] private bool isOnGround;
-    [SerializeField] private bool moveLeft = false;
-    [SerializeField] private bool moveCenterFL = false;
-    [SerializeField] private bool moveCenterFR = false;
-    [SerializeField] private bool moveRight = false;
 
-    public bool invulnerable = false;
-    public float maxHealth = 100f;
-    public float health = 100f;
+    [SerializeField] private bool isOnGround; //To be able to jump or not
+    [SerializeField] private bool moveLeft = false; //Move from one lane to the other lane
+    [SerializeField] private bool moveCenterFL = false; //Move from one lane to the other lane
+    [SerializeField] private bool moveCenterFR = false; //Move from one lane to the other lane
+    [SerializeField] private bool moveRight = false; //Move from one lane to the other lane
+
+    public bool invulnerable = false; //Make the player invulnerable to damage
+    public float maxHealth = 100f; //Full health
+    public float health = 100f; //Current health
     public int score = 0;
     private Rigidbody playerRb;
     private Vector3 startPos;
-    [SerializeField] private GameObject Explode;
-    [SerializeField] private SpawnManager spawnManager;
+    [SerializeField] private SpawnManager spawnManager; //Gets reference of the SpawnManager
 
 
     public float VerticalStep
@@ -41,20 +39,18 @@ public class PlayerController : MonoBehaviour, IDamageable<float, Enums.DamageTy
     // Start is called before the first frame update
     void Start()
     {
-        
         GameManager.Instance.OnGameStateChanged.AddListener(HandleGameStateChanged); //Add a Listener to the event
 
-        Vector3 characterTransform = new Vector3(0, 0, 0);
+        //Spawn the selected character
+        Vector3 characterTransform = new Vector3(0, 0, 0); 
         Quaternion characterRotation = Quaternion.Euler(0, 90, 0);
         characterSelected = CharacterListPrefab.GetComponent<CharacterList>().characterList[GameManager.Instance.characterSelectedNumber];
         characterSelected = Instantiate(characterSelected, characterTransform, characterRotation);
         characterSelected.transform.SetParent(gameObject.transform);
 
         playerRb = GetComponent<Rigidbody>();
-        Physics.gravity *= gravityModifier;
-        startPos = transform.position;
+        startPos = transform.position; //Used to be able to calculate the different lanes
         resetAll();
-        //runAnimation = GetComponentInChildren<Animator>();
         runAnimation = characterSelected.GetComponent<Animator>();
     }
 
@@ -69,7 +65,7 @@ public class PlayerController : MonoBehaviour, IDamageable<float, Enums.DamageTy
             characterSelected.SetActive(true);
         }
     }
-    private void resetAll()
+    private void resetAll() //When game restarts 
     {
         gameObject.transform.position = new Vector3(0, 0, 0);
         moveLeft = false;
@@ -86,7 +82,7 @@ public class PlayerController : MonoBehaviour, IDamageable<float, Enums.DamageTy
         MovePlayer();
         ConstrainPlayerPosition();
 
-        if (Input.GetKeyDown(KeyCode.Space) && isOnGround)
+        if (Input.GetKeyDown(KeyCode.Space) && isOnGround) //Jump
         {
             playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             isOnGround = false;
@@ -108,7 +104,7 @@ public class PlayerController : MonoBehaviour, IDamageable<float, Enums.DamageTy
         // move player from center to left
         #region Move Left
         // when the player is in position of the center
-        if (verticalInput > 0 && transform.position.z >= startPos.z - tolerance && transform.position.z < verticalStep)
+        if (verticalInput > 0 && transform.position.z >= startPos.z && transform.position.z < verticalStep)
         {
             moveLeft = true;
             moveCenterFL = false;
@@ -130,7 +126,7 @@ public class PlayerController : MonoBehaviour, IDamageable<float, Enums.DamageTy
         // move player from left to center
         #region Move Center From Left 
         // when the player is in position of the Left side
-        if (verticalInput < 0 && transform.position.z > startPos.z - tolerance && transform.position.z <= verticalStep)
+        if (verticalInput < 0 && transform.position.z > startPos.z && transform.position.z <= verticalStep)
         {
             moveLeft = false;
             moveCenterFL = true;
@@ -143,7 +139,7 @@ public class PlayerController : MonoBehaviour, IDamageable<float, Enums.DamageTy
             transform.position = Vector3.MoveTowards(transform.position, centerPos, Time.deltaTime * verticalSpeed);
         }
         // When the player is in position 
-        if (transform.position.z <= startPos.z + tolerance)
+        if (transform.position.z <= startPos.z)
         {
             moveCenterFL = false;
         }
@@ -152,7 +148,7 @@ public class PlayerController : MonoBehaviour, IDamageable<float, Enums.DamageTy
         // move player from right to center
         #region Move Center From Right 
         // when the player is in position of the Right side
-        if (verticalInput > 0 && transform.position.z < startPos.z + tolerance && transform.position.z >= -verticalStep)
+        if (verticalInput > 0 && transform.position.z < startPos.z && transform.position.z >= -verticalStep)
         {
             moveLeft = false;
             moveCenterFL = false;
@@ -165,7 +161,7 @@ public class PlayerController : MonoBehaviour, IDamageable<float, Enums.DamageTy
             transform.position = Vector3.MoveTowards(transform.position, centerPos, Time.deltaTime * verticalSpeed);
         }
         // When the player is in position 
-        if (transform.position.z >= startPos.z - tolerance)
+        if (transform.position.z >= startPos.z)
         {
             moveCenterFR = false;
         }
@@ -174,7 +170,7 @@ public class PlayerController : MonoBehaviour, IDamageable<float, Enums.DamageTy
         // move player from center to right
         #region Move Right 
         // when the player is in position of the center
-        if (verticalInput < 0 && transform.position.z <= startPos.z + tolerance && transform.position.z > -verticalStep)
+        if (verticalInput < 0 && transform.position.z <= startPos.z && transform.position.z > -verticalStep)
         {
             moveLeft = false;
             moveCenterFL = false;
@@ -213,7 +209,7 @@ public class PlayerController : MonoBehaviour, IDamageable<float, Enums.DamageTy
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            isOnGround = true;
+            isOnGround = true; //Is able to jump
         }
     }
 
@@ -227,26 +223,20 @@ public class PlayerController : MonoBehaviour, IDamageable<float, Enums.DamageTy
     }
     private void Death()
     {
-        spawnManager.SpawnParticle(Enums.Particals.BlueLarge, gameObject.transform.position);
-        //gameObject.SetActive()
-        characterSelected.SetActive(false);
-    }
-
-    private void OnDestroy()
-    {
-        Physics.gravity /= gravityModifier;
+        spawnManager.SpawnParticle(Enums.Particals.BlueLarge, gameObject.transform.position); //Spawn particle when dead
+        characterSelected.SetActive(false); //Set inactive to use again if user restarts game
     }
 
     public void Damage(float damageTaken, Enums.DamageType damageType, Vector3 damageLocation)
     {
         if (invulnerable == false)
         {
-            health -= damageTaken;
-            if (DamageDealt != null)
+            health -= damageTaken; //Calculate new health
+            if (DamageDealt != null) 
             {
-                DamageDealt(damageTaken);
+                DamageDealt(damageTaken); //Fire up the event
             }
-            if (health <= 0)
+            if (health <= 0) //Death if health below 0
             {
                 GameManager.Instance.GameOver();
                 Death();
@@ -254,7 +244,7 @@ public class PlayerController : MonoBehaviour, IDamageable<float, Enums.DamageTy
         }
         if(damageType == Enums.DamageType.Collision)
         {
-            spawnManager.SpawnParticle(Enums.Particals.BlueSmall, damageLocation);
+            spawnManager.SpawnParticle(Enums.Particals.BlueSmall, damageLocation); //Spawn particle
         }
 
     }

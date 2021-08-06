@@ -4,10 +4,7 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    //[SerializeField] private GameObject playerPrefab;
     private PlayerController playerControllerScript; //Gets the player Controller Script
-    //private GameObject characterSelected;
-    //[SerializeField] private GameObject CharacterListPrefab;
 
     [SerializeField] private GameObject spawnListPrefab; //Gets the list of all obstacles, enemies and bosses
 
@@ -20,17 +17,18 @@ public class SpawnManager : MonoBehaviour
     private List<GameObject> enemiesPool = new List<GameObject>();
     private List<GameObject> bossesPool = new List<GameObject>();
 
-    
 
     private float xObstacleSpawnPos = 30.0f; //The spawn position in the x direction
     private float startDelay = 2f; //Delay before spawning 
     public float obstacleSpawnTime = 0.2f; //Spawning delay intervals
+    public float EnemiesSpawnTime = 3f; //Spawning delay intervals
     private float powerupSpawnTime = 5f;
-    private bool isPlaying = true;
+    //private bool isPlaying = true;
 
     private int PoolDepth = 10; // The amount that will be spawned
     private bool canGrow = true; //If the need for more particals it will create more
     [SerializeField] private int poolDuplicates = 3;
+
 
     [Space]
     [Header("Particals Small")]
@@ -78,10 +76,6 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private GameObject whiteLargeParticalPrefab; //Hit Particals
     private List<GameObject> whiteLargeParticalPool = new List<GameObject>(); // The pool that is created that is used to store the items
 
-    //[SerializeField] private GameObject explosionParticalPrefab; //Explosion Particals
-    //private List<GameObject> explosionParticalPool = new List<GameObject>();
-
-
 
     void Start()
     {
@@ -115,19 +109,18 @@ public class SpawnManager : MonoBehaviour
         PoolGameObject(grayLargeParticalPrefab, grayLargeParticalPool, PoolDepth);
         PoolGameObject(whiteLargeParticalPrefab, whiteLargeParticalPool, PoolDepth);
 
-        //Spawning obstacles with intervals
+        //Spawning obstacles and enemies with intervals
         InvokeRepeating("SpawnObstacle", startDelay, obstacleSpawnTime);
-        InvokeRepeating("SpawnEnemy", startDelay, 3);
+        InvokeRepeating("SpawnEnemy", startDelay, EnemiesSpawnTime);
 
     }
     private void HandleGameStateChanged(GameManager.GameState currentState, GameManager.GameState previousState) //When the state changes in the GameManager
     {
         if (currentState == GameManager.GameState.BOSSFIGHT)
         {
-            //DisableAllEnemies();
             CancelInvoke();
-            InvokeRepeating("SpawnObstacle", startDelay, obstacleSpawnTime);    
-            for(int i = 0; i<bossesPool.Count; i++)
+            InvokeRepeating("SpawnObstacle", startDelay, obstacleSpawnTime); //keeps spawning Obstacles
+            for (int i = 0; i < bossesPool.Count; i++) //Spawn all bosses
             {
                 SpawnBoss();
             }
@@ -135,16 +128,14 @@ public class SpawnManager : MonoBehaviour
         if (currentState == GameManager.GameState.DEAD)
         {
             CancelInvoke();
-            DisableAllObstacles();
-            isPlaying = false;
+            DisableAllObstacles(); //Clean the level, keeps the enemies running
         }
         if (currentState == GameManager.GameState.RUNNING && previousState == GameManager.GameState.DEAD)
         {
-            isPlaying = true;
-            InvokeRepeating("SpawnObstacle", startDelay, obstacleSpawnTime);
+            InvokeRepeating("SpawnObstacle", startDelay, obstacleSpawnTime); 
             InvokeRepeating("SpawnEnemy", startDelay, 3);
-            DisableAllParticals();
-            DisableAllEnemies();
+            DisableAllParticals(); //Clean the level
+            DisableAllEnemies(); //Clean the level
         }
     }
 
@@ -202,7 +193,7 @@ public class SpawnManager : MonoBehaviour
 
     #region Spawn Partical
 
-    public void SpawnRandomPartical(Vector3 location, float locationRange)
+    public void SpawnRandomPartical(Vector3 location, float locationRange) // will spawn a random particle at a random location
     {
         int randomNumber = Random.Range(0, (int)Enums.Particals.NumberOfTypes);
         Vector3 randomLocation = new Vector3(Random.Range(-locationRange, locationRange), Random.Range(-locationRange, locationRange), Random.Range(-locationRange, locationRange));
@@ -337,19 +328,16 @@ public class SpawnManager : MonoBehaviour
 
     private void SpawnObstacle() //Will set an random obstacle active and set it to a new position
     {
-        if (isPlaying)
+        int randomPathway = Random.Range(-1, 2);
+        GameObject obstacleToSpawn = GetAvailableRandomGameObject(obstaclesPool);
+
+        if (obstacleToSpawn != null)
         {
-            int randomPathway = Random.Range(-1, 2);
-            GameObject obstacleToSpawn = GetAvailableRandomGameObject(obstaclesPool);
+            float yPos = obstacleToSpawn.transform.position.y;
+            Vector3 spawnPos = new Vector3(xObstacleSpawnPos, yPos, randomPathway * playerControllerScript.VerticalStep);
 
-            if (obstacleToSpawn != null)
-            {
-                float yPos = obstacleToSpawn.transform.position.y;
-                Vector3 spawnPos = new Vector3(xObstacleSpawnPos, yPos, randomPathway * playerControllerScript.VerticalStep);
-
-                obstacleToSpawn.SetActive(true);
-                obstacleToSpawn.transform.position = spawnPos;
-            }
+            obstacleToSpawn.SetActive(true);
+            obstacleToSpawn.transform.position = spawnPos;
         }
     }
     #endregion
@@ -358,8 +346,8 @@ public class SpawnManager : MonoBehaviour
 
     private void SpawnEnemy() //Will set an random obstacle active and set it to a new position
     {
-        if (isPlaying && GameManager.Instance.basicEnemiesCount <= GameManager.Instance.maxSpawnedEnemies)
-        {            
+        if (GameManager.Instance.basicEnemiesCount <= GameManager.Instance.maxSpawnedEnemies)
+        {
             int randomPathway = Random.Range(-1, 2);
             GameObject enemyToSpawn = GetAvailableRandomGameObject(enemiesPool);
 
@@ -381,35 +369,32 @@ public class SpawnManager : MonoBehaviour
 
     private void SpawnBoss() //Will set an random obstacle active and set it to a new position
     {
-        if (isPlaying)
+        int randomPathway = Random.Range(-1, 2);
+        GameObject bossToSpawn = GetAvailableRandomGameObject(bossesPool);
+
+        if (bossToSpawn != null)
         {
-            int randomPathway = Random.Range(-1, 2);
-            GameObject bossToSpawn = GetAvailableRandomGameObject(bossesPool);
+            EnemyMain enemyScript = bossToSpawn.GetComponent<EnemyMain>();
+            float xPos = Random.Range(enemyScript.spawnPos - enemyScript.spawnPosRange, enemyScript.spawnPos + enemyScript.spawnPosRange);
+            float yPos = bossToSpawn.transform.position.y;
+            Vector3 spawnPos = new Vector3(xPos, yPos, randomPathway * playerControllerScript.VerticalStep);
 
-            if (bossToSpawn != null)
-            {
-                EnemyMain enemyScript = bossToSpawn.GetComponent<EnemyMain>();
-                float xPos = Random.Range(enemyScript.spawnPos - enemyScript.spawnPosRange, enemyScript.spawnPos + enemyScript.spawnPosRange);
-                float yPos = bossToSpawn.transform.position.y;
-                Vector3 spawnPos = new Vector3(xPos, yPos, randomPathway * playerControllerScript.VerticalStep);
-
-                bossToSpawn.SetActive(true);
-                bossToSpawn.transform.position = spawnPos;
-            }
+            bossToSpawn.SetActive(true);
+            bossToSpawn.transform.position = spawnPos;
         }
     }
 
-    public void BossDeath(Vector3 location)
+    public void BossDeath(Vector3 location) //Will clear level + spawn a few particles
     {
         CancelInvoke();
         DisableAllObstacles();
         DisableAllEnemies();
         StartCoroutine(CoSpawnParticles(location));
     }
-    IEnumerator CoSpawnParticles( Vector3 location)
+    IEnumerator CoSpawnParticles(Vector3 location)
     {
         int count = 0;
-        while (count<=10)
+        while (count <= 10)
         {
             float randomTime = Random.Range(0, 0.75f);
             WaitForSeconds waitTime = new WaitForSeconds(randomTime);
