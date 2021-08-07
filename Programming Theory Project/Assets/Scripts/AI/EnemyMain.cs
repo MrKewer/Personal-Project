@@ -67,7 +67,7 @@ public class EnemyMain : MonoBehaviour, IDamageable<float, Enums.DamageType, Vec
             if (hit != null)
             {
                 hit.Damage(collisionDamage, Enums.DamageType.Bite, pos); //Do damage to player
-                spawnManager.SpawnParticle(Enums.Particals.RedSmall, pos); //Spawn Particle
+                spawnManager.SpawnParticle(Enums.Particles.RedSmall, pos); //Spawn Particle
                 runSpeed = backwardSpeed; //Run backwards
             }
         }

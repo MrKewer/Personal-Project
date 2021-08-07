@@ -1,5 +1,64 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4134640853987143154
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4134640853987143153}
+  - component: {fileID: 4134640853987143152}
+  - component: {fileID: 9151691225101981997}
+  m_Layer: 0
+  m_Name: Balls
+  m_TagString: Powerup
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4134640853987143153
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4134640853987143154}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 5064714564940617428}
+  m_Father: {fileID: 5064025222403822835}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &4134640853987143152
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4134640853987143154}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.731432, y: 3.1364799, z: 1.731432}
+  m_Center: {x: 0, y: 1.0682397, z: 0}
+--- !u!114 &9151691225101981997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4134640853987143154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa159b8bdc440394a91f221f7f5d2e16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickupType: 2
 --- !u!1 &5064025222403822832
 GameObject:
   m_ObjectHideFlags: 0
@@ -9,11 +68,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5064025222403822835}
-  - component: {fileID: 5064025222403822834}
-  - component: {fileID: 11099850045415471}
+  - component: {fileID: 4948447257584911188}
   m_Layer: 0
   m_Name: Balls
-  m_TagString: Powerup
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26,28 +84,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5064025222403822832}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 20.35831, y: 0.76605403, z: -0.29675898}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 5064714564940617428}
-  - {fileID: 3729246018084692511}
+  - {fileID: 4134640853987143153}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &5064025222403822834
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5064025222403822832}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.731432, y: 3.1364799, z: 1.731432}
-  m_Center: {x: 0, y: 1.0682397, z: 0}
---- !u!114 &11099850045415471
+--- !u!114 &4948447257584911188
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -56,54 +100,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 5064025222403822832}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa159b8bdc440394a91f221f7f5d2e16, type: 3}
+  m_Script: {fileID: 11500000, guid: 394d0b1f166273143b52e7a8e2336f4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickupType: 2
---- !u!1001 &3729246018084848515
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 5064025222403822835}
-    m_Modifications:
-    - target: {fileID: 434588, guid: 1570b78163aaedc44bfd35cf13a9f13f, type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 434588, guid: 1570b78163aaedc44bfd35cf13a9f13f, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.62
-      objectReference: {fileID: 0}
-    - target: {fileID: 434588, guid: 1570b78163aaedc44bfd35cf13a9f13f, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 434588, guid: 1570b78163aaedc44bfd35cf13a9f13f, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 434588, guid: 1570b78163aaedc44bfd35cf13a9f13f, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 19940294, guid: 1570b78163aaedc44bfd35cf13a9f13f, type: 3}
-      propertyPath: m_Materials.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 1570b78163aaedc44bfd35cf13a9f13f, type: 3}
---- !u!4 &3729246018084692511 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 434588, guid: 1570b78163aaedc44bfd35cf13a9f13f, type: 3}
-  m_PrefabInstance: {fileID: 3729246018084848515}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5064025223424418072
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 5064025222403822835}
+    m_TransformParent: {fileID: 4134640853987143153}
     m_Modifications:
     - target: {fileID: 1506585243793092, guid: d4ee8d5ef71ec5a49b51381c8889bc09, type: 3}
       propertyPath: m_Name

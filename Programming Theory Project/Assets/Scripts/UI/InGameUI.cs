@@ -13,6 +13,9 @@ public class InGameUI : MonoBehaviour
     private BossMain bossMain;
     private int time = 0;
     public int count = 0;
+    private bool bHasPowerup = false;
+    private bool bGetsNewPowerup = false;
+
     [SerializeField] private TextMeshProUGUI playerNameText; //The text to display player name
     [SerializeField] private Slider playerHealthBar; //The health bar of the player
     [SerializeField] private TextMeshProUGUI playerHealthAmountDisplay; //The health bar of the player
@@ -61,17 +64,17 @@ public class InGameUI : MonoBehaviour
     {
         if (currentState == GameManager.GameState.BOSSFIGHT) //When the bossfight begins
         {
-            bossHealthBar.gameObject.SetActive(true); 
+            bossHealthBar.gameObject.SetActive(true);
             bossMain = GameObject.FindGameObjectWithTag("Boss").GetComponent<BossMain>();
             bossHealthBar.maxValue = bossMain.maxHealth;
             bossHealthBar.value = bossMain.health;
             bossNameText.text = bossMain.BossName;
-            bossHealthAmountDisplay.text = bossMain.health +"/" + bossMain.maxHealth;
-            
+            bossHealthAmountDisplay.text = bossMain.health + "/" + bossMain.maxHealth;
+
             if (bossMain != null)
             {
                 bossMain.DamageDealt += BossMain_DamageDealt; //Add function to method
-            }            
+            }
         }
         if (currentState == GameManager.GameState.DEAD)
         {
@@ -120,57 +123,69 @@ public class InGameUI : MonoBehaviour
 
     #region Powerups
 
-    public void Invulnerability(Enums.Picups pickupType)
+    public void Invulnerability(Enums.Pickups pickupType)
     {
-        powerupIndicator.SetActive(true);
-        powerupIndicatorTime[8].SetActive(true);
+        StartPowerup(pickupType);
         powerupIndicator.GetComponent<Image>().sprite = invulnerablitySprite;
-        StartCoroutine(PowerupCoroutine(pickupType));
+
     }
 
-    public void FlameThrower(Enums.Picups pickupType)
+    public void FlameThrower(Enums.Pickups pickupType)
     {
-        powerupIndicator.SetActive(true);
-        powerupIndicatorTime[8].SetActive(true);
+        StartPowerup(pickupType);
         powerupIndicator.GetComponent<Image>().sprite = flameThrowerSprite;
-        StartCoroutine(PowerupCoroutine(pickupType));
+
     }
 
-    public void DoubleCoins(Enums.Picups pickupType)
+    public void DoubleCoins(Enums.Pickups pickupType)
     {
-        powerupIndicator.SetActive(true);
-        powerupIndicatorTime[8].SetActive(true);
+        StartPowerup(pickupType);
         powerupIndicator.GetComponent<Image>().sprite = doubleCoinsSprite;
-        StartCoroutine(PowerupCoroutine(pickupType));
+
     }
-    public void Balls(Enums.Picups pickupType)
+    public void Balls(Enums.Pickups pickupType)
     {
+
+        StartPowerup(pickupType);
+        powerupIndicator.GetComponent<Image>().sprite = ballSprite;
+
+
+    }
+    private void StartPowerup(Enums.Pickups pickupType)
+    {
+        if (bHasPowerup)
+        {
+            PowerupCountComplete();
+        }
         powerupIndicator.SetActive(true);
         powerupIndicatorTime[8].SetActive(true);
-        powerupIndicator.GetComponent<Image>().sprite = ballSprite;
-        StartCoroutine(PowerupCoroutine(pickupType));
+        playerController.currentPowerup = pickupType;
+        count = 8;
+        InvokeRepeating("PowerupCounter", 0, 1);
     }
-
-    IEnumerator PowerupCoroutine(Enums.Picups pickupType)
+    private void PowerupCounter()
     {
-        count = 7;
-        while (count > -1)
-        {
-            WaitForSeconds waitTime = new WaitForSeconds(1);
-            yield return waitTime;
-            DeactivatePowerupIndicatorTime();
-            powerupIndicatorTime[count].SetActive(true);
-            count--;
-        }
+        bHasPowerup = true;
         DeactivatePowerupIndicatorTime();
-        powerupIndicator.SetActive(false);
-        playerController.StopPowerup(pickupType);
+        powerupIndicatorTime[count].SetActive(true);
+        count--;
+        if (count == -1)
+        {
+            PowerupCountComplete();
+        }
     }
-
+    private void PowerupCountComplete()
+    {
+        DeactivatePowerupIndicatorTime();
+        bHasPowerup = false;
+        powerupIndicator.SetActive(false);
+        playerController.StopPowerup();
+        CancelInvoke("PowerupCounter");
+    }
 
     private void DeactivatePowerupIndicatorTime()
     {
-        for (int i = 0; i<powerupIndicatorTime.Count; i++)
+        for (int i = 0; i < powerupIndicatorTime.Count; i++)
         {
             powerupIndicatorTime[i].SetActive(false);
         }

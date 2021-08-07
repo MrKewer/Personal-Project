@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour, IDamageable<float, Enums.DamageTy
     [SerializeField] private bool moveCenterFR = false; //Move from one lane to the other lane
     [SerializeField] private bool moveRight = false; //Move from one lane to the other lane
 
+    public Enums.Pickups currentPowerup;
     public bool invulnerable = false; //Make the player invulnerable to damage
     public bool flameThrower = false;
 
@@ -55,6 +56,7 @@ public class PlayerController : MonoBehaviour, IDamageable<float, Enums.DamageTy
         startPos = transform.position; //Used to be able to calculate the different lanes
         resetAll();
         runAnimation = characterSelected.GetComponent<Animator>();
+
     }
 
     private void HandleGameStateChanged(GameManager.GameState currentState, GameManager.GameState previousState) //When the state changes in the GameManager
@@ -222,38 +224,40 @@ public class PlayerController : MonoBehaviour, IDamageable<float, Enums.DamageTy
     {
         if (other.gameObject.CompareTag("Powerup"))
         {
-            Enums.Picups pickupType = other.gameObject.GetComponent<Pickups>().pickupType;
+            Enums.Pickups pickupType = other.gameObject.GetComponent<Pickups>().pickupType;
             switch (pickupType)
             {
-                case Enums.Picups.Heal:
+                case Enums.Pickups.Heal:
                     health = maxHealth;
                     inGameUI.UpdatePlayerHealth();
                     break;
 
-                case Enums.Picups.Invulnerability:
+                case Enums.Pickups.Invulnerability:
                     invulnerable = true;
                     inGameUI.Invulnerability(pickupType);
                     break;
 
-                case Enums.Picups.Ball:
+                case Enums.Pickups.Ball:
                     inGameUI.Balls(pickupType);
                     InvokeRepeating("SpawnBalls", 0.5f, 0.2f);
                     break;
 
-                case Enums.Picups.DoubleCoins:
+                case Enums.Pickups.DoubleCoins:
                     inGameUI.DoubleCoins(pickupType);
                     break;
 
-                case Enums.Picups.FlameThrower:
+                case Enums.Pickups.FlameThrower:
                     inGameUI.FlameThrower(pickupType);
                     break;
 
-                case Enums.Picups.Coin:
+                case Enums.Pickups.Coin:
                     score++;
                     inGameUI.UpdateScore();
                     break;
 
-                case Enums.Picups.Bomb:
+                case Enums.Pickups.Bomb:
+                    Vector3 bombLocation = new Vector3(transform.position.x - 1.3f, transform.position.y + 2, transform.position.z);
+                    spawnManager.SpawnBomb(bombLocation);
                     break;
             }
             other.gameObject.SetActive(false);
@@ -267,21 +271,21 @@ public class PlayerController : MonoBehaviour, IDamageable<float, Enums.DamageTy
     { 
         Vector3 spawnPos = new Vector3(transform.position.x - 1, transform.position.y + 3, transform.position.z);
         spawnManager.SpawnBall(spawnPos);
-
     }
 
-    public void StopPowerup(Enums.Picups pickupType)
+    public void StopPowerup()
     {
-        switch (pickupType)
+
+        switch (currentPowerup)
         {
-            case Enums.Picups.Invulnerability:
+            case Enums.Pickups.Invulnerability:
                 invulnerable = false;
                 break;
 
-            case Enums.Picups.FlameThrower:
+            case Enums.Pickups.FlameThrower:
 
                 break;
-            case Enums.Picups.Ball:
+            case Enums.Pickups.Ball:
                 CancelInvoke("SpawnBalls");
                 break;
         }
@@ -294,7 +298,7 @@ public class PlayerController : MonoBehaviour, IDamageable<float, Enums.DamageTy
     #region Damage + Death
     private void Death()
     {
-        spawnManager.SpawnParticle(Enums.Particals.BlueLarge, gameObject.transform.position); //Spawn particle when dead
+        spawnManager.SpawnParticle(Enums.Particles.BlueLarge, gameObject.transform.position); //Spawn particle when dead
         characterSelected.SetActive(false); //Set inactive to use again if user restarts game
     }
 
@@ -315,7 +319,7 @@ public class PlayerController : MonoBehaviour, IDamageable<float, Enums.DamageTy
         }
         if(damageType == Enums.DamageType.Collision)
         {
-            spawnManager.SpawnParticle(Enums.Particals.BlueSmall, damageLocation); //Spawn particle
+            spawnManager.SpawnParticle(Enums.Particles.BlueSmall, damageLocation); //Spawn particle
         }
 
     }

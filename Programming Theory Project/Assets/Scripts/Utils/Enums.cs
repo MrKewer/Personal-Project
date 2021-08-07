@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Enums
 {
-    public enum DamageType { Collision, Bite, Poison, Fire, NumberOfTypes };
-    //public enum LargeParticals { Yellow, Purple, Red, Blue, Green, NumberOfTypes };
-    //public enum SmallParticals { Yellow, Purple, Red, Blue, Green, NumberOfTypes};
+    public enum DamageType { Collision, Bite, Poison, Fire, Explosion, NumberOfTypes };
+    //public enum LargeParticles { Yellow, Purple, Red, Blue, Green, NumberOfTypes };
+    //public enum SmallParticles { Yellow, Purple, Red, Blue, Green, NumberOfTypes};
 
-    public enum Particals { YellowSmall, WhiteSmall, GraySmall, WhiteLarge, GrayLarge, PurpleSmall, RedSmall, BlueSmall, GreenSmall, YellowLarge, PurpleLarge, RedLarge, BlueLarge, GreenLarge, NumberOfTypes };
+    public enum Particles { YellowSmall, WhiteSmall, GraySmall, WhiteLarge, GrayLarge, PurpleSmall, RedSmall, BlueSmall, GreenSmall, YellowLarge, PurpleLarge, RedLarge, BlueLarge, GreenLarge, NumberOfTypes };
     
-    public enum Picups { Heal, Invulnerability, Ball, FlameThrower, Coin, Bomb, DoubleCoins }
+    public enum Pickups { Heal, Invulnerability, Ball, FlameThrower, Coin, Bomb, DoubleCoins, NumberOfTypes }
 }

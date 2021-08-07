@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 8267523529193480107}
   - component: {fileID: 3918964037355332713}
   - component: {fileID: 4301195027931909520}
+  - component: {fileID: -3766880702241051897}
   m_Layer: 0
   m_Name: Crate_Question_01
   m_TagString: Ground
@@ -142,6 +143,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageAmount: 10
+--- !u!114 &-3766880702241051897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1906384758145082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 394d0b1f166273143b52e7a8e2336f4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7123166738901792496
 PrefabInstance:
   m_ObjectHideFlags: 0

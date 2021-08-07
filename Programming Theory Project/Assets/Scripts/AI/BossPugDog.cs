@@ -84,7 +84,7 @@ public class BossPugDog : BossMain
     }
     protected override void Death()
     {
-        spawnManager.SpawnParticle(Enums.Particals.BlueLarge, gameObject.transform.position); // Spawn Particle
+        spawnManager.SpawnParticle(Enums.Particles.BlueLarge, gameObject.transform.position); // Spawn Particle
         GameManager.Instance.EndGame(); //Tell the game manager the game has ended
         spawnManager.BossDeath(gameObject.transform.position); //Tell the spawn manager the boss is dead, will spawn extra particle effects
         base.Death(); //Parrent death will deactivate this game object

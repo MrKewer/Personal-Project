@@ -5,7 +5,7 @@ using UnityEngine;
 public class BossMain : EnemyMain
 {
     public event DamageDealtHandler DamageDealt; //This event will be used to update the InGameUI
-    [SerializeField] protected Enums.Particals collisionParticle;
+    [SerializeField] protected Enums.Particles collisionParticle;
     public string BossName; //The name that will be displayed on the InGameUI
 
     public override void Damage(float damageTaken, Enums.DamageType damageType, Vector3 damageLocation)

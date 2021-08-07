@@ -32,13 +32,13 @@ public class EnemyBasic : EnemyMain
         healthBar.transform.localScale = new Vector3(healthBarSize.x * (health / maxHealth), healthBarSize.y, healthBarSize.z); //Sets the healthbar image to the size of the current health
         if (damageType == Enums.DamageType.Collision) //When the enemy collide with obstacle, a particle will spawn and the enemy will run backwards
         {
-            spawnManager.SpawnParticle(Enums.Particals.PurpleSmall, damageLocation);
+            spawnManager.SpawnParticle(Enums.Particles.PurpleSmall, damageLocation);
             runSpeed = backwardSpeed;
         }
     }
     protected override void Death()
     {
-        spawnManager.SpawnParticle(Enums.Particals.PurpleLarge, gameObject.transform.position); //Spawn particle on death
+        spawnManager.SpawnParticle(Enums.Particles.PurpleLarge, gameObject.transform.position); //Spawn particle on death
         GameManager.Instance.enemiesDead += 1; //Calculate how many you have killed
         if (GameManager.Instance.enemiesDead >= GameManager.Instance.enemiesDeadBeforeBossFight) //When the boss will come out
         {

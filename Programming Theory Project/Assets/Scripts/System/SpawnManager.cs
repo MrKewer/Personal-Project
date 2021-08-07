@@ -17,73 +17,91 @@ public class SpawnManager : MonoBehaviour
     private List<GameObject> enemiesPool = new List<GameObject>();
     private List<GameObject> bossesPool = new List<GameObject>();
 
-    [SerializeField] private List<GameObject> ballsToSpawn;
-    private List<GameObject> ballPool = new List<GameObject>();
+
+
 
     private float xObstacleSpawnPos = 30.0f; //The spawn position in the x direction
     private float startDelay = 2f; //Delay before spawning 
     public float obstacleSpawnTime = 0.2f; //Spawning delay intervals
     public float EnemiesSpawnTime = 3f; //Spawning delay intervals
-    private float powerupSpawnTime = 5f;
+    public float pickupSpawnTime = 0.2f;
     //private bool isPlaying = true;
 
     private int PoolDepth = 10; // The amount that will be spawned
-    private bool canGrow = true; //If the need for more particals it will create more
+    //private bool canGrow = true; //If the need for more particles it will create more
     [SerializeField] private int poolDuplicates = 3;
 
+    [Space]
+    [Header("Pickups")]
+    [Space]
+    [SerializeField] private List<GameObject> pickupsToSpawn; //All the pickups to spawn
+    private List<GameObject> pickupPool = new List<GameObject>(); //The pool that is created that is used to store the items
+    [SerializeField] private List<GameObject> ballsToSpawn; //The list of the ball to spawn
+    private List<GameObject> ballPool = new List<GameObject>(); //The pool that is created that is used to store the items
+    [SerializeField] private GameObject bombPrefab; //The Bomb that is droped
+    private List<GameObject> bombPool = new List<GameObject>(); //The pool that is created that is used to store the items
+    [SerializeField] private GameObject ExplosionParticlePrefab; //The explosion the bomb will create
+    private List<GameObject> ExplosionParticlePool = new List<GameObject>(); //The pool that is created that is used to store the items
+    private int PickupCounter = 0; //Keeps count of obsticles spawned
+    private int WhenToSpawnPickup = 4; //Spawn pickup after this amount of obsticles has spawned, will be randomed.
+
+    #region Prefabs for particles
+    [Space]
+    [Header("Particles Small")]
+    [Space]
+    [SerializeField] private GameObject yellowSmallParticlePrefab; //Hit Particles
+    private List<GameObject> yellowSmallParticlePool = new List<GameObject>(); // The pool that is created that is used to store the items
+
+    [SerializeField] private GameObject purpleSmallParticlePrefab; //Hit Particles
+    private List<GameObject> purpleSmallParticlePool = new List<GameObject>(); // The pool that is created that is used to store the items
+
+    [SerializeField] private GameObject redSmallParticlePrefab; //Hit Particles
+    private List<GameObject> redSmallParticlePool = new List<GameObject>(); // The pool that is created that is used to store the items
+
+    [SerializeField] private GameObject blueSmallParticlePrefab; //Hit Particles
+    private List<GameObject> blueSmallParticlePool = new List<GameObject>(); // The pool that is created that is used to store the items
+
+    [SerializeField] private GameObject greenSmallParticlePrefab; //Hit Particles
+    private List<GameObject> greenSmallParticlePool = new List<GameObject>(); // The pool that is created that is used to store the items
+    [SerializeField] private GameObject graySmallParticlePrefab; //Hit Particles
+    private List<GameObject> graySmallParticlePool = new List<GameObject>(); // The pool that is created that is used to store the items
+    [SerializeField] private GameObject whiteSmallParticlePrefab; //Hit Particles
+    private List<GameObject> whiteSmallParticlePool = new List<GameObject>(); // The pool that is created that is used to store the items
 
     [Space]
-    [Header("Particals Small")]
+    [Header("Particles Large")]
     [Space]
-    [SerializeField] private GameObject yellowSmallParticalPrefab; //Hit Particals
-    private List<GameObject> yellowSmallParticalPool = new List<GameObject>(); // The pool that is created that is used to store the items
+    [SerializeField] private GameObject yellowLargeParticlePrefab; //Hit Particles
+    private List<GameObject> yellowLargeParticlePool = new List<GameObject>(); // The pool that is created that is used to store the items
 
-    [SerializeField] private GameObject purpleSmallParticalPrefab; //Hit Particals
-    private List<GameObject> purpleSmallParticalPool = new List<GameObject>(); // The pool that is created that is used to store the items
+    [SerializeField] private GameObject purpleLargeParticlePrefab; //Hit Particles
+    private List<GameObject> purpleLargeParticlePool = new List<GameObject>(); // The pool that is created that is used to store the items
 
-    [SerializeField] private GameObject redSmallParticalPrefab; //Hit Particals
-    private List<GameObject> redSmallParticalPool = new List<GameObject>(); // The pool that is created that is used to store the items
+    [SerializeField] private GameObject redLargeParticlePrefab; //Hit Particles
+    private List<GameObject> redLargeParticlePool = new List<GameObject>(); // The pool that is created that is used to store the items
 
-    [SerializeField] private GameObject blueSmallParticalPrefab; //Hit Particals
-    private List<GameObject> blueSmallParticalPool = new List<GameObject>(); // The pool that is created that is used to store the items
+    [SerializeField] private GameObject blueLargeParticlePrefab; //Hit Particles
+    private List<GameObject> blueLargeParticlePool = new List<GameObject>(); // The pool that is created that is used to store the items
 
-    [SerializeField] private GameObject greenSmallParticalPrefab; //Hit Particals
-    private List<GameObject> greenSmallParticalPool = new List<GameObject>(); // The pool that is created that is used to store the items
-    [SerializeField] private GameObject graySmallParticalPrefab; //Hit Particals
-    private List<GameObject> graySmallParticalPool = new List<GameObject>(); // The pool that is created that is used to store the items
-    [SerializeField] private GameObject whiteSmallParticalPrefab; //Hit Particals
-    private List<GameObject> whiteSmallParticalPool = new List<GameObject>(); // The pool that is created that is used to store the items
+    [SerializeField] private GameObject greenLargeParticlePrefab; //Hit Particles
+    private List<GameObject> greenLargeParticlePool = new List<GameObject>(); // The pool that is created that is used to store the items
 
-    [Space]
-    [Header("Particals Large")]
-    [Space]
-    [SerializeField] private GameObject yellowLargeParticalPrefab; //Hit Particals
-    private List<GameObject> yellowLargeParticalPool = new List<GameObject>(); // The pool that is created that is used to store the items
+    [SerializeField] private GameObject grayLargeParticlePrefab; //Hit Particles
+    private List<GameObject> grayLargeParticlePool = new List<GameObject>(); // The pool that is created that is used to store the items
 
-    [SerializeField] private GameObject purpleLargeParticalPrefab; //Hit Particals
-    private List<GameObject> purpleLargeParticalPool = new List<GameObject>(); // The pool that is created that is used to store the items
+    [SerializeField] private GameObject whiteLargeParticlePrefab; //Hit Particles
+    private List<GameObject> whiteLargeParticlePool = new List<GameObject>(); // The pool that is created that is used to store the items
 
-    [SerializeField] private GameObject redLargeParticalPrefab; //Hit Particals
-    private List<GameObject> redLargeParticalPool = new List<GameObject>(); // The pool that is created that is used to store the items
-
-    [SerializeField] private GameObject blueLargeParticalPrefab; //Hit Particals
-    private List<GameObject> blueLargeParticalPool = new List<GameObject>(); // The pool that is created that is used to store the items
-
-    [SerializeField] private GameObject greenLargeParticalPrefab; //Hit Particals
-    private List<GameObject> greenLargeParticalPool = new List<GameObject>(); // The pool that is created that is used to store the items
-
-    [SerializeField] private GameObject grayLargeParticalPrefab; //Hit Particals
-    private List<GameObject> grayLargeParticalPool = new List<GameObject>(); // The pool that is created that is used to store the items
-
-    [SerializeField] private GameObject whiteLargeParticalPrefab; //Hit Particals
-    private List<GameObject> whiteLargeParticalPool = new List<GameObject>(); // The pool that is created that is used to store the items
-
+    #endregion
 
     void Start()
     {
         GameManager.Instance.OnGameStateChanged.AddListener(HandleGameStateChanged); //Add a Listener to the event
 
+        
         playerControllerScript = GameObject.Find("Player").GetComponent<PlayerController>();
+
+        //Pool Obsticles + Enemies + Bosses
         listToSpawnPrefab = spawnListPrefab.GetComponent<LevelList>().spawnList[GameManager.Instance.levelSelectedNumber];
         obstaclesToSpawn = listToSpawnPrefab.GetComponent<SpawnList>().obstacles;
         enemiesToSpawn = listToSpawnPrefab.GetComponent<SpawnList>().enemies;
@@ -93,28 +111,34 @@ public class SpawnManager : MonoBehaviour
         PoolGameObject(enemiesToSpawn, enemiesPool, poolDuplicates);
         PoolGameObject(bossesToSpawn, bossesPool, 1);
 
+        //Pool Pickups
+        PoolGameObject(pickupsToSpawn, pickupPool, poolDuplicates);
         PoolGameObject(ballsToSpawn, ballPool, poolDuplicates);
+        PoolGameObject(bombPrefab, bombPool, 2);
+        PoolGameObject(ExplosionParticlePrefab, ExplosionParticlePool, 2);
 
-        //Pool Small particals
-        PoolGameObject(yellowSmallParticalPrefab, yellowSmallParticalPool, PoolDepth);
-        PoolGameObject(purpleSmallParticalPrefab, purpleSmallParticalPool, PoolDepth);
-        PoolGameObject(redSmallParticalPrefab, redSmallParticalPool, PoolDepth);
-        PoolGameObject(blueSmallParticalPrefab, blueSmallParticalPool, PoolDepth);
-        PoolGameObject(greenSmallParticalPrefab, greenSmallParticalPool, PoolDepth);
-        PoolGameObject(graySmallParticalPrefab, graySmallParticalPool, PoolDepth);
-        PoolGameObject(whiteSmallParticalPrefab, whiteSmallParticalPool, PoolDepth);
+        //Pool Small particles
+        PoolGameObject(yellowSmallParticlePrefab, yellowSmallParticlePool, PoolDepth);
+        PoolGameObject(purpleSmallParticlePrefab, purpleSmallParticlePool, PoolDepth);
+        PoolGameObject(redSmallParticlePrefab, redSmallParticlePool, PoolDepth);
+        PoolGameObject(blueSmallParticlePrefab, blueSmallParticlePool, PoolDepth);
+        PoolGameObject(greenSmallParticlePrefab, greenSmallParticlePool, PoolDepth);
+        PoolGameObject(graySmallParticlePrefab, graySmallParticlePool, PoolDepth);
+        PoolGameObject(whiteSmallParticlePrefab, whiteSmallParticlePool, PoolDepth);
 
-        //Pool Large particals
-        PoolGameObject(yellowLargeParticalPrefab, yellowLargeParticalPool, PoolDepth);
-        PoolGameObject(purpleLargeParticalPrefab, purpleLargeParticalPool, PoolDepth);
-        PoolGameObject(redLargeParticalPrefab, redLargeParticalPool, PoolDepth);
-        PoolGameObject(blueLargeParticalPrefab, blueLargeParticalPool, PoolDepth);
-        PoolGameObject(greenLargeParticalPrefab, greenLargeParticalPool, PoolDepth);
-        PoolGameObject(grayLargeParticalPrefab, grayLargeParticalPool, PoolDepth);
-        PoolGameObject(whiteLargeParticalPrefab, whiteLargeParticalPool, PoolDepth);
+        //Pool Large particles
+        PoolGameObject(yellowLargeParticlePrefab, yellowLargeParticlePool, PoolDepth);
+        PoolGameObject(purpleLargeParticlePrefab, purpleLargeParticlePool, PoolDepth);
+        PoolGameObject(redLargeParticlePrefab, redLargeParticlePool, PoolDepth);
+        PoolGameObject(blueLargeParticlePrefab, blueLargeParticlePool, PoolDepth);
+        PoolGameObject(greenLargeParticlePrefab, greenLargeParticlePool, PoolDepth);
+        PoolGameObject(grayLargeParticlePrefab, grayLargeParticlePool, PoolDepth);
+        PoolGameObject(whiteLargeParticlePrefab, whiteLargeParticlePool, PoolDepth);
+
+
 
         //Spawning obstacles and enemies with intervals
-        InvokeRepeating("SpawnObstacle", startDelay, obstacleSpawnTime);
+        InvokeRepeating("SpawnObstacleAndPickup", startDelay, obstacleSpawnTime);
         InvokeRepeating("SpawnEnemy", startDelay, EnemiesSpawnTime);
 
     }
@@ -137,25 +161,25 @@ public class SpawnManager : MonoBehaviour
         {
             InvokeRepeating("SpawnObstacle", startDelay, obstacleSpawnTime); 
             InvokeRepeating("SpawnEnemy", startDelay, 3);
-            DisableAllParticals(); //Clean the level
+            DisableAllParticles(); //Clean the level
             DisableAllEnemies(); //Clean the level
         }
     }
 
     #region Pool Game Object
-    void PoolGameObject(GameObject prefab, List<GameObject> pool, int poolSize) //Create and disable particals used to indicate on hit
+    void PoolGameObject(GameObject prefab, List<GameObject> pool, int poolSize) //Create and disable GameObjects
     {
         for (int i = 0; i < poolSize; i++)
         {
             GameObject pooledGameObject = Instantiate(prefab);
-            pooledGameObject.AddComponent<Obstacles>();
+            pooledGameObject.AddComponent<MoveLeft>();
             pooledGameObject.SetActive(false);
             pool.Add(pooledGameObject);
             pooledGameObject.transform.SetParent(gameObject.transform);
         }
     }
 
-    public GameObject GetAvailableGameObject(List<GameObject> pool) //Gets available hit particals
+    public GameObject GetAvailableGameObject(List<GameObject> pool) //Gets available hit particles
     {
         for (int i = 0; i < pool.Count; i++)
         {
@@ -194,88 +218,88 @@ public class SpawnManager : MonoBehaviour
     }
     #endregion
 
-    #region Spawn Partical
+    #region Spawn Particle
 
-    public void SpawnRandomPartical(Vector3 location, float locationRange) // will spawn a random particle at a random location
+    public void SpawnRandomParticle(Vector3 location, float locationRange) // will spawn a random particle at a random location
     {
-        int randomNumber = Random.Range(0, (int)Enums.Particals.NumberOfTypes);
+        int randomNumber = Random.Range(0, (int)Enums.Particles.NumberOfTypes);
         Vector3 randomLocation = new Vector3(Random.Range(-locationRange, locationRange), Random.Range(-locationRange, locationRange), Random.Range(-locationRange, locationRange));
-        SpawnParticle((Enums.Particals)randomNumber, randomLocation + location);
+        SpawnParticle((Enums.Particles)randomNumber, randomLocation + location);
     }
 
-    public void SpawnParticle(Enums.Particals partical, Vector3 location)
+    public void SpawnParticle(Enums.Particles particle, Vector3 location)
     {
         GameObject particleEffect;
-        switch (partical)
+        switch (particle)
         {
-            //Small Particals
-            case Enums.Particals.WhiteSmall:
-                particleEffect = GetAvailableGameObject(whiteSmallParticalPool);
+            //Small Particles
+            case Enums.Particles.WhiteSmall:
+                particleEffect = GetAvailableGameObject(whiteSmallParticlePool);
                 if (particleEffect != null)
                 {
                     particleEffect.SetActive(true);
                     particleEffect.transform.position = location;
                 }
                 break;
-            case Enums.Particals.GraySmall:
-                particleEffect = GetAvailableGameObject(graySmallParticalPool);
+            case Enums.Particles.GraySmall:
+                particleEffect = GetAvailableGameObject(graySmallParticlePool);
                 if (particleEffect != null)
                 {
                     particleEffect.SetActive(true);
                     particleEffect.transform.position = location;
                 }
                 break;
-            case Enums.Particals.YellowSmall:
-                particleEffect = GetAvailableGameObject(yellowSmallParticalPool);
+            case Enums.Particles.YellowSmall:
+                particleEffect = GetAvailableGameObject(yellowSmallParticlePool);
                 if (particleEffect != null)
                 {
                     particleEffect.SetActive(true);
                     particleEffect.transform.position = location;
                 }
                 break;
-            case Enums.Particals.PurpleSmall:
-                particleEffect = GetAvailableGameObject(purpleSmallParticalPool);
+            case Enums.Particles.PurpleSmall:
+                particleEffect = GetAvailableGameObject(purpleSmallParticlePool);
                 if (particleEffect != null)
                 {
                     particleEffect.SetActive(true);
                     particleEffect.transform.position = location;
                 }
                 break;
-            case Enums.Particals.BlueSmall:
-                particleEffect = GetAvailableGameObject(blueSmallParticalPool);
+            case Enums.Particles.BlueSmall:
+                particleEffect = GetAvailableGameObject(blueSmallParticlePool);
                 if (particleEffect != null)
                 {
                     particleEffect.SetActive(true);
                     particleEffect.transform.position = location;
                 }
                 break;
-            case Enums.Particals.RedSmall:
-                particleEffect = GetAvailableGameObject(redSmallParticalPool);
+            case Enums.Particles.RedSmall:
+                particleEffect = GetAvailableGameObject(redSmallParticlePool);
                 if (particleEffect != null)
                 {
                     particleEffect.SetActive(true);
                     particleEffect.transform.position = location;
                 }
                 break;
-            case Enums.Particals.GreenSmall:
-                particleEffect = GetAvailableGameObject(greenSmallParticalPool);
+            case Enums.Particles.GreenSmall:
+                particleEffect = GetAvailableGameObject(greenSmallParticlePool);
                 if (particleEffect != null)
                 {
                     particleEffect.SetActive(true);
                     particleEffect.transform.position = location;
                 }
                 break;
-            //Large Particals
-            case Enums.Particals.WhiteLarge:
-                particleEffect = GetAvailableGameObject(whiteLargeParticalPool);
+            //Large Particles
+            case Enums.Particles.WhiteLarge:
+                particleEffect = GetAvailableGameObject(whiteLargeParticlePool);
                 if (particleEffect != null)
                 {
                     particleEffect.SetActive(true);
                     particleEffect.transform.position = location;
                 }
                 break;
-            case Enums.Particals.GrayLarge:
-                particleEffect = GetAvailableGameObject(grayLargeParticalPool);
+            case Enums.Particles.GrayLarge:
+                particleEffect = GetAvailableGameObject(grayLargeParticlePool);
                 if (particleEffect != null)
                 {
                     particleEffect.SetActive(true);
@@ -283,40 +307,40 @@ public class SpawnManager : MonoBehaviour
                 }
                 break;
 
-            case Enums.Particals.YellowLarge:
-                particleEffect = GetAvailableGameObject(yellowLargeParticalPool);
+            case Enums.Particles.YellowLarge:
+                particleEffect = GetAvailableGameObject(yellowLargeParticlePool);
                 if (particleEffect != null)
                 {
                     particleEffect.SetActive(true);
                     particleEffect.transform.position = location;
                 }
                 break;
-            case Enums.Particals.PurpleLarge:
-                particleEffect = GetAvailableGameObject(purpleLargeParticalPool);
+            case Enums.Particles.PurpleLarge:
+                particleEffect = GetAvailableGameObject(purpleLargeParticlePool);
                 if (particleEffect != null)
                 {
                     particleEffect.SetActive(true);
                     particleEffect.transform.position = location;
                 }
                 break;
-            case Enums.Particals.BlueLarge:
-                particleEffect = GetAvailableGameObject(blueLargeParticalPool);
+            case Enums.Particles.BlueLarge:
+                particleEffect = GetAvailableGameObject(blueLargeParticlePool);
                 if (particleEffect != null)
                 {
                     particleEffect.SetActive(true);
                     particleEffect.transform.position = location;
                 }
                 break;
-            case Enums.Particals.RedLarge:
-                particleEffect = GetAvailableGameObject(redLargeParticalPool);
+            case Enums.Particles.RedLarge:
+                particleEffect = GetAvailableGameObject(redLargeParticlePool);
                 if (particleEffect != null)
                 {
                     particleEffect.SetActive(true);
                     particleEffect.transform.position = location;
                 }
                 break;
-            case Enums.Particals.GreenLarge:
-                particleEffect = GetAvailableGameObject(greenLargeParticalPool);
+            case Enums.Particles.GreenLarge:
+                particleEffect = GetAvailableGameObject(greenLargeParticlePool);
                 if (particleEffect != null)
                 {
                     particleEffect.SetActive(true);
@@ -327,21 +351,54 @@ public class SpawnManager : MonoBehaviour
     }
     #endregion
 
-    #region Obstacles
+    #region Obstacles and Pickups
 
-    private void SpawnObstacle() //Will set an random obstacle active and set it to a new position
+    private void SpawnObstacleAndPickup() //Will set an random obstacle and pickup active and set it to a new position
     {
-        int randomPathway = Random.Range(-1, 2);
+        //spawn Obstacles
+        int randomPathwayObstacle = Random.Range(-1, 2);
         GameObject obstacleToSpawn = GetAvailableRandomGameObject(obstaclesPool);
-
         if (obstacleToSpawn != null)
         {
             float yPos = obstacleToSpawn.transform.position.y;
-            Vector3 spawnPos = new Vector3(xObstacleSpawnPos, yPos, randomPathway * playerControllerScript.VerticalStep);
+            Vector3 spawnPos = new Vector3(xObstacleSpawnPos, yPos, randomPathwayObstacle * playerControllerScript.VerticalStep);
 
             obstacleToSpawn.SetActive(true);
             obstacleToSpawn.transform.position = spawnPos;
         }
+
+        //Spawn Pickup
+        if (PickupCounter >= pickupSpawnTime)
+        {
+            int randomPathwayPickup = RandomDifferentPathway(randomPathwayObstacle);
+            if (randomPathwayPickup != -5) //-5 means invalid
+            {
+                GameObject pickupToSpawn = GetAvailableRandomGameObject(pickupPool);
+                if (pickupToSpawn != null)
+                {
+                    float yPos = pickupToSpawn.transform.position.y;
+                    Vector3 spawnPos = new Vector3(xObstacleSpawnPos, yPos, randomPathwayPickup * playerControllerScript.VerticalStep);
+
+                    pickupToSpawn.SetActive(true);
+                    pickupToSpawn.transform.position = spawnPos;
+                }
+                pickupSpawnTime = Random.Range(2, 7);
+                PickupCounter = 0;
+            }
+        }
+        PickupCounter++;
+    }
+    private int RandomDifferentPathway(int obstaclePathway)
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            int randomPathwayPickup = Random.Range(-1, 2);
+            if (randomPathwayPickup != obstaclePathway)
+            {
+                return randomPathwayPickup;
+            }
+        }
+        return -5; //set an invalid number
     }
 
     public void SpawnBall(Vector3 location) //Will set an random obstacle active and set it to a new position
@@ -415,7 +472,7 @@ public class SpawnManager : MonoBehaviour
             float randomTime = Random.Range(0, 0.75f);
             WaitForSeconds waitTime = new WaitForSeconds(randomTime);
             yield return waitTime;
-            SpawnRandomPartical(location, 10);
+            SpawnRandomParticle(location, 10);
             count++;
         }
 
@@ -423,50 +480,76 @@ public class SpawnManager : MonoBehaviour
 
     #endregion
 
-    private void OnDestroy() //Clear all created objects from game
+    #region Explosion
+    public void SpawnBomb(Vector3 spawnPos)
     {
-        //Small Particals
-        for (int i = 0; i < yellowSmallParticalPool.Count; i++)
+        GameObject bombToSpawn = GetAvailableRandomGameObject(bombPool);
+
+        if (bombToSpawn != null)
         {
-            Destroy(yellowSmallParticalPool[i]);
-        }
-        for (int i = 0; i < purpleSmallParticalPool.Count; i++)
-        {
-            Destroy(purpleSmallParticalPool[i]);
-        }
-        for (int i = 0; i < blueSmallParticalPool.Count; i++)
-        {
-            Destroy(blueSmallParticalPool[i]);
-        }
-        for (int i = 0; i < redSmallParticalPool.Count; i++)
-        {
-            Destroy(redSmallParticalPool[i]);
-        }
-        for (int i = 0; i < greenSmallParticalPool.Count; i++)
-        {
-            Destroy(greenSmallParticalPool[i]);
+            bombToSpawn.SetActive(true);
+            bombToSpawn.transform.position = spawnPos;
         }
 
-        //Large Particals
-        for (int i = 0; i < yellowLargeParticalPool.Count; i++)
+    }
+
+    public void SpawnExplosion(Vector3 spawnPos)
+    {
+        GameObject explosionToSpawn = GetAvailableRandomGameObject(ExplosionParticlePool);
+
+        if (explosionToSpawn != null)
         {
-            Destroy(yellowLargeParticalPool[i]);
+            explosionToSpawn.SetActive(true);
+            explosionToSpawn.transform.position = spawnPos;
         }
-        for (int i = 0; i < purpleLargeParticalPool.Count; i++)
+    }
+
+
+    #endregion
+    private void OnDestroy() //Clear all created objects from game
+    {
+        //Small Particles
+        for (int i = 0; i < yellowSmallParticlePool.Count; i++)
         {
-            Destroy(purpleLargeParticalPool[i]);
+            Destroy(yellowSmallParticlePool[i]);
         }
-        for (int i = 0; i < blueLargeParticalPool.Count; i++)
+        for (int i = 0; i < purpleSmallParticlePool.Count; i++)
         {
-            Destroy(blueLargeParticalPool[i]);
+            Destroy(purpleSmallParticlePool[i]);
         }
-        for (int i = 0; i < redLargeParticalPool.Count; i++)
+        for (int i = 0; i < blueSmallParticlePool.Count; i++)
         {
-            Destroy(redLargeParticalPool[i]);
+            Destroy(blueSmallParticlePool[i]);
         }
-        for (int i = 0; i < greenLargeParticalPool.Count; i++)
+        for (int i = 0; i < redSmallParticlePool.Count; i++)
         {
-            Destroy(greenLargeParticalPool[i]);
+            Destroy(redSmallParticlePool[i]);
+        }
+        for (int i = 0; i < greenSmallParticlePool.Count; i++)
+        {
+            Destroy(greenSmallParticlePool[i]);
+        }
+
+        //Large Particles
+        for (int i = 0; i < yellowLargeParticlePool.Count; i++)
+        {
+            Destroy(yellowLargeParticlePool[i]);
+        }
+        for (int i = 0; i < purpleLargeParticlePool.Count; i++)
+        {
+            Destroy(purpleLargeParticlePool[i]);
+        }
+        for (int i = 0; i < blueLargeParticlePool.Count; i++)
+        {
+            Destroy(blueLargeParticlePool[i]);
+        }
+        for (int i = 0; i < redLargeParticlePool.Count; i++)
+        {
+            Destroy(redLargeParticlePool[i]);
+        }
+        for (int i = 0; i < greenLargeParticlePool.Count; i++)
+        {
+            Destroy(greenLargeParticlePool[i]);
         }
 
         //Other
@@ -482,7 +565,23 @@ public class SpawnManager : MonoBehaviour
         {
             Destroy(bossesPool[i]);
         }
-
+        for (int i = 0; i < pickupPool.Count; i++)
+        {
+            Destroy(pickupPool[i]);
+        }
+        for (int i = 0; i < ballPool.Count; i++)
+        {
+            Destroy(ballPool[i]);
+        }
+        for (int i = 0; i < bombPool.Count; i++)
+        {
+            Destroy(bombPool[i]);
+        }
+        for (int i = 0; i < ExplosionParticlePool.Count; i++)
+        {
+            Destroy(ExplosionParticlePool[i]);
+        }
+        
     }
 
     #region Disable Game Objects
@@ -493,53 +592,68 @@ public class SpawnManager : MonoBehaviour
         {
             obstaclesPool[i].SetActive(false);
         }
+        for (int i = 0; i < pickupPool.Count; i++)
+        {
+            Destroy(pickupPool[i]);
+        }
+        for (int i = 0; i < ballPool.Count; i++)
+        {
+            Destroy(ballPool[i]);
+        }
+        for (int i = 0; i < bombPool.Count; i++)
+        {
+            Destroy(bombPool[i]);
+        }
     }
-    void DisableAllParticals()
+    void DisableAllParticles()
     {
-        //Small Particals
-        for (int i = 0; i < yellowSmallParticalPool.Count; i++)
+        //Small Particles
+        for (int i = 0; i < yellowSmallParticlePool.Count; i++)
         {
-            yellowSmallParticalPool[i].SetActive(false);
+            yellowSmallParticlePool[i].SetActive(false);
         }
-        for (int i = 0; i < purpleSmallParticalPool.Count; i++)
+        for (int i = 0; i < purpleSmallParticlePool.Count; i++)
         {
-            purpleSmallParticalPool[i].SetActive(false);
+            purpleSmallParticlePool[i].SetActive(false);
         }
-        for (int i = 0; i < redSmallParticalPool.Count; i++)
+        for (int i = 0; i < redSmallParticlePool.Count; i++)
         {
-            redSmallParticalPool[i].SetActive(false);
+            redSmallParticlePool[i].SetActive(false);
         }
-        for (int i = 0; i < greenSmallParticalPool.Count; i++)
+        for (int i = 0; i < greenSmallParticlePool.Count; i++)
         {
-            greenSmallParticalPool[i].SetActive(false);
+            greenSmallParticlePool[i].SetActive(false);
         }
-        for (int i = 0; i < blueSmallParticalPool.Count; i++)
+        for (int i = 0; i < blueSmallParticlePool.Count; i++)
         {
-            blueSmallParticalPool[i].SetActive(false);
-        }
-
-        //Large Particals
-        for (int i = 0; i < yellowLargeParticalPool.Count; i++)
-        {
-            yellowLargeParticalPool[i].SetActive(false);
-        }
-        for (int i = 0; i < purpleLargeParticalPool.Count; i++)
-        {
-            purpleLargeParticalPool[i].SetActive(false);
-        }
-        for (int i = 0; i < redLargeParticalPool.Count; i++)
-        {
-            redLargeParticalPool[i].SetActive(false);
-        }
-        for (int i = 0; i < greenLargeParticalPool.Count; i++)
-        {
-            greenLargeParticalPool[i].SetActive(false);
-        }
-        for (int i = 0; i < blueLargeParticalPool.Count; i++)
-        {
-            blueLargeParticalPool[i].SetActive(false);
+            blueSmallParticlePool[i].SetActive(false);
         }
 
+        //Large Particles
+        for (int i = 0; i < yellowLargeParticlePool.Count; i++)
+        {
+            yellowLargeParticlePool[i].SetActive(false);
+        }
+        for (int i = 0; i < purpleLargeParticlePool.Count; i++)
+        {
+            purpleLargeParticlePool[i].SetActive(false);
+        }
+        for (int i = 0; i < redLargeParticlePool.Count; i++)
+        {
+            redLargeParticlePool[i].SetActive(false);
+        }
+        for (int i = 0; i < greenLargeParticlePool.Count; i++)
+        {
+            greenLargeParticlePool[i].SetActive(false);
+        }
+        for (int i = 0; i < blueLargeParticlePool.Count; i++)
+        {
+            blueLargeParticlePool[i].SetActive(false);
+        }
+        for (int i = 0; i < ExplosionParticlePool.Count; i++)
+        {
+            Destroy(ExplosionParticlePool[i]);
+        }
 
     }
     void DisableAllEnemies()

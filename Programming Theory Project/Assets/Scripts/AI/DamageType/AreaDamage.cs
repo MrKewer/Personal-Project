@@ -7,7 +7,7 @@ public class AreaDamage : MonoBehaviour
     private SpawnManager spawnManager; 
     [SerializeField] private float damagePerSecond; //The amount of damage to deal
     private bool bDoDamage = false; // When damage will be aplied each second, this keeps the loop running in the coroutine
-    [SerializeField] private Enums.Particals particleToSpawnOnDamage; //The Type of particle to spawn when damage is dealt
+    [SerializeField] private Enums.Particles particleToSpawnOnDamage; //The Type of particle to spawn when damage is dealt
 
     void Awake()
     {

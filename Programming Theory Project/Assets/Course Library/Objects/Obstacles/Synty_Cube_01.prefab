@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 3532945178190738617}
   - component: {fileID: 150205649958307018}
   - component: {fileID: -9163229047911123227}
+  - component: {fileID: 5571651779877379488}
   m_Layer: 0
   m_Name: Synty_Cube_01
   m_TagString: Ground
@@ -142,6 +143,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageAmount: 10
+--- !u!114 &5571651779877379488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1529207471264370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 394d0b1f166273143b52e7a8e2336f4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7108936652136111370
 PrefabInstance:
   m_ObjectHideFlags: 0
