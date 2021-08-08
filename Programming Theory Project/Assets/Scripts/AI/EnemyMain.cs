@@ -30,6 +30,7 @@ public class EnemyMain : MonoBehaviour, IDamageable<float, Enums.DamageType, Vec
         playerController = player.GetComponent<PlayerController>();
         spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         runAnimation = gameObject.GetComponent<Animator>();
+        gameObject.GetComponent<Rigidbody>().interpolation = RigidbodyInterpolation.Interpolate; //When they run back they will run through the other enemies
     }
     protected virtual void OnEnable()
     {
@@ -47,14 +48,14 @@ public class EnemyMain : MonoBehaviour, IDamageable<float, Enums.DamageType, Vec
         {            
             runSpeed = forwardSpeed;
         }
-        if(runSpeed < 0)
-        {
-            gameObject.GetComponent<Rigidbody>().interpolation = RigidbodyInterpolation.Interpolate; //When they run back they will run through the other enemies
-        }
-        else
-        {
-            gameObject.GetComponent<Rigidbody>().interpolation = RigidbodyInterpolation.Extrapolate; //When running forward they would not run in each other
-        }
+        //if(runSpeed < 0)
+        //{
+        //    gameObject.GetComponent<Rigidbody>().interpolation = RigidbodyInterpolation.Interpolate; //When they run back they will run through the other enemies
+        //}
+        //else
+        //{
+        //    gameObject.GetComponent<Rigidbody>().interpolation = RigidbodyInterpolation.Extrapolate; //When running forward they would not run in each other
+        //}
     }
 
     protected virtual void OnCollisionEnter(Collision collision)

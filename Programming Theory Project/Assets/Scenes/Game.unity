@@ -778,6 +778,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7782296552925202882, guid: 951ebfd5b569221488a5f0974b815308, type: 3}
+      propertyPath: pickupsToSpawn.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7782296552925202882, guid: 951ebfd5b569221488a5f0974b815308, type: 3}
+      propertyPath: pickupsToSpawn.Array.data[8]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7782296552925202882, guid: 951ebfd5b569221488a5f0974b815308, type: 3}
+      propertyPath: pickupsToSpawn.Array.data[9]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7782296552925202882, guid: 951ebfd5b569221488a5f0974b815308, type: 3}
+      propertyPath: pickupsToSpawn.Array.data[10]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7782296552925202882, guid: 951ebfd5b569221488a5f0974b815308, type: 3}
+      propertyPath: pickupsToSpawn.Array.data[11]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7782296552925202882, guid: 951ebfd5b569221488a5f0974b815308, type: 3}
+      propertyPath: pickupsToSpawn.Array.data[12]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 7782296552925202883, guid: 951ebfd5b569221488a5f0974b815308, type: 3}
       propertyPath: m_Name
       value: SpawnManager

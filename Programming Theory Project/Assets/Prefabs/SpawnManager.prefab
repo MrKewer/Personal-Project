@@ -58,6 +58,11 @@ MonoBehaviour:
   - {fileID: 5071166830505136813, guid: c1811849b096c5d47894f3cf19852cf5, type: 3}
   - {fileID: 6029605018640540225, guid: 6b08171b0a959bb4a8d1baf7c6382cf5, type: 3}
   - {fileID: 5589843375933755232, guid: be65427cfd26b5d449b5c86d43bda310, type: 3}
+  - {fileID: 2358800636639433447, guid: 9d2128e6075c43c42a2faf416088837c, type: 3}
+  - {fileID: 2358800636639433447, guid: 9d2128e6075c43c42a2faf416088837c, type: 3}
+  - {fileID: 2358800636639433447, guid: 9d2128e6075c43c42a2faf416088837c, type: 3}
+  - {fileID: 2358800636639433447, guid: 9d2128e6075c43c42a2faf416088837c, type: 3}
+  - {fileID: 2358800636639433447, guid: 9d2128e6075c43c42a2faf416088837c, type: 3}
   ballsToSpawn:
   - {fileID: 1665714918814616, guid: dcdfdede07642ee44ad5cfe22399dc15, type: 3}
   - {fileID: 1138913196090074, guid: d9532b099f8dfb045844414b0b707bb3, type: 3}
@@ -68,6 +73,7 @@ MonoBehaviour:
   - {fileID: 1559113662988582, guid: c771dc487345feb4aa9946a24d7d7713, type: 3}
   bombPrefab: {fileID: 1902926406981984, guid: 95d82d671dd71444b8f339ac03b72d6f, type: 3}
   ExplosionParticlePrefab: {fileID: 191186, guid: 079954accd64b32419ec069129c81273, type: 3}
+  ExplosionSpherePrefab: {fileID: 7895418235414403851, guid: e9947204d20fd654bb99986cdd14fe29, type: 3}
   yellowSmallParticlePrefab: {fileID: 180128, guid: 6586ff0f14125534cae2f5d8f04b7871, type: 3}
   purpleSmallParticlePrefab: {fileID: 180128, guid: e2b09876c4cfaf041b31e5c1130e8f4c, type: 3}
   redSmallParticlePrefab: {fileID: 180128, guid: 0973631397cd98f49a927f3b10f4ccac, type: 3}

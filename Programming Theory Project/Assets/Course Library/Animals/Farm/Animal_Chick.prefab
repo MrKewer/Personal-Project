@@ -164,6 +164,7 @@ MonoBehaviour:
   speed: 10
   forwardSpeed: 20
   backwardSpeed: -30
+  runSpeed: -10
   collisionDamage: 3
   spawnPos: -14
   spawnPosRange: 3

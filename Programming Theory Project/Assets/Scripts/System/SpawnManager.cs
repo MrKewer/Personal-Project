@@ -42,6 +42,8 @@ public class SpawnManager : MonoBehaviour
     private List<GameObject> bombPool = new List<GameObject>(); //The pool that is created that is used to store the items
     [SerializeField] private GameObject ExplosionParticlePrefab; //The explosion the bomb will create
     private List<GameObject> ExplosionParticlePool = new List<GameObject>(); //The pool that is created that is used to store the items
+    [SerializeField] private GameObject ExplosionSpherePrefab; //The explosion the bomb will create
+    private List<GameObject> ExplosionSpherePool = new List<GameObject>(); //The pool that is created that is used to store the items
     private int PickupCounter = 0; //Keeps count of obsticles spawned
     private int WhenToSpawnPickup = 4; //Spawn pickup after this amount of obsticles has spawned, will be randomed.
 
@@ -116,6 +118,7 @@ public class SpawnManager : MonoBehaviour
         PoolGameObject(ballsToSpawn, ballPool, poolDuplicates);
         PoolGameObject(bombPrefab, bombPool, 2);
         PoolGameObject(ExplosionParticlePrefab, ExplosionParticlePool, 2);
+        PoolGameObject(ExplosionSpherePrefab, ExplosionSpherePool, 2);
 
         //Pool Small particles
         PoolGameObject(yellowSmallParticlePrefab, yellowSmallParticlePool, PoolDepth);
@@ -501,6 +504,13 @@ public class SpawnManager : MonoBehaviour
         {
             explosionToSpawn.SetActive(true);
             explosionToSpawn.transform.position = spawnPos;
+        }
+        GameObject explosionSphereToSpawn = GetAvailableRandomGameObject(ExplosionSpherePool);
+
+        if (explosionToSpawn != null)
+        {
+            explosionSphereToSpawn.SetActive(true);
+            explosionSphereToSpawn.transform.position = spawnPos;
         }
     }
 

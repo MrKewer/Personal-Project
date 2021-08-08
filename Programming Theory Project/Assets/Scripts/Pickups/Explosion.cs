@@ -20,6 +20,7 @@ public class Explosion : MonoBehaviour
                 }
             }
         }
+        gameObject.SetActive(false);
     }
 }
 
