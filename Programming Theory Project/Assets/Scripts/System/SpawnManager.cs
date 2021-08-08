@@ -17,9 +17,6 @@ public class SpawnManager : MonoBehaviour
     private List<GameObject> enemiesPool = new List<GameObject>();
     private List<GameObject> bossesPool = new List<GameObject>();
 
-
-
-
     private float xObstacleSpawnPos = 30.0f; //The spawn position in the x direction
     private float startDelay = 2f; //Delay before spawning 
     public float obstacleSpawnTime = 0.2f; //Spawning delay intervals

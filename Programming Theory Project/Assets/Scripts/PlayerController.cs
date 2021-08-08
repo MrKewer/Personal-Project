@@ -23,6 +23,8 @@ public class PlayerController : MonoBehaviour, IDamageable<float, Enums.DamageTy
     [SerializeField] private bool moveRight = false; //Move from one lane to the other lane
 
     public Enums.Pickups currentPowerup;
+    public int coinValue = 10;
+    public bool bHasDoubleCoins = false;
     public bool invulnerable = false; //Make the player invulnerable to damage
     public bool flameThrower = false;
 
@@ -225,6 +227,7 @@ public class PlayerController : MonoBehaviour, IDamageable<float, Enums.DamageTy
         if (other.gameObject.CompareTag("Powerup"))
         {
             Enums.Pickups pickupType = other.gameObject.GetComponent<Pickups>().pickupType;
+            //spawnManager.SpawnParticle(Enums.Particles.WhiteSmall, other.gameObject.transform.position);
             switch (pickupType)
             {
                 case Enums.Pickups.Heal:
@@ -233,8 +236,8 @@ public class PlayerController : MonoBehaviour, IDamageable<float, Enums.DamageTy
                     break;
 
                 case Enums.Pickups.Invulnerability:
-                    invulnerable = true;
                     inGameUI.Invulnerability(pickupType);
+                    invulnerable = true;
                     break;
 
                 case Enums.Pickups.Ball:
@@ -244,6 +247,7 @@ public class PlayerController : MonoBehaviour, IDamageable<float, Enums.DamageTy
 
                 case Enums.Pickups.DoubleCoins:
                     inGameUI.DoubleCoins(pickupType);
+                    bHasDoubleCoins = true;
                     break;
 
                 case Enums.Pickups.FlameThrower:
@@ -251,8 +255,7 @@ public class PlayerController : MonoBehaviour, IDamageable<float, Enums.DamageTy
                     break;
 
                 case Enums.Pickups.Coin:
-                    score++;
-                    inGameUI.UpdateScore();
+                    UpdateScore(coinValue);
                     break;
 
                 case Enums.Pickups.Bomb:
@@ -288,9 +291,20 @@ public class PlayerController : MonoBehaviour, IDamageable<float, Enums.DamageTy
             case Enums.Pickups.Ball:
                 CancelInvoke("SpawnBalls");
                 break;
+            case Enums.Pickups.DoubleCoins:
+                bHasDoubleCoins = false;
+                break;
         }
     }
-
+    public void UpdateScore(int Amount)
+    {
+        if (bHasDoubleCoins)
+        {
+            Amount *= 2;
+        }
+        score += Amount;
+        inGameUI.UpdateScore();
+    }
 
 
     #endregion
