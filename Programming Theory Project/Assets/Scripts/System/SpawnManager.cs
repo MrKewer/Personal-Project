@@ -135,12 +135,9 @@ public class SpawnManager : MonoBehaviour
         PoolGameObject(grayLargeParticlePrefab, grayLargeParticlePool, PoolDepth);
         PoolGameObject(whiteLargeParticlePrefab, whiteLargeParticlePool, PoolDepth);
 
-
-
         //Spawning obstacles and enemies with intervals
         InvokeRepeating("SpawnObstacleAndPickup", startDelay, obstacleSpawnTime);
         InvokeRepeating("SpawnEnemy", startDelay, EnemiesSpawnTime);
-
     }
     private void HandleGameStateChanged(GameManager.GameState currentState, GameManager.GameState previousState) //When the state changes in the GameManager
     {
