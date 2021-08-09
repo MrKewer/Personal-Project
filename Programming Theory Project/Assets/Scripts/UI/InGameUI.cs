@@ -8,20 +8,18 @@ using System;
 public delegate void ScoreUpdateHandler(float amount); //Create a delegate to use when score is updated
 public class InGameUI : MonoBehaviour
 {
-    //public event DamageDealtHandler UpdateHealth;
     private PlayerController playerController;
+    private SpawnManager spawnManager;
     private BossMain bossMain;
     private int time = 0;
     public int count = 0;
     private bool bHasPowerup = false;
-    private bool bGetsNewPowerup = false;
 
     [SerializeField] private TextMeshProUGUI playerNameText; //The text to display player name
     [SerializeField] private Slider playerHealthBar; //The health bar of the player
     [SerializeField] private TextMeshProUGUI playerHealthAmountDisplay; //The health bar of the player
     [SerializeField] private TextMeshProUGUI scoreText; //The text of the displayed score
     [SerializeField] private TextMeshProUGUI timeText; //The text to display time
-
 
 
     [SerializeField] private TextMeshProUGUI bossNameText; // The name of the boss
@@ -40,14 +38,14 @@ public class InGameUI : MonoBehaviour
     private void OnEnable()
     {
         //Set all equal to the player's input in the MainMenu
-        playerController = GameObject.Find("Player").GetComponent<PlayerController>();
 
+        playerController = GameObject.Find("Player").GetComponent<PlayerController>();
+        spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         playerNameText.text = GameManager.Instance.playerName;
         playerHealthBar.maxValue = playerController.maxHealth;
         UpdatePlayerHealth();
         UpdateScore();
         playerController.DamageDealt += PlayerController_DamageDealt;
-
         playerController.inGameUI = this;
     }
 
@@ -65,11 +63,11 @@ public class InGameUI : MonoBehaviour
         if (currentState == GameManager.GameState.BOSSFIGHT) //When the bossfight begins
         {
             bossHealthBar.gameObject.SetActive(true);
-            bossMain = GameObject.FindGameObjectWithTag("Boss").GetComponent<BossMain>();
+            bossMain = spawnManager.bossesPool[0].GetComponent<BossMain>();
+            //bossMain = GameObject.FindGameObjectWithTag("Boss").GetComponent<BossMain>();
             bossHealthBar.maxValue = bossMain.maxHealth;
-            bossHealthBar.value = bossMain.health;
             bossNameText.text = bossMain.BossName;
-            bossHealthAmountDisplay.text = bossMain.health + "/" + bossMain.maxHealth;
+            UpdateBossHealth();
 
             if (bossMain != null)
             {
@@ -79,10 +77,14 @@ public class InGameUI : MonoBehaviour
         if (currentState == GameManager.GameState.DEAD)
         {
             bossHealthBar.gameObject.SetActive(false);
+            PowerupCountComplete();
             CancelInvoke();
         }
-        if (currentState == GameManager.GameState.RUNNING && previousState == GameManager.GameState.DEAD)
+        if (currentState == GameManager.GameState.RUNNING && (previousState == GameManager.GameState.DEAD || previousState == GameManager.GameState.ENDGAME || previousState == GameManager.GameState.MAINMENU))
         {
+            bossHealthBar.gameObject.SetActive(false);
+            bossMain = null;
+            CancelInvoke();
             time = 0;
             InvokeRepeating("Timer", 0, 1);
         }
@@ -104,12 +106,17 @@ public class InGameUI : MonoBehaviour
     }
     private void BossMain_DamageDealt(float amount) //Added to event when the boss received damage
     {
-        bossHealthBar.value = bossMain.health;
-        bossHealthAmountDisplay.text = bossMain.health + "/" + bossMain.maxHealth;
+        UpdateBossHealth();
     }
     #endregion
 
     #region Updates
+
+    public void UpdateBossHealth()
+    {
+        bossHealthBar.value = bossMain.health;
+        bossHealthAmountDisplay.text = bossMain.health + "/" + bossMain.maxHealth;
+    }
     public void UpdatePlayerHealth()
     {
         playerHealthBar.value = playerController.health;
@@ -117,7 +124,7 @@ public class InGameUI : MonoBehaviour
     }
     public void UpdateScore()
     {
-        scoreText.text = "Score: " + playerController.score.ToString();
+        scoreText.text = playerController.score.ToString();
     }
     #endregion
 

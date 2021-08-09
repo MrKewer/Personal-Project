@@ -90,6 +90,7 @@ public class GameManager : Singleton<GameManager>
     {
         DontDestroyOnLoad(gameObject); //Called to keep this script even if it loads a complete new level
         Physics.gravity *= gravityModifier; //This should only be done once in the game
+        _currentLevelName = SceneManager.GetActiveScene().name; //Gets the current scenes name
         _loadOperations = new List<AsyncOperation>(); //Initialize the list
         _instancedSystemPrefabs = new List<GameObject>(); //Initialize the list
         InstantiateSystemPrefabs(); //Create all the managers
@@ -140,11 +141,14 @@ public class GameManager : Singleton<GameManager>
 
             if (_loadOperations.Count == 0) // When the level load is complete
             {
+
                 UpdateState(GameState.RUNNING); // Asuming that the game only has the one gameplay type
+
             }
         }
         Debug.Log("Load Complete.");
     }
+
     void OnUnloadOperationComplete(AsyncOperation ao)
     {
         Debug.Log("Unload Complete.");

@@ -94,10 +94,13 @@ MonoBehaviour:
   moveCenterFL: 0
   moveCenterFR: 0
   moveRight: 0
+  currentPowerup: 0
+  coinValue: 5
+  bHasDoubleCoins: 0
   invulnerable: 0
   flameThrower: 0
-  maxHealth: 200
-  health: 200
+  maxHealth: 1
+  health: 1
   score: 0
   spawnManager: {fileID: 0}
   inGameUI: {fileID: 0}

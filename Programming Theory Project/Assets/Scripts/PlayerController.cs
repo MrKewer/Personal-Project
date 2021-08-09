@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour, IDamageable<float, Enums.DamageTy
     [SerializeField] private float verticalStep = 3f; //The distance of the lanes
     [SerializeField] private float xBound = 10.0f; // the maximum position the player can go forward or backwards
     [SerializeField] private float jumpForce = 250.0f;
-
+    private bool bIsDead = false;
     [SerializeField] private bool isOnGround; //To be able to jump or not
     [SerializeField] private bool moveLeft = false; //Move from one lane to the other lane
     [SerializeField] private bool moveCenterFL = false; //Move from one lane to the other lane
@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour, IDamageable<float, Enums.DamageTy
     public int score = 0;
     private Rigidbody playerRb;
     private Vector3 startPos;
-    [SerializeField] private SpawnManager spawnManager; //Gets reference of the SpawnManager
+    public SpawnManager spawnManager; //Gets reference of the SpawnManager
     public InGameUI inGameUI; //This is set inside of the InGameUI
 
     public float VerticalStep
@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour, IDamageable<float, Enums.DamageTy
 
         playerRb = GetComponent<Rigidbody>();
         startPos = transform.position; //Used to be able to calculate the different lanes
-        resetAll();
+        //resetAll();
         runAnimation = characterSelected.GetComponent<Animator>();
 
     }
@@ -65,14 +65,15 @@ public class PlayerController : MonoBehaviour, IDamageable<float, Enums.DamageTy
     {
         if (currentState == GameManager.GameState.DEAD)
         {
-            resetAll();
+            //resetAll();
         }
-        if (currentState == GameManager.GameState.RUNNING && previousState == GameManager.GameState.DEAD)
+        if (currentState == GameManager.GameState.RUNNING && (previousState == GameManager.GameState.DEAD || previousState == GameManager.GameState.ENDGAME))
         {
-            characterSelected.SetActive(true);
+            resetAll();
+            //characterSelected.SetActive(true);
         }
     }
-    private void resetAll() //When game restarts 
+    public void resetAll() //When game restarts 
     {
         gameObject.transform.position = new Vector3(0, 0, 0);
         moveLeft = false;
@@ -81,6 +82,10 @@ public class PlayerController : MonoBehaviour, IDamageable<float, Enums.DamageTy
         moveRight = false;
         health = maxHealth;
         score = 0;
+        characterSelected.SetActive(true);
+        bIsDead = false;
+        inGameUI.UpdatePlayerHealth();
+        inGameUI.UpdateScore();
     }
 
     // Update is called once per frame
@@ -313,7 +318,9 @@ public class PlayerController : MonoBehaviour, IDamageable<float, Enums.DamageTy
     private void Death()
     {
         spawnManager.SpawnParticle(Enums.Particles.BlueLarge, gameObject.transform.position); //Spawn particle when dead
+        gameObject.transform.position = new Vector3(0, -100, 0); //Place Player outside the viewport
         characterSelected.SetActive(false); //Set inactive to use again if user restarts game
+        bIsDead = true;
     }
 
     public void Damage(float damageTaken, Enums.DamageType damageType, Vector3 damageLocation)
@@ -325,7 +332,7 @@ public class PlayerController : MonoBehaviour, IDamageable<float, Enums.DamageTy
             {
                 DamageDealt(damageTaken); //Fire up the event
             }
-            if (health <= 0) //Death if health below 0
+            if (health <= 0 && !bIsDead) //Death if health below 0
             {
                 GameManager.Instance.GameOver();
                 Death();

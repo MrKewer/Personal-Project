@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnListPrefab: {fileID: 6599522259516073843, guid: 1f5358da87480524d818a45a301333d0, type: 3}
+  playerScenePrefab: {fileID: 0}
   obstacleSpawnTime: 1
   EnemiesSpawnTime: 3
   pickupSpawnTime: 0.2
@@ -58,11 +59,6 @@ MonoBehaviour:
   - {fileID: 5071166830505136813, guid: c1811849b096c5d47894f3cf19852cf5, type: 3}
   - {fileID: 6029605018640540225, guid: 6b08171b0a959bb4a8d1baf7c6382cf5, type: 3}
   - {fileID: 5589843375933755232, guid: be65427cfd26b5d449b5c86d43bda310, type: 3}
-  - {fileID: 2358800636639433447, guid: 9d2128e6075c43c42a2faf416088837c, type: 3}
-  - {fileID: 2358800636639433447, guid: 9d2128e6075c43c42a2faf416088837c, type: 3}
-  - {fileID: 2358800636639433447, guid: 9d2128e6075c43c42a2faf416088837c, type: 3}
-  - {fileID: 2358800636639433447, guid: 9d2128e6075c43c42a2faf416088837c, type: 3}
-  - {fileID: 2358800636639433447, guid: 9d2128e6075c43c42a2faf416088837c, type: 3}
   ballsToSpawn:
   - {fileID: 1665714918814616, guid: dcdfdede07642ee44ad5cfe22399dc15, type: 3}
   - {fileID: 1138913196090074, guid: d9532b099f8dfb045844414b0b707bb3, type: 3}

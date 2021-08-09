@@ -8,22 +8,32 @@ using UnityEditor;
 
 public class MainMenu : MonoBehaviour
 {
+
     //UI screens inside the Main Menu
     [SerializeField] private GameObject titleScreen;
     [SerializeField] private GameObject enterName;
     [SerializeField] private GameObject characterSelect;
     [SerializeField] private GameObject levelSelect;
 
+    [Space]
+    [Header("Title Screen")]
+    [Space]
     //The buttons on the title screen
     [SerializeField] private Button newGameButton;
     [SerializeField] private Button optionButton;
     [SerializeField] private Button exitButton;
 
+    [Space]
+    [Header("Player Name Screen")]
+    [Space]
     //Enter Name Screen
     [SerializeField] private InputField playerName;
     [SerializeField] private Button enterNameNextButton;
     [SerializeField] private Button enterNameBackButton;
 
+    [Space]
+    [Header("Character Select Screen")]
+    [Space]
     //Character Select Screen
     [SerializeField] private Button characterSelectLeftScrollButton;
     [SerializeField] private Button characterSelectRightScrollButton;
@@ -34,6 +44,9 @@ public class MainMenu : MonoBehaviour
     private List<GameObject> characterPool = new List<GameObject>(); //Created Game Objects, that will be displayed
     [SerializeField] private int characterNumber = 0; //Current character in the list
 
+    [Space]
+    [Header("Level Select Screen")]
+    [Space]
     //Level Select Screen
     [SerializeField] private Button levelSelectLeftScrollButton;
     [SerializeField] private Button levelSelectRightScrollButton;

@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    private PlayerController playerControllerScript; //Gets the player Controller Script
+    public PlayerController playerControllerScript; //Gets the player Controller Script
 
     [SerializeField] private GameObject spawnListPrefab; //Gets the list of all obstacles, enemies and bosses
+    [SerializeField] private GameObject playerScenePrefab;
+ 
 
     private GameObject listToSpawnPrefab; //Get the lists of all to spawn based on the selected level (gets from spawnListPrefab's spawnList)
     private List<GameObject> obstaclesToSpawn; //The list that is gotten from the listToSpawnPrefab
@@ -15,7 +17,7 @@ public class SpawnManager : MonoBehaviour
 
     private List<GameObject> obstaclesPool = new List<GameObject>(); //The pool that is created that is used to store the items
     private List<GameObject> enemiesPool = new List<GameObject>();
-    private List<GameObject> bossesPool = new List<GameObject>();
+    public List<GameObject> bossesPool = new List<GameObject>();
 
     private float xObstacleSpawnPos = 30.0f; //The spawn position in the x direction
     private float startDelay = 2f; //Delay before spawning 
@@ -97,8 +99,11 @@ public class SpawnManager : MonoBehaviour
     {
         GameManager.Instance.OnGameStateChanged.AddListener(HandleGameStateChanged); //Add a Listener to the event
 
-        
-        playerControllerScript = GameObject.Find("Player").GetComponent<PlayerController>();
+
+        //playerControllerScript = GameObject.Find("Player").GetComponent<PlayerController>();
+        playerControllerScript = playerScenePrefab.GetComponent<PlayerController>();
+        playerControllerScript.spawnManager = this;
+
 
         //Pool Obsticles + Enemies + Bosses
         listToSpawnPrefab = spawnListPrefab.GetComponent<LevelList>().spawnList[GameManager.Instance.levelSelectedNumber];
@@ -154,9 +159,11 @@ public class SpawnManager : MonoBehaviour
             CancelInvoke();
             DisableAllObstacles(); //Clean the level, keeps the enemies running
         }
-        if (currentState == GameManager.GameState.RUNNING && previousState == GameManager.GameState.DEAD)
+        if (currentState == GameManager.GameState.RUNNING && (previousState == GameManager.GameState.DEAD || previousState == GameManager.GameState.ENDGAME ))
         {
-            InvokeRepeating("SpawnObstacle", startDelay, obstacleSpawnTime); 
+            CancelInvoke();
+            DisableAllObstacles(); //Clean the level, keeps the enemies running
+            InvokeRepeating("SpawnObstacleAndPickup", startDelay, obstacleSpawnTime); 
             InvokeRepeating("SpawnEnemy", startDelay, 3);
             DisableAllParticles(); //Clean the level
             DisableAllEnemies(); //Clean the level
@@ -598,15 +605,15 @@ public class SpawnManager : MonoBehaviour
         }
         for (int i = 0; i < pickupPool.Count; i++)
         {
-            Destroy(pickupPool[i]);
+            pickupPool[i].SetActive(false);
         }
         for (int i = 0; i < ballPool.Count; i++)
         {
-            Destroy(ballPool[i]);
+            ballPool[i].SetActive(false);
         }
         for (int i = 0; i < bombPool.Count; i++)
         {
-            Destroy(bombPool[i]);
+            bombPool[i].SetActive(false);
         }
     }
     void DisableAllParticles()
@@ -656,7 +663,7 @@ public class SpawnManager : MonoBehaviour
         }
         for (int i = 0; i < ExplosionParticlePool.Count; i++)
         {
-            Destroy(ExplosionParticlePool[i]);
+            ExplosionParticlePool[i].SetActive(false);
         }
 
     }
