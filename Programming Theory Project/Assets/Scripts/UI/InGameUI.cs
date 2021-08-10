@@ -11,9 +11,9 @@ public class InGameUI : MonoBehaviour
     private PlayerController playerController;
     private SpawnManager spawnManager;
     private BossMain bossMain;
-    private int time = 0;
-    public int count = 0;
-    private bool bHasPowerup = false;
+    private int time = 0; //The InGameTime
+    public int count = 0; //counter for the powerups
+    private bool bHasPowerup = false; //To be used to see if a new powerup has been picked up
 
     [SerializeField] private TextMeshProUGUI playerNameText; //The text to display player name
     [SerializeField] private Slider playerHealthBar; //The health bar of the player
@@ -40,14 +40,13 @@ public class InGameUI : MonoBehaviour
     private void OnEnable()
     {
         //Set all equal to the player's input in the MainMenu
-
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
         spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         playerNameText.text = GameManager.Instance.playerName;
         playerHealthBar.maxValue = playerController.maxHealth;
         UpdatePlayerHealth();
         UpdateScore();
-        playerController.DamageDealt += PlayerController_DamageDealt;
+        playerController.DamageDealt += PlayerController_DamageDealt; //Add the event to know when the player has received damage
         playerController.inGameUI = this;
     }
 
@@ -66,7 +65,6 @@ public class InGameUI : MonoBehaviour
         {
             bossHealthBar.gameObject.SetActive(true);
             bossMain = spawnManager.bossesPool[0].GetComponent<BossMain>();
-            //bossMain = GameObject.FindGameObjectWithTag("Boss").GetComponent<BossMain>();
             bossHealthBar.maxValue = bossMain.maxHealth;
             bossNameText.text = bossMain.BossName;
             UpdateBossHealth();
@@ -87,9 +85,8 @@ public class InGameUI : MonoBehaviour
             bossHealthBar.gameObject.SetActive(false);
             PowerupCountComplete();
             CancelInvoke();
-            GameManager.Instance.SaveGame(playerController.score, time);
+            GameManager.Instance.SaveGame(playerController.score, time); //Only place where the saved game is called
         }
-
         if (currentState == GameManager.GameState.RUNNING && (previousState == GameManager.GameState.DEAD || previousState == GameManager.GameState.ENDGAME || previousState == GameManager.GameState.MAINMENU))
         {
             bossHealthBar.gameObject.SetActive(false);
@@ -102,6 +99,7 @@ public class InGameUI : MonoBehaviour
 
     void Timer() //The timer to display time
     {
+        //convert the time to time format
         float minutes = Mathf.FloorToInt(time / 60);
         float seconds = Mathf.FloorToInt(time % 60);
 
@@ -122,17 +120,17 @@ public class InGameUI : MonoBehaviour
 
     #region Updates
 
-    public void UpdateBossHealth()
+    public void UpdateBossHealth() //Update Boss Health
     {
         bossHealthBar.value = bossMain.health;
         bossHealthAmountDisplay.text = bossMain.health + "/" + bossMain.maxHealth;
     }
-    public void UpdatePlayerHealth()
+    public void UpdatePlayerHealth() //Update Player Health
     {
         playerHealthBar.value = playerController.health;
         playerHealthAmountDisplay.text = playerController.health + "/" + playerController.maxHealth;
     }
-    public void UpdateScore()
+    public void UpdateScore() //Update Score
     {
         scoreText.text = playerController.score.ToString();
     }
@@ -144,12 +142,6 @@ public class InGameUI : MonoBehaviour
     {
         StartPowerup(pickupType);
         powerupIndicator.GetComponent<Image>().sprite = invulnerablitySprite;
-    }
-
-    public void FlameThrower(Enums.Pickups pickupType)
-    {
-        StartPowerup(pickupType);
-        powerupIndicator.GetComponent<Image>().sprite = flameThrowerSprite;
     }
 
     public void DoubleCoins(Enums.Pickups pickupType)
@@ -164,17 +156,18 @@ public class InGameUI : MonoBehaviour
     }
     private void StartPowerup(Enums.Pickups pickupType)
     {
-        if (bHasPowerup)
+        if (bHasPowerup) //To check if the is not already a powerup running
         {
-            PowerupCountComplete();
+            PowerupCountComplete(); //Stops Current powerup
         }
+        //Reset the indicator and run the new powerup
         powerupIndicator.SetActive(true);
         powerupIndicatorTime[8].SetActive(true);
         playerController.currentPowerup = pickupType;
         count = 8;
         InvokeRepeating("PowerupCounter", 0, 1);
     }
-    private void PowerupCounter()
+    private void PowerupCounter() //runs this function through the InvokeRepeating
     {
         bHasPowerup = true;
         DeactivatePowerupIndicatorTime();
@@ -185,7 +178,7 @@ public class InGameUI : MonoBehaviour
             PowerupCountComplete();
         }
     }
-    private void PowerupCountComplete()
+    private void PowerupCountComplete() //Stops the powerup
     {
         DeactivatePowerupIndicatorTime();
         bHasPowerup = false;
@@ -194,7 +187,7 @@ public class InGameUI : MonoBehaviour
         CancelInvoke("PowerupCounter");
     }
 
-    private void DeactivatePowerupIndicatorTime()
+    private void DeactivatePowerupIndicatorTime()//Remove all the powerup indicators
     {
         for (int i = 0; i < powerupIndicatorTime.Count; i++)
         {

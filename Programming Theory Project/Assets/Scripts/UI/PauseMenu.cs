@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class PauseMenu : MonoBehaviour
 {
     [SerializeField] private GameObject pauseScreen;
-    [SerializeField] private GameObject optionsScreen;
+    [SerializeField] private GameObject optionsScreen; //This screen has its own script
 
     [SerializeField] private Button resumeButton;
     [SerializeField] private Button optionsButton;

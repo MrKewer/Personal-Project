@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class BombDrop : MonoBehaviour
 {
-    [SerializeField] private GameObject EnemyEnterZone;
-    private SpawnManager spawnManager;
+    [SerializeField] private GameObject EnemyEnterZone; //Extra sphere around the bomb, to have a bigger change to hit something
+    private SpawnManager spawnManager; 
 
     private void Start()
     {
@@ -14,7 +14,7 @@ public class BombDrop : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("Boss")) //Does damage only if its the enemy or boss, Lets the player jump and run on the obstacles
+        if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("Boss"))
         {
             spawnManager.SpawnExplosion(transform.position);
             gameObject.SetActive(false);

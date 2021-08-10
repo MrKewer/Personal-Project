@@ -11,8 +11,8 @@ public class MainMenu : MonoBehaviour
 
     //UI screens inside the Main Menu
     [SerializeField] private GameObject titleScreen;
-    [SerializeField] private GameObject highScoreScreen;
-    [SerializeField] private GameObject optionsScreen;
+    [SerializeField] private GameObject highScoreScreen; //This screen has its own script
+    [SerializeField] private GameObject optionsScreen; //This screen has its own script
     [SerializeField] private GameObject enterName;
     [SerializeField] private GameObject characterSelect;
     [SerializeField] private GameObject levelSelect;
@@ -97,7 +97,7 @@ public class MainMenu : MonoBehaviour
         //Enter Name Screen
         enterNameNextButton.onClick.AddListener(CharacterSelectScreen);
         enterNameBackButton.onClick.AddListener(TitleScreen);
-        
+
         //Character Select Screen
         characterSelectLeftScrollButton.onClick.AddListener(CharacterSelectScrollLeft);
         characterSelectRightScrollButton.onClick.AddListener(CharacterSelectScrollRight);
@@ -185,8 +185,8 @@ public class MainMenu : MonoBehaviour
     }
     private void CharacterSelectScrollRight() //Scroll right
     {
-        characterNumber++;        
-        if (characterNumber <= characterList.Count -1)
+        characterNumber++;
+        if (characterNumber <= characterList.Count - 1)
         {
             CharacterSelectDeactivatePool();
             characterPool[characterNumber].SetActive(true);
@@ -200,7 +200,7 @@ public class MainMenu : MonoBehaviour
     }
     private void CharacterSelectScrollLeft() //Scroll Left
     {
-        characterNumber--;        
+        characterNumber--;
         if (characterNumber >= 0)
         {
             CharacterSelectDeactivatePool();
@@ -250,15 +250,17 @@ public class MainMenu : MonoBehaviour
     #endregion
 
     #region HighScore Screen
+    //Handles the rest in its own script
     private void HighScore()
     {
         DeactivateAllScreens();
         highScoreScreen.SetActive(true);
     }
 
-    #endregion
+    #endregion 
 
     #region Options Screen
+    //Handles the rest in its own script
     private void Options()
     {
         DeactivateAllScreens();
@@ -266,8 +268,6 @@ public class MainMenu : MonoBehaviour
     }
 
     #endregion
-
-
 
     private void StartGame()
     {

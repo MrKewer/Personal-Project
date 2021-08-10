@@ -44,18 +44,10 @@ public class EnemyMain : MonoBehaviour, IDamageable<float, Enums.DamageType, Vec
         FollowDirection = new Vector3((FollowDirection.x * runSpeed) / 100, 0, (FollowDirection.z + zRandom)); //Setup the vector to only use the x direction
         transform.Translate(FollowDirection * speed * Time.deltaTime); //Translate the character to the location
         runAnimation.SetFloat("Speed_f", GameManager.Instance.gameSpeed * AnimationSpeed / 10); //Set the run animation to sinc in with game speed
-        if (gameObject.transform.position.x <= spawnPos || FollowDirection.x < -0.5) //If running back and gets to spawn position then run forward
+        if (gameObject.transform.position.x <= spawnPos || FollowDirection.x < -1) //If running back and gets to spawn position then run forward, when FollowDirection.x is negative it must prevent from running past player
         {            
             runSpeed = forwardSpeed;
         }
-        //if(runSpeed < 0)
-        //{
-        //    gameObject.GetComponent<Rigidbody>().interpolation = RigidbodyInterpolation.Interpolate; //When they run back they will run through the other enemies
-        //}
-        //else
-        //{
-        //    gameObject.GetComponent<Rigidbody>().interpolation = RigidbodyInterpolation.Extrapolate; //When running forward they would not run in each other
-        //}
     }
 
     protected virtual void OnCollisionEnter(Collision collision)

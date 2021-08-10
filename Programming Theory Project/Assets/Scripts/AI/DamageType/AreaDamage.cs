@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AreaDamage : MonoBehaviour
 {
-    private SpawnManager spawnManager; 
+    private SpawnManager spawnManager; //Reference to Spawn Manager
     [SerializeField] private float damagePerSecond; //The amount of damage to deal
     private bool bDoDamage = false; // When damage will be aplied each second, this keeps the loop running in the coroutine
     [SerializeField] private Enums.Particles particleToSpawnOnDamage; //The Type of particle to spawn when damage is dealt
@@ -22,12 +22,12 @@ public class AreaDamage : MonoBehaviour
             spawnManager.SpawnParticle(particleToSpawnOnDamage, other.gameObject.transform.position); //Show particle 
 
         }
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player")) //Do damage per second to player
         {
             IDamageable<float, Enums.DamageType, Vector3> hit = (IDamageable<float, Enums.DamageType, Vector3>)other.gameObject.GetComponent(typeof(IDamageable<float, Enums.DamageType, Vector3>));
             if (hit != null)
             {
-                bDoDamage = true;
+                bDoDamage = true; //When the player has enter the colider
                 StartCoroutine(DoDamagePerSecond(other, hit));
             }
         }
@@ -37,7 +37,7 @@ public class AreaDamage : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            bDoDamage = false;
+            bDoDamage = false; //When the player has exit the colider
         }
 
     }

@@ -24,9 +24,9 @@ public class HighScoreMenu : MonoBehaviour
 
     private void OnEnable()
     {
-        highScores = GameManager.Instance.highScores;
+        highScores = GameManager.Instance.highScores; //Gets the list from GameManager
 
-        if (highScores[0].score > 0)
+        if (highScores[0].score > 0) //Check to see if there are data otherwise show empty text fields
         {
             highScores.Sort();
             firstPlayerName.text = highScores[0].playerName + " : " + highScores[0].score;

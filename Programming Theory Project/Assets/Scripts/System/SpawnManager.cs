@@ -23,12 +23,10 @@ public class SpawnManager : MonoBehaviour
     private float startDelay = 2f; //Delay before spawning 
     public float obstacleSpawnTime = 0.2f; //Spawning delay intervals
     public float EnemiesSpawnTime = 3f; //Spawning delay intervals
-    public float pickupSpawnTime = 0.2f;
-    //private bool isPlaying = true;
+    public float pickupSpawnTime = 0.2f; //This will be used to random intervals of the pickups spawned
 
     private int PoolDepth = 10; // The amount that will be spawned
-    //private bool canGrow = true; //If the need for more particles it will create more
-    [SerializeField] private int poolDuplicates = 3;
+    [SerializeField] private int poolDuplicates = 3; //Create duplicates of objects
 
     [Space]
     [Header("Pickups")]
@@ -175,7 +173,7 @@ public class SpawnManager : MonoBehaviour
         for (int i = 0; i < poolSize; i++)
         {
             GameObject pooledGameObject = Instantiate(prefab);
-            pooledGameObject.AddComponent<MoveLeft>();
+            pooledGameObject.AddComponent<MoveLeft>(); //Not to much of a good thing, beter to add scripts manualy, but works nice for this gameplay type
             pooledGameObject.SetActive(false);
             pool.Add(pooledGameObject);
             pooledGameObject.transform.SetParent(gameObject.transform);
@@ -230,7 +228,7 @@ public class SpawnManager : MonoBehaviour
         SpawnParticle((Enums.Particles)randomNumber, randomLocation + location);
     }
 
-    public void SpawnParticle(Enums.Particles particle, Vector3 location)
+    public void SpawnParticle(Enums.Particles particle, Vector3 location) //Can be called by any other Game Object that whats to spawn a particle
     {
         GameObject particleEffect;
         switch (particle)
@@ -358,7 +356,7 @@ public class SpawnManager : MonoBehaviour
 
     private void SpawnObstacleAndPickup() //Will set an random obstacle and pickup active and set it to a new position
     {
-        //spawn Obstacles
+        //Spawn Obstacles
         int randomPathwayObstacle = Random.Range(-1, 2);
         GameObject obstacleToSpawn = GetAvailableRandomGameObject(obstaclesPool);
         if (obstacleToSpawn != null)
@@ -391,7 +389,7 @@ public class SpawnManager : MonoBehaviour
         }
         PickupCounter++;
     }
-    private int RandomDifferentPathway(int obstaclePathway)
+    private int RandomDifferentPathway(int obstaclePathway) //To spawn next to an obstacle
     {
         for (int i = 0; i < 5; i++)
         {
@@ -484,7 +482,7 @@ public class SpawnManager : MonoBehaviour
     #endregion
 
     #region Explosion
-    public void SpawnBomb(Vector3 spawnPos)
+    public void SpawnBomb(Vector3 spawnPos) //Drop the bomb
     {
         GameObject bombToSpawn = GetAvailableRandomGameObject(bombPool);
 
@@ -493,10 +491,9 @@ public class SpawnManager : MonoBehaviour
             bombToSpawn.SetActive(true);
             bombToSpawn.transform.position = spawnPos;
         }
-
     }
 
-    public void SpawnExplosion(Vector3 spawnPos)
+    public void SpawnExplosion(Vector3 spawnPos) //Spawn the explosion after the dropped bomb hits an enemy or boss
     {
         GameObject explosionToSpawn = GetAvailableRandomGameObject(ExplosionParticlePool);
 
@@ -505,7 +502,9 @@ public class SpawnManager : MonoBehaviour
             explosionToSpawn.SetActive(true);
             explosionToSpawn.transform.position = spawnPos;
         }
-        GameObject explosionSphereToSpawn = GetAvailableRandomGameObject(ExplosionSpherePool);
+
+
+        GameObject explosionSphereToSpawn = GetAvailableRandomGameObject(ExplosionSpherePool); //The sphere collects all the enemies inside, this caused problems when attached will MoveLeft Script and attached to the particle
 
         if (explosionToSpawn != null)
         {

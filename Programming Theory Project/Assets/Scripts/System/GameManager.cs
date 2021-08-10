@@ -12,7 +12,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
 {
-    [SerializeField] private LoadSave loadSave;
+    [SerializeField] private LoadSave loadSave; //Reference to the LoadSave script
     public List<HighScoreList> highScores = new List<HighScoreList>();
     public float gameSpeed = 10f; //The speed at which the game will run
     public int levelSelectedNumber = 2; //The level the player will choose in the MainMenu
@@ -94,20 +94,8 @@ public class GameManager : Singleton<GameManager>
     void Start()
     {
         DontDestroyOnLoad(gameObject); //Called to keep this script even if it loads a complete new level
-        loadSave = gameObject.GetComponent<LoadSave>();
-
-        //highScores.Add(new HighScoreList("Jan", 50, "Level1", "00:30"));
-        //highScores.Add(new HighScoreList("Roben", 5, "Level3", "00:42"));
-        //highScores.Add(new HighScoreList("Jaap", 100, "Level2", "00:32"));
-        //highScores.Add(new HighScoreList("", 0, "", ""));
-        //highScores.Add(new HighScoreList("", 0, "", ""));
-        //highScores.Add(new HighScoreList("", 0, "", ""));
-
-        //loadSave.SaveGame();
-
-
-        //Toets delete als
-        LoadGame();
+        loadSave = gameObject.GetComponent<LoadSave>(); //Gets reference to the LoadSave script
+        LoadGame(); //Load game on startup
         Physics.gravity *= gravityModifier; //This should only be done once in the game
         _loadOperations = new List<AsyncOperation>(); //Initialize the list
         _instancedSystemPrefabs = new List<GameObject>(); //Initialize the list
@@ -239,17 +227,19 @@ public class GameManager : Singleton<GameManager>
     #region LoadSave
     private void LoadGame()
     {
-        loadSave.LoadGame();
+        loadSave.LoadGame(); //To the loading on the LoadSave Script
     }
     public void SaveGame(int score, int time)
     {
+        //convert the time to time format
         float minutes = Mathf.FloorToInt(time / 60);
         float seconds = Mathf.FloorToInt(time % 60);
 
+        //use the 6th one to add a new score, this one will not be displayed, only used then to sort out the list
         highScores[5] = new HighScoreList(playerName, score, "Level" + (levelSelectedNumber+1), string.Format("{0:00}:{1:00}", minutes, seconds));
 
-        highScores.Sort();
-        loadSave.SaveGame();
+        highScores.Sort(); //Sort out list with new item added to list
+        loadSave.SaveGame(); //Save the new list
     }
     #endregion
 

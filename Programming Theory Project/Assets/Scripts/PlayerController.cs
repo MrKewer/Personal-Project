@@ -23,20 +23,20 @@ public class PlayerController : MonoBehaviour, IDamageable<float, Enums.DamageTy
     [SerializeField] private bool moveRight = false; //Move from one lane to the other lane
 
     public Enums.Pickups currentPowerup;
-    [SerializeField] private int coinValue = 10;
-    public bool bHasDoubleCoins = false;
+    [SerializeField] private int coinValue = 10; //The value of each coin picked up
+    public bool bHasDoubleCoins = false; //Used to make the player receive double coins
     [SerializeField] private bool invulnerable = false; //Make the player invulnerable to damage
     [SerializeField] private float healPickup = 50f; //Full health
 
     public float maxHealth = 100f; //Full health
     public float health = 100f; //Current health
-    public int score = 0;
+    public int score = 0; //The Main score is kept here
     private Rigidbody playerRb;
-    private Vector3 startPos;
+    private Vector3 startPos; //The start position, used to calculate the different lanes
     public SpawnManager spawnManager; //Gets reference of the SpawnManager
     public InGameUI inGameUI; //This is set inside of the InGameUI
 
-    public float VerticalStep
+    public float VerticalStep // The size of the lanes
     {
         get { return verticalStep; }
         private set { }
@@ -56,20 +56,14 @@ public class PlayerController : MonoBehaviour, IDamageable<float, Enums.DamageTy
 
         playerRb = GetComponent<Rigidbody>();
         startPos = transform.position; //Used to be able to calculate the different lanes
-        //resetAll();
         runAnimation = characterSelected.GetComponent<Animator>();
     }
 
     private void HandleGameStateChanged(GameManager.GameState currentState, GameManager.GameState previousState) //When the state changes in the GameManager
     {
-        if (currentState == GameManager.GameState.DEAD)
-        {
-            //resetAll();
-        }
         if (currentState == GameManager.GameState.RUNNING && (previousState == GameManager.GameState.DEAD || previousState == GameManager.GameState.ENDGAME))
         {
             resetAll();
-            //characterSelected.SetActive(true);
         }
     }
     public void resetAll() //When game restarts 
@@ -230,36 +224,31 @@ public class PlayerController : MonoBehaviour, IDamageable<float, Enums.DamageTy
     {
         if (other.gameObject.CompareTag("Powerup"))
         {
-            Enums.Pickups pickupType = other.gameObject.GetComponent<Pickups>().pickupType;
-            //spawnManager.SpawnParticle(Enums.Particles.WhiteSmall, other.gameObject.transform.position);
+            Enums.Pickups pickupType = other.gameObject.GetComponent<Pickups>().pickupType;            
             switch (pickupType)
             {
                 case Enums.Pickups.Heal:
-                    health += healPickup;
-                    if(health > maxHealth)
+                    health += healPickup; //Just add a few extra health
+                    if(health > maxHealth) //Not to go over the maxHealth
                     {
                         health = maxHealth;
                     }
-                    inGameUI.UpdatePlayerHealth();
+                    inGameUI.UpdatePlayerHealth(); //Update Health in the UI
                     break;
 
                 case Enums.Pickups.Invulnerability:
-                    inGameUI.Invulnerability(pickupType);
-                    invulnerable = true;
+                    inGameUI.Invulnerability(pickupType); //Handle the powerup time in UI
+                    invulnerable = true; //Is used in the applied damage section
                     break;
 
                 case Enums.Pickups.Ball:
-                    inGameUI.Balls(pickupType);
+                    inGameUI.Balls(pickupType); //Handle the powerup time in UI
                     InvokeRepeating("SpawnBalls", 0.5f, 0.2f);
                     break;
 
                 case Enums.Pickups.DoubleCoins:
-                    inGameUI.DoubleCoins(pickupType);
-                    bHasDoubleCoins = true;
-                    break;
-
-                case Enums.Pickups.FlameThrower:
-                    inGameUI.FlameThrower(pickupType);
+                    inGameUI.DoubleCoins(pickupType); //Handle the powerup time in UI
+                    bHasDoubleCoins = true; //Used in the UpdateScore function
                     break;
 
                 case Enums.Pickups.Coin:
@@ -271,14 +260,14 @@ public class PlayerController : MonoBehaviour, IDamageable<float, Enums.DamageTy
                     spawnManager.SpawnBomb(bombLocation);
                     break;
             }
-            other.gameObject.SetActive(false);
+            other.gameObject.SetActive(false); //Disable the pickup
         }
     }
     #endregion
 
     #region Powerups
 
-    public void SpawnBalls()
+    public void SpawnBalls() //This function are used in InvokeRepeating
     { 
         Vector3 spawnPos = new Vector3(transform.position.x - 1, transform.position.y + 3, transform.position.z);
         spawnManager.SpawnBall(spawnPos);
@@ -286,15 +275,10 @@ public class PlayerController : MonoBehaviour, IDamageable<float, Enums.DamageTy
 
     public void StopPowerup()
     {
-
         switch (currentPowerup)
         {
             case Enums.Pickups.Invulnerability:
                 invulnerable = false;
-                break;
-
-            case Enums.Pickups.FlameThrower:
-
                 break;
             case Enums.Pickups.Ball:
                 CancelInvoke("SpawnBalls");
@@ -313,7 +297,6 @@ public class PlayerController : MonoBehaviour, IDamageable<float, Enums.DamageTy
         score += Amount;
         inGameUI.UpdateScore();
     }
-
 
     #endregion
 
