@@ -90,7 +90,6 @@ public class GameManager : Singleton<GameManager>
     {
         DontDestroyOnLoad(gameObject); //Called to keep this script even if it loads a complete new level
         Physics.gravity *= gravityModifier; //This should only be done once in the game
-        _currentLevelName = SceneManager.GetActiveScene().name; //Gets the current scenes name
         _loadOperations = new List<AsyncOperation>(); //Initialize the list
         _instancedSystemPrefabs = new List<GameObject>(); //Initialize the list
         InstantiateSystemPrefabs(); //Create all the managers

@@ -11,6 +11,8 @@ public class MainMenu : MonoBehaviour
 
     //UI screens inside the Main Menu
     [SerializeField] private GameObject titleScreen;
+    [SerializeField] private GameObject highScoreScreen;
+    [SerializeField] private GameObject optionsScreen;
     [SerializeField] private GameObject enterName;
     [SerializeField] private GameObject characterSelect;
     [SerializeField] private GameObject levelSelect;
@@ -20,6 +22,7 @@ public class MainMenu : MonoBehaviour
     [Space]
     //The buttons on the title screen
     [SerializeField] private Button newGameButton;
+    [SerializeField] private Button highScoreButton;
     [SerializeField] private Button optionButton;
     [SerializeField] private Button exitButton;
 
@@ -57,6 +60,20 @@ public class MainMenu : MonoBehaviour
     private List<Sprite> levelList; //The list from the levelListPrefab
     [SerializeField] private int levelNumber = 0; //Current Level in the list
 
+
+    [Space]
+    [Header("HighScore Screen")]
+    [Space]
+    //The buttons on the title screen
+    [SerializeField] private Button highScoreBackButton;
+
+    [Space]
+    [Header("Options Screen")]
+    [Space]
+    //The buttons on the title screen
+
+    [SerializeField] private Button optionsBackButton;
+
     private void OnEnable()
     {
         TitleScreen(); //The fist screen to show
@@ -73,6 +90,8 @@ public class MainMenu : MonoBehaviour
     {
         //Title Screen
         newGameButton.onClick.AddListener(NewGame);
+        highScoreButton.onClick.AddListener(HighScore);
+        optionButton.onClick.AddListener(Options);
         exitButton.onClick.AddListener(ExitGame);
 
         //Enter Name Screen
@@ -90,6 +109,12 @@ public class MainMenu : MonoBehaviour
         levelSelectRightScrollButton.onClick.AddListener(LevelSelectScrollRight);
         levelSelectStartButton.onClick.AddListener(StartGame);
         levelSelectBackButton.onClick.AddListener(CharacterSelectScreen);
+
+        //High Score Screen
+        highScoreBackButton.onClick.AddListener(TitleScreen);
+
+        //Options Screen
+        optionsBackButton.onClick.AddListener(TitleScreen);
     }
 
     #region Title Screen
@@ -223,7 +248,27 @@ public class MainMenu : MonoBehaviour
     }
 
     #endregion
-    
+
+    #region HighScore Screen
+    private void HighScore()
+    {
+        DeactivateAllScreens();
+        highScoreScreen.SetActive(true);
+    }
+
+    #endregion
+
+    #region Options Screen
+    private void Options()
+    {
+        DeactivateAllScreens();
+        optionsScreen.SetActive(true);
+    }
+
+    #endregion
+
+
+
     private void StartGame()
     {
         GameManager.Instance.playerName = playerName.text;
@@ -238,6 +283,8 @@ public class MainMenu : MonoBehaviour
         enterName.SetActive(false);
         characterSelect.SetActive(false);
         levelSelect.SetActive(false);
+        optionsScreen.SetActive(false);
+        highScoreScreen.SetActive(false);
     }
     private void ExitGame()
     {

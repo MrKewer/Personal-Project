@@ -74,7 +74,7 @@ public class InGameUI : MonoBehaviour
                 bossMain.DamageDealt += BossMain_DamageDealt; //Add function to method
             }
         }
-        if (currentState == GameManager.GameState.DEAD)
+        if (currentState == GameManager.GameState.DEAD || currentState == GameManager.GameState.ENDGAME)
         {
             bossHealthBar.gameObject.SetActive(false);
             PowerupCountComplete();

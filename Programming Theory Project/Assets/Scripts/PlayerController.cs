@@ -23,10 +23,11 @@ public class PlayerController : MonoBehaviour, IDamageable<float, Enums.DamageTy
     [SerializeField] private bool moveRight = false; //Move from one lane to the other lane
 
     public Enums.Pickups currentPowerup;
-    public int coinValue = 10;
+    [SerializeField] private int coinValue = 10;
     public bool bHasDoubleCoins = false;
-    public bool invulnerable = false; //Make the player invulnerable to damage
-    public bool flameThrower = false;
+    [SerializeField] private bool invulnerable = false; //Make the player invulnerable to damage
+    [SerializeField] private bool flameThrower = false;
+    [SerializeField] private float healPickup = 50f; //Full health
 
     public float maxHealth = 100f; //Full health
     public float health = 100f; //Current health
@@ -236,7 +237,11 @@ public class PlayerController : MonoBehaviour, IDamageable<float, Enums.DamageTy
             switch (pickupType)
             {
                 case Enums.Pickups.Heal:
-                    health = maxHealth;
+                    health += healPickup;
+                    if(health > maxHealth)
+                    {
+                        health = maxHealth;
+                    }
                     inGameUI.UpdatePlayerHealth();
                     break;
 
