@@ -44,7 +44,6 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private GameObject ExplosionSpherePrefab; //The explosion the bomb will create
     private List<GameObject> ExplosionSpherePool = new List<GameObject>(); //The pool that is created that is used to store the items
     private int PickupCounter = 0; //Keeps count of obsticles spawned
-    private int WhenToSpawnPickup = 4; //Spawn pickup after this amount of obsticles has spawned, will be randomed.
 
     #region Prefabs for particles
     [Space]

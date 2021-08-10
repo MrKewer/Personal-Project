@@ -168,8 +168,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 64}
-  m_SizeDelta: {x: 256, y: 128}
+  m_AnchoredPosition: {x: 0, y: 26.5}
+  m_SizeDelta: {x: 212, y: 53}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8951453387642019730
 CanvasRenderer:
@@ -480,7 +480,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -120}
-  m_SizeDelta: {x: 256, y: 128}
+  m_SizeDelta: {x: 212, y: 53}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2027766363760817960
 CanvasRenderer:
@@ -839,7 +839,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -40}
-  m_SizeDelta: {x: 256, y: 128}
+  m_SizeDelta: {x: 212, y: 53}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6379224700769251279
 CanvasRenderer:
@@ -1166,7 +1166,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 40}
-  m_SizeDelta: {x: 256, y: 128}
+  m_SizeDelta: {x: 212, y: 53}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2274875700484152145
 CanvasRenderer:
@@ -1431,7 +1431,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 557465483084072202, guid: 59ec351c72a3aa94897bd612f41e3485, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 48.01005
+      value: 48.010063
       objectReference: {fileID: 0}
     - target: {fileID: 557465483084389957, guid: 59ec351c72a3aa94897bd612f41e3485, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1447,7 +1447,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 557465483084390010, guid: 59ec351c72a3aa94897bd612f41e3485, type: 3}
       propertyPath: m_Value
-      value: -0.00000063565034
+      value: -0.0000012713007
       objectReference: {fileID: 0}
     - target: {fileID: 557465484136284857, guid: 59ec351c72a3aa94897bd612f41e3485, type: 3}
       propertyPath: m_AnchorMax.x

@@ -35,6 +35,8 @@ public class InGameUI : MonoBehaviour
     [SerializeField] private Sprite doubleCoinsSprite;
     [SerializeField] private Sprite flameThrowerSprite;
 
+
+
     private void OnEnable()
     {
         //Set all equal to the player's input in the MainMenu
@@ -74,12 +76,20 @@ public class InGameUI : MonoBehaviour
                 bossMain.DamageDealt += BossMain_DamageDealt; //Add function to method
             }
         }
-        if (currentState == GameManager.GameState.DEAD || currentState == GameManager.GameState.ENDGAME)
+        if (currentState == GameManager.GameState.DEAD)
         {
             bossHealthBar.gameObject.SetActive(false);
             PowerupCountComplete();
             CancelInvoke();
         }
+        if (currentState == GameManager.GameState.ENDGAME && (previousState == GameManager.GameState.BOSSFIGHT || previousState == GameManager.GameState.RUNNING))
+        {
+            bossHealthBar.gameObject.SetActive(false);
+            PowerupCountComplete();
+            CancelInvoke();
+            GameManager.Instance.SaveGame(playerController.score, time);
+        }
+
         if (currentState == GameManager.GameState.RUNNING && (previousState == GameManager.GameState.DEAD || previousState == GameManager.GameState.ENDGAME || previousState == GameManager.GameState.MAINMENU))
         {
             bossHealthBar.gameObject.SetActive(false);
@@ -134,29 +144,23 @@ public class InGameUI : MonoBehaviour
     {
         StartPowerup(pickupType);
         powerupIndicator.GetComponent<Image>().sprite = invulnerablitySprite;
-
     }
 
     public void FlameThrower(Enums.Pickups pickupType)
     {
         StartPowerup(pickupType);
         powerupIndicator.GetComponent<Image>().sprite = flameThrowerSprite;
-
     }
 
     public void DoubleCoins(Enums.Pickups pickupType)
     {
         StartPowerup(pickupType);
         powerupIndicator.GetComponent<Image>().sprite = doubleCoinsSprite;
-
     }
     public void Balls(Enums.Pickups pickupType)
     {
-
         StartPowerup(pickupType);
         powerupIndicator.GetComponent<Image>().sprite = ballSprite;
-
-
     }
     private void StartPowerup(Enums.Pickups pickupType)
     {

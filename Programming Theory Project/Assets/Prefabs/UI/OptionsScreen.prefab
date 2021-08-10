@@ -742,7 +742,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &557465483084072202
 RectTransform:
   m_ObjectHideFlags: 0
@@ -762,7 +762,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 300}
+  m_SizeDelta: {x: 0, y: 388.7155}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &557465483084389956
 GameObject:
@@ -885,7 +885,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1274559122092745537}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.83996665
+  m_Size: 0.6482633
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -927,7 +927,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -279, y: -37}
-  m_SizeDelta: {x: 256, y: 128}
+  m_SizeDelta: {x: 212, y: 53}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &557465483792256285
 CanvasRenderer:
@@ -1971,7 +1971,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -279, y: -128}
-  m_SizeDelta: {x: 256, y: 128}
+  m_SizeDelta: {x: 212, y: 53}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6519313467574544178
 CanvasRenderer:
@@ -2092,7 +2092,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -279, y: 54}
-  m_SizeDelta: {x: 256, y: 128}
+  m_SizeDelta: {x: 212, y: 53}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6519313468149050497
 CanvasRenderer:
@@ -2557,7 +2557,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -121, y: 109}
+  m_AnchoredPosition: {x: -118, y: 152.1599}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6639939421571216842
@@ -2636,8 +2636,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -25, y: 19}
-  m_SizeDelta: {x: 351.3, y: 133.14}
+  m_AnchoredPosition: {x: -22, y: -12}
+  m_SizeDelta: {x: 351.3, y: 281.4597}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6542052973065389871
 CanvasRenderer:
@@ -2680,14 +2680,12 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'W or up-arrow: Move character left
-
-    S or down-arrow: Move character
-    right
-
-    A or left-arrow: Move character backwards
-
-    D or right-arrow: Move
-    character forward
-
-    Space: Jump'
+  m_Text: "Run away from the animals they don\u2019t like you and they will bite
+    you. While running away you should dodge all the incoming obstacles, the animals
+    are so much on your tail they will just run into any obstacle. If you\u2019re
+    lucky, you can pick up some food to restore your health, bombs or balls to throw
+    at the at the animals, a shield to run through anything or double your diamond
+    coins you pick up.\r\n\r\nThe character moves in 3 different lanes, and can run
+    faster or slower.\r\nW or up-arrow: Moves one lane up\r\nS or down-arrow: Move
+    one lane down\r\nA or left-arrow: Runs slower\r\nD or right-arrow: Runs faster\r\nSpace:
+    Jump\r\n"

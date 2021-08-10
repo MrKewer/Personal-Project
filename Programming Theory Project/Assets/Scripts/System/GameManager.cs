@@ -4,16 +4,21 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
+
 //UnityEvent<Current GameState, Previous GameState>
 //Serializable in order to register via the inspecter
 [System.Serializable] public class EventGameState : UnityEvent<GameManager.GameState, GameManager.GameState> { }
+
+
 public class GameManager : Singleton<GameManager>
 {
+    [SerializeField] private LoadSave loadSave;
+    public List<HighScoreList> highScores = new List<HighScoreList>();
     public float gameSpeed = 10f; //The speed at which the game will run
     public int levelSelectedNumber = 2; //The level the player will choose in the MainMenu
     public int characterSelectedNumber = 0; //The Character the player will choose in the MainMenu
     public string playerName = "a"; //The Name the player will type in, in the MainMenu
-
+        
     public int enemiesDead = 0; //Keeps count of the enemies killed
     public int enemiesDeadBeforeBossFight = 2; //The amount of enemies to kill before the boss comes out
     public int maxSpawnedEnemies = 10; //The max amount of active enemies in level
@@ -89,6 +94,20 @@ public class GameManager : Singleton<GameManager>
     void Start()
     {
         DontDestroyOnLoad(gameObject); //Called to keep this script even if it loads a complete new level
+        loadSave = gameObject.GetComponent<LoadSave>();
+
+        //highScores.Add(new HighScoreList("Jan", 50, "Level1", "00:30"));
+        //highScores.Add(new HighScoreList("Roben", 5, "Level3", "00:42"));
+        //highScores.Add(new HighScoreList("Jaap", 100, "Level2", "00:32"));
+        //highScores.Add(new HighScoreList("", 0, "", ""));
+        //highScores.Add(new HighScoreList("", 0, "", ""));
+        //highScores.Add(new HighScoreList("", 0, "", ""));
+
+        //loadSave.SaveGame();
+
+
+        //Toets delete als
+        LoadGame();
         Physics.gravity *= gravityModifier; //This should only be done once in the game
         _loadOperations = new List<AsyncOperation>(); //Initialize the list
         _instancedSystemPrefabs = new List<GameObject>(); //Initialize the list
@@ -145,12 +164,12 @@ public class GameManager : Singleton<GameManager>
 
             }
         }
-        Debug.Log("Load Complete.");
+        //Debug.Log("Load Complete.");
     }
 
     void OnUnloadOperationComplete(AsyncOperation ao)
     {
-        Debug.Log("Unload Complete.");
+        //Debug.Log("Unload Complete.");
     }
     public void StartGame() //Call to start the game
     {
@@ -216,4 +235,22 @@ public class GameManager : Singleton<GameManager>
         UpdateState(GameState.BOSSFIGHT);
     }
     #endregion
+
+    #region LoadSave
+    private void LoadGame()
+    {
+        loadSave.LoadGame();
+    }
+    public void SaveGame(int score, int time)
+    {
+        float minutes = Mathf.FloorToInt(time / 60);
+        float seconds = Mathf.FloorToInt(time % 60);
+
+        highScores[5] = new HighScoreList(playerName, score, "Level" + (levelSelectedNumber+1), string.Format("{0:00}:{1:00}", minutes, seconds));
+
+        highScores.Sort();
+        loadSave.SaveGame();
+    }
+    #endregion
+
 }

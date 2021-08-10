@@ -26,7 +26,6 @@ public class PlayerController : MonoBehaviour, IDamageable<float, Enums.DamageTy
     [SerializeField] private int coinValue = 10;
     public bool bHasDoubleCoins = false;
     [SerializeField] private bool invulnerable = false; //Make the player invulnerable to damage
-    [SerializeField] private bool flameThrower = false;
     [SerializeField] private float healPickup = 50f; //Full health
 
     public float maxHealth = 100f; //Full health
@@ -59,7 +58,6 @@ public class PlayerController : MonoBehaviour, IDamageable<float, Enums.DamageTy
         startPos = transform.position; //Used to be able to calculate the different lanes
         //resetAll();
         runAnimation = characterSelected.GetComponent<Animator>();
-
     }
 
     private void HandleGameStateChanged(GameManager.GameState currentState, GameManager.GameState previousState) //When the state changes in the GameManager
