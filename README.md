@@ -3,6 +3,8 @@ Zoophobia
 Video Available:
 https://youtu.be/gAd0Nb8dP8Y
 
+Play game in browser
+https://play.unity.com/mg/other/zoophobia
 
 1. Introduction
 The game is built by using the assets given from the Unity Learn - Junior Programmer, and some self-made textures to match the game’s UI. 
