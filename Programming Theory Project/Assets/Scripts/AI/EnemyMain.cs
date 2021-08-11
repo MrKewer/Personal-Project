@@ -41,14 +41,15 @@ public class EnemyMain : MonoBehaviour, IDamageable<float, Enums.DamageType, Vec
     protected virtual void FixedUpdate()
     {
         Vector3 FollowDirection = (player.transform.position - transform.position).normalized; //Get the direction of this character and the player
-        FollowDirection = new Vector3((FollowDirection.x * runSpeed) / 100, 0, (FollowDirection.z + zRandom)); //Setup the vector to only use the x direction
+        FollowDirection = new Vector3((Mathf.Abs(FollowDirection.x) * runSpeed) / 100, 0, (FollowDirection.z + zRandom)); //Setup the vector to only use the x direction
         transform.Translate(FollowDirection * speed * Time.deltaTime); //Translate the character to the location
         runAnimation.SetFloat("Speed_f", GameManager.Instance.gameSpeed * AnimationSpeed / 10); //Set the run animation to sinc in with game speed
-        if (gameObject.transform.position.x <= spawnPos || FollowDirection.x < -1) //If running back and gets to spawn position then run forward, when FollowDirection.x is negative it must prevent from running past player
+        if (gameObject.transform.position.x <= spawnPos) //If running back and gets to spawn position then run forward, when FollowDirection.x is negative it must prevent from running past player
         {            
             runSpeed = forwardSpeed;
         }
     }
+    
 
     protected virtual void OnCollisionEnter(Collision collision)
     {

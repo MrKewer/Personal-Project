@@ -37,7 +37,7 @@ public class BossPugDog : BossMain
             {
                 runSpeed = -40; //Set to a large value to get in position quicker
                 Vector3 FollowDirection = (player.transform.position - transform.position).normalized; //Get the direction of this character and the player
-                FollowDirection = new Vector3((FollowDirection.x * runSpeed) / 100, 0, 0); //Setup the vector to only use the x direction
+                FollowDirection = new Vector3((Mathf.Abs(FollowDirection.x) * runSpeed) / 100, 0, 0); //Setup the vector to only use the x direction
                 transform.Translate(FollowDirection * speed * Time.deltaTime); //Translate the character to the location
                 runAnimation.SetFloat("Speed_f", GameManager.Instance.gameSpeed * AnimationSpeed / 10); //set the run animation to sinc in with game speed
                 if (gameObject.transform.position.x <= xPositionForAbility) //If in the position to start using ability

@@ -279,8 +279,9 @@ MonoBehaviour:
   maxHealth: 70
   health: 70
   speed: 10
-  forwardSpeed: 5
+  forwardSpeed: 8
   backwardSpeed: -10
+  runSpeed: -10
   collisionDamage: 10
   spawnPos: -14
   spawnPosRange: 3
@@ -301,7 +302,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!1 &106346
 GameObject:

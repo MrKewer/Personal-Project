@@ -221,7 +221,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!114 &-5772147054792816593
 MonoBehaviour:
@@ -239,8 +239,8 @@ MonoBehaviour:
   maxHealth: 800
   health: 800
   speed: 10
-  forwardSpeed: 10
-  backwardSpeed: -10
+  forwardSpeed: 8
+  backwardSpeed: -12
   runSpeed: -10
   collisionDamage: 20
   spawnPos: -18
