@@ -4,16 +4,12 @@ Video Available:
 https://youtu.be/gAd0Nb8dP8Y
 
 
-
-1.	Introduction
+1. Introduction
 The game is built by using the assets given from the Unity Learn - Junior Programmer, and some self-made textures to match the game’s UI. 
 The game’s gameplay is self-designed and is coded from scratch using the knowledge learned from the Unity Learn – Junior Programmer Pathway.  
 This game is made to showcase my skills developed in Game Development. The project is free to browse to see how it is coded. The project is available on GitHub.
 
-
-
-
-2.	Concept
+2. Concept
 Run away from the animals they don’t like you and they will bite you. While running away you should dodge all the incoming obstacles, 
 the animals are so much on your tail they will just run into any obstacle. If you’re lucky, you can pick up some food to restore your health, 
 bombs or balls to throw at the at the animals, a shield to run through anything or double your diamond coins you pick up.
